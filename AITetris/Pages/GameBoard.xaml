@@ -1,0 +1,367 @@
+﻿<Page x:Class="AITetris.Pages.GameBoard"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:AITetris.Pages"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="GameBoard">
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="25" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="25" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="25" />
+        </Grid.RowDefinitions>
+
+        <!-- Game Title -->
+        <Label 
+            x:Name="GameBoardTitleLbl"
+            Grid.Column="2"
+            Grid.Row="1"
+            Grid.ColumnSpan="3"
+            Content="Welcome to a game of AI Tetris"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            FontFamily="Tahoma"
+            FontSize="25"
+            FontWeight="Bold"/>
+        
+        <!-- Game Grid -->
+        <Border
+            x:Name="GameBoardGameGridBorder"
+            Grid.Column="2"
+            Grid.ColumnSpan="3"
+            Grid.Row="2"
+            Grid.RowSpan="6"
+            BorderThickness="2"
+            BorderBrush="Silver">
+
+            <Grid
+                x:Name="GameBoardGameGrid">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+            </Grid>
+        </Border>
+
+        <!-- Next Block -->
+        <Border
+            x:Name="GameBoardNextBlockBorder"
+            Grid.Column="5"
+            Grid.Row="2"
+            Grid.RowSpan="2"
+            BorderThickness="2"
+            BorderBrush="Silver">
+
+            <StackPanel
+                x:Name="GameBoardNextBlockSP">
+
+                <Label
+                    x:Name="GameBoardNextBlockTitle"
+                    Content="Next Block"
+                    HorizontalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="15"
+                    FontWeight="Bold"
+                    Margin="0, 10" />
+
+                <Image 
+                    Source="C:\Users\Christoffer Petersen\Desktop\Svendeprøve\AI_Tetris\AITetris\Assets\Sprits\BlueHole.png"
+                    Stretch="Uniform"
+                    Width="50"
+                    Margin="5" />
+
+            </StackPanel>
+        </Border>
+
+        <!-- Save Block -->
+        <Border
+            x:Name="GameBoardSaveBlockBorder"
+            Grid.Column="5"
+            Grid.Row="4"
+            Grid.RowSpan="2"
+            BorderThickness="2"
+            BorderBrush="Silver">
+
+            <StackPanel
+                x:Name="GameBoardSaveBlockSP">
+
+                <Label
+                    x:Name="GameBoardSaveBlockTitle"
+                    Content="Save Block"
+                    HorizontalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="15"
+                    FontWeight="Bold"
+                    Margin="0, 10" />
+
+                <Image 
+                    Source="C:\Users\Christoffer Petersen\Desktop\Svendeprøve\AI_Tetris\AITetris\Assets\Sprits\BlueHole.png"
+                    Stretch="Uniform"
+                    Width="50"
+                    Margin="5" />
+
+            </StackPanel>
+        </Border>
+
+        <!-- Actions -->
+        <Border
+            x:Name="GameBoardActionsBorder"
+            Grid.Column="5"
+            Grid.Row="6"
+            Grid.RowSpan="2"
+            BorderThickness="2"
+            BorderBrush="Silver">
+
+            <StackPanel
+                x:Name="GameBoardActionsSP">
+
+                <Label 
+                    x:Name="GameBoardActionsTitleLbl"
+                    Content="Actions"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="15"
+                    FontWeight="Bold"/>
+
+                <Button
+                    x:Name="GameBoardActionsPauseBtn"
+                    Content="Pause Game"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="10"
+                    FontWeight="Bold"
+                    Margin="0, 10"
+                    Click="GameBoardActionsPauseBtn_Click">
+
+                </Button>
+
+                <Button
+                    x:Name="GameBoardActionsConsumeOneBtn"
+                    Content="Consume One"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="10"
+                    FontWeight="Bold"
+                    Click="GameBoardActionsConsumeOneBtn_Click">
+
+                </Button>
+
+                <Button
+                    x:Name="GameBoardActionsConsumeTwoBtn"
+                    Content="Consume Two"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="10"
+                    FontWeight="Bold"
+                    Click="GameBoardActionsConsumeTwoBtn_Click">
+
+                </Button>
+
+                <Button
+                    x:Name="GameBoardActionsConsumeThreeBtn"
+                    Content="Consume Three"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="10"
+                    FontWeight="Bold"
+                    Click="GameBoardActionsConsumeThreeBtn_Click">
+
+                </Button>
+            </StackPanel>
+        </Border>
+
+        <!-- Score -->
+        <Border
+            x:Name="GameBoardScoreBorder"
+            Grid.Column="1"
+            Grid.Row="2"
+            Grid.RowSpan="2"
+            BorderThickness="2"
+            BorderBrush="Silver">
+
+            <StackPanel
+                x:Name="GameBoardScoreSP">
+
+                <Label 
+                    x:Name="GameBoardScoreTitleLbl"
+                    Content="Score"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="15"
+                    FontWeight="Bold"/>
+
+                <Label 
+                    x:Name="GameBoardScorePlayerLbl"
+                    Content="Player Name"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="8"
+                    FontWeight="Bold"/>
+
+                <Label 
+                    x:Name="GameBoardScoreTimeLbl"
+                    Content="00:00:00:00"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="8"
+                    FontWeight="Bold"/>
+
+                <Label 
+                    x:Name="GameBoardScoreLineClearedLbl"
+                    Content="Lines: 0"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="8"
+                    FontWeight="Bold"/>
+
+                <Label 
+                    x:Name="GameBoardScorePointLbl"
+                    Content="Point: 0"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="8"
+                    FontWeight="Bold"/>
+            </StackPanel>
+        </Border>
+
+        <!-- Controls -->
+        <Border
+            x:Name="GameBoardControlsBorder"
+            Grid.Column="1"
+            Grid.Row="4"
+            Grid.RowSpan="4"
+            BorderThickness="2"
+            BorderBrush="Silver">
+
+            <StackPanel
+                x:Name="GameBoardControlsSP">
+
+                <Label
+                    x:Name="GameBoardControlsTitle"
+                    Content="Controls"
+                    HorizontalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="15"
+                    FontWeight="Bold"
+                    Margin="0, 5" />
+
+                <Label
+                    x:Name="GameBoardControlsPause"
+                    Content="Pause (Esc)"
+                    HorizontalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="10"
+                    FontWeight="Bold"/>
+
+                <Label
+                    x:Name="GameBoardControlsSave"
+                    Content="Save (Left Shift)"
+                    HorizontalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="10"
+                    FontWeight="Bold"/>
+
+                <Label
+                    x:Name="GameBoardControlsRotate"
+                    Content="Rotate (Up Arrow)"
+                    HorizontalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="10"
+                    FontWeight="Bold"/>
+
+                <Label
+                    x:Name="GameBoardControlsLeft"
+                    Content="Left (Left Arrow)"
+                    HorizontalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="10"
+                    FontWeight="Bold"/>
+
+                <Label
+                    x:Name="GameBoardControlsRight"
+                    Content="Right (Right Arrow)"
+                    HorizontalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="10"
+                    FontWeight="Bold"/>
+
+                <Label
+                    x:Name="GameBoardControlsDown"
+                    Content="Down (Down Arrow)"
+                    HorizontalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="10"
+                    FontWeight="Bold"/>
+
+                <Label
+                    x:Name="GameBoardControlsInstantDown"
+                    Content="Instant Down (Space)"
+                    HorizontalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="10"
+                    FontWeight="Bold"/>
+            </StackPanel>
+        </Border>
+    </Grid>
+</Page>
