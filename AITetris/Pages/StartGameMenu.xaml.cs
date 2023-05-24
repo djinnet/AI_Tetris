@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AITetris.Classes;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -29,6 +30,30 @@ namespace AITetris.Pages
         private void PlayAsAichb_Click(object sender, RoutedEventArgs e)
         {
             PickAIcmb.IsEnabled = ((CheckBox)sender).IsChecked ?? false;
+        }
+
+        private void StartGamebnt_Click(object sender, RoutedEventArgs e)
+        {
+            if(Nametxtbox.Text.Length > 0)
+            {
+                if (PlayAsAichb.IsChecked ?? false)
+                {
+                    Player player = new Player(Nametxtbox.Text);
+                }
+                else
+                {
+                    //TODO AI create
+                }
+            }
+            else
+            {
+                NoNamelbl.Visibility = Visibility.Visible;
+            }
+        }
+
+        private void Cancelbtn_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.GoBack();
         }
     }
 }
