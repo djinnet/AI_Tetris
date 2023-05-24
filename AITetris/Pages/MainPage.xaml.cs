@@ -13,18 +13,21 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace AITetris
+namespace AITetris.Pages
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    /// Interaction logic for MainPage.xaml
     /// </summary>
-    public partial class MainWindow : NavigationWindow
+    public partial class MainPage : Page
     {
-        public MainWindow()
+        public MainPage()
         {
             InitializeComponent();
+        }
 
-            NavigationService.Navigate(new Uri("Pages/MainPage.xaml", UriKind.Relative));
+        private void NavigateTestPage_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("Pages/TestPage.xaml", UriKind.Relative));
         }
     }
 }
