@@ -25,9 +25,39 @@ namespace AITetris.Pages
             InitializeComponent();
         }
 
-        private void NavigateTestPage_Click(object sender, RoutedEventArgs e)
+        //private void NavigateTestPage_Click(object sender, RoutedEventArgs e)
+        //{
+        //    NavigationService.Navigate(new Uri("Pages/TestPage.xaml", UriKind.Relative));
+        //}
+
+        private void MainMenuStartGameBtn_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Uri("Pages/TestPage.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("Pages/StartGameMenu.xaml", UriKind.Relative));
+        }
+
+        private void MainMenuLeaderboardBtn_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("Pages/Leaderboard.xaml", UriKind.Relative));
+        }
+
+        private void MainMenuPointShopBtn_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("Pages/PointShop.xaml", UriKind.Relative));
+        }
+
+        private void MainMenuSettingsBtn_Click(object sender, RoutedEventArgs e)
+        {
+            NavigationService.Navigate(new Uri("Pages/Settings.xaml", UriKind.Relative));
+        }
+
+        private void MainMenuExitBtn_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBoxResult result = MessageBox.Show("Do you really want to exit the game?", "Confirmation", MessageBoxButton.OKCancel);
+
+            if (result == MessageBoxResult.OK)
+            {
+                Application.Current.Shutdown();
+            }
         }
     }
 }
