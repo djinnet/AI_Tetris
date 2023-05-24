@@ -36,8 +36,9 @@
             <Button Content="Button" Grid.Row="1"/>
             <Button Content="Button" Grid.Row="2"/>
         </Grid>
-        <Button Content="Start" HorizontalAlignment="Left" Margin="348,277,0,0" VerticalAlignment="Top" Width="77" Height="25"/>
-        <Button Content="Cancel" HorizontalAlignment="Left" Margin="63,402,0,0" VerticalAlignment="Top"/>
+        <Button x:Name="StartGamebnt" Content="Start" HorizontalAlignment="Left" Margin="348,277,0,0" VerticalAlignment="Top" Width="77" Height="25" Click="StartGamebnt_Click"/>
+        <Button x:Name="Cancelbtn" Content="Cancel" HorizontalAlignment="Left" Margin="62,377,0,0" VerticalAlignment="Top" Click="Cancelbtn_Click"/>
+        <Label x:Name="NoNamelbl" Content="Please input a name" HorizontalAlignment="Left" Margin="330,130,0,0" VerticalAlignment="Top" Foreground="#FFFF0303" Visibility="Hidden"/>
 
     </Grid>
 </Page>
