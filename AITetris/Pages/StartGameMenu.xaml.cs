@@ -36,10 +36,10 @@ namespace AITetris.Pages
         {
             if(Nametxtbox.Text.Length > 0)
             {
-                if (PlayAsAichb.IsChecked ?? false)
+                if (!PlayAsAichb.IsChecked ?? false)
                 {
                     Player player = new Player(Nametxtbox.Text);
-                    NavigationService.Navigate(new Uri("GameBoard.xaml", UriKind.Relative));
+                    NavigationService.Navigate(new Uri("Pages/GameBoard.xaml", UriKind.Relative));
                 }
                 else
                 {
