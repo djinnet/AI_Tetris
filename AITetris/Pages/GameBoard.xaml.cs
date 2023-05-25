@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -12,6 +13,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using AITetris.Classes;
 
 namespace AITetris.Pages
 {
@@ -20,9 +22,18 @@ namespace AITetris.Pages
     /// </summary>
     public partial class GameBoard : Page
     {
-        public GameBoard()
+        Character character;
+        public GameBoard(Character character)
         {
             InitializeComponent();
+            this.character = character;
+            GameBoardScorePlayerLbl.Content = character.name;
+            AddPoint(1);
+        }
+
+        private void AddPoint(int lines)
+        {
+            GameBoardScorePointLbl.Content = "Point: " + (Convert.ToInt32(((string)GameBoardScorePointLbl.Content).Remove(0,7)) + (Math.Pow(2, lines) * 100)).ToString();
         }
 
         private void GameBoardActionsPauseBtn_Click(object sender, RoutedEventArgs e)
@@ -32,17 +43,17 @@ namespace AITetris.Pages
 
         private void GameBoardActionsConsumeOneBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            AddPoint(2);
         }
 
         private void GameBoardActionsConsumeTwoBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            AddPoint(3);
         }
 
         private void GameBoardActionsConsumeThreeBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            AddPoint(4);
         }
     }
 }
