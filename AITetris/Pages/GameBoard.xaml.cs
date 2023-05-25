@@ -28,7 +28,7 @@ namespace AITetris.Pages
             InitializeComponent();
             this.character = character;
             GameBoardScorePlayerLbl.Content = character.name;
-            AddPoint(1);
+            //AddPoint(1);
         }
 
         private void AddPoint(int lines)
@@ -43,17 +43,17 @@ namespace AITetris.Pages
 
         private void GameBoardActionsConsumeOneBtn_Click(object sender, RoutedEventArgs e)
         {
-            AddPoint(2);
+            //AddPoint(2);
         }
 
         private void GameBoardActionsConsumeTwoBtn_Click(object sender, RoutedEventArgs e)
         {
-            AddPoint(3);
+            //AddPoint(3);
         }
 
         private void GameBoardActionsConsumeThreeBtn_Click(object sender, RoutedEventArgs e)
         {
-            AddPoint(4);
+            //AddPoint(4);
         }
     }
 }
