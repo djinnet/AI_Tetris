@@ -188,6 +188,56 @@
 
                 </Button>
 
+                <!--<Button
+                    x:Name="GameBoardActionsStartTimeTestBtn"
+                    Content="Start time"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="10"
+                    FontWeight="Bold"
+                    Click="GameBoardActionsStartTimeTestBtn_Click">
+
+                </Button>
+
+
+                <Button
+                    x:Name="GameBoardActionsStopTimeTestBtn"
+                    Content="Stop time"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="10"
+                    FontWeight="Bold"
+                    Click="GameBoardActionsStopTimeTestBtn_Click">
+                    
+                </Button>
+
+                <Button
+                    x:Name="GameBoardActionsPauseTimeTestBtn"
+                    Content="Pause time"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="10"
+                    FontWeight="Bold"
+                    Click="GameBoardActionsPauseTimeTestBtn_Click">
+
+                </Button>
+
+                <Button
+                    x:Name="GameBoardActionsResumeTimeTestBtn"
+                    Content="Resume time"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="10"
+                    FontWeight="Bold"
+                    Margin="0, 10"
+                    Click="GameBoardActionsResumeTimeTestBtn_Click">
+
+                </Button>-->
+
                 <Button
                     x:Name="GameBoardActionsConsumeOneBtn"
                     Content="Consume One"
