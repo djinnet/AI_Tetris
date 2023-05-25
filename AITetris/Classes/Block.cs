@@ -1,19 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace AITetris.Classes
 {
-    internal class Block
+    public class Block
     {
-        public Block()
+        public Block(int coordinateX, int coordinateY)
         {
+            this.coordinateX = coordinateX;
+            this.coordinateY = coordinateY;
             spritePath = "../Assets/Sprits/BlueGreenPrimary.png";
         }
-        int coordinateX;
-        int coordinateY;
-        string spritePath;
+        public int coordinateX;
+        public int coordinateY;
+        public string spritePath;
     }
 }
