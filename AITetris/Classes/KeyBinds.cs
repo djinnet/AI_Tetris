@@ -7,19 +7,19 @@ using System.Windows.Input;
 
 namespace AITetris.Classes
 {
-    internal class KeyBinds
+    public class KeyBinds
     {
         public KeyBinds()
         {
 
         }
 
-        Key insta;
-        Key drop;
-        Key rotate;
-        Key right;
-        Key left;
-        Key swap;
-        Key pause;
+        public Key insta;
+        public Key drop;
+        public Key rotate;
+        public Key right;
+        public Key left;
+        public Key swap;
+        public Key pause;
     }
 }

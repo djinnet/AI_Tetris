@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AITetris.Classes
 {
-    internal class Character
+    public class Character
     {
         public Character(string name)
         {
