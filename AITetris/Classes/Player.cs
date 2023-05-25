@@ -7,7 +7,7 @@ using System.Windows;
 
 namespace AITetris.Classes
 {
-    internal class Player : Character
+    public class Player : Character
     {
         public Player(string name) : base(name)
         {

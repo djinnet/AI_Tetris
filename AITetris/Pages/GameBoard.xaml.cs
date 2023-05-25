@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -14,6 +15,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using AITetris.Classes;
 
 namespace AITetris.Pages
 {
@@ -28,14 +30,18 @@ namespace AITetris.Pages
         private TimeSpan elapsedTime;
         private TimeSpan pausedTime;
         private bool isScoreboardTimerPaused;
-
-        public GameBoard()
+        private Character character;
+        
+        public GameBoard(Character character)
         {
             InitializeComponent();
-
+            
             // Initialize variables
             isScoreboardTimerPaused = false;
-
+            this.character = character;
+            
+            GameBoardScorePlayerLbl.Content = character.name;
+            
             // Scoreboard timer
             scoreboardTimer = new DispatcherTimer();
             StartTime(scoreboardTimer);
@@ -119,6 +125,11 @@ namespace AITetris.Pages
 
             // Start the timer
             timer.Start();
+        }      
+
+        private void AddPoint(int lines)
+        {
+            GameBoardScorePointLbl.Content = "Point: " + (Convert.ToInt32(((string)GameBoardScorePointLbl.Content).Remove(0,7)) + (Math.Pow(2, lines) * 100)).ToString();
         }
 
 
@@ -129,17 +140,17 @@ namespace AITetris.Pages
 
         private void GameBoardActionsConsumeOneBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            //AddPoint(2);
         }
 
         private void GameBoardActionsConsumeTwoBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            //AddPoint(3);
         }
 
         private void GameBoardActionsConsumeThreeBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            //AddPoint(4);
         }
 
         // Test buttons to control the timer

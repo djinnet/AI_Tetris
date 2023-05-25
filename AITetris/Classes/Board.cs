@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AITetris.Classes
 {
-    internal class Board
+    public class Board
     {
         public Board(int xLength, int yLength)
         {
@@ -14,7 +14,7 @@ namespace AITetris.Classes
             blocks = new Block[xLength * yLength];
         }
 
-        bool[,] grid;
-        Block[] blocks;
+        public bool[,] grid;
+        public Block[] blocks;
     }
 }

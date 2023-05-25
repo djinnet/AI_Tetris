@@ -7,19 +7,19 @@ using System.Windows.Documents;
 
 namespace AITetris.Classes
 {
-    internal class Settings
+    public class Settings
     {
         public Settings()
         {
             KeyBinds = new KeyBinds();
         }
 
-        double gameSpeed;
-        double startSpeed;
-        bool enableSwapBlock;
-        bool enableNextBlock;
-        int volume;
-        bool enableTraining;
-        KeyBinds KeyBinds;
+        public double gameSpeed;
+        public double startSpeed;
+        public bool enableSwapBlock;
+        public bool enableNextBlock;
+        public int volume;
+        public bool enableTraining;
+        public KeyBinds KeyBinds;
     }
 }

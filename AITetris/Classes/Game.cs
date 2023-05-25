@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace AITetris.Classes
 {
-    internal class Game
+    public class Game
     {
         public Game(Board board, Character character, bool isPlayer, Settings settings)
         {
@@ -17,11 +17,11 @@ namespace AITetris.Classes
             this.isPlayer = isPlayer;
             this.settings = settings;
         }
-        Board board;
-        Character character;
-        int points;
-        int time;
-        bool isPlayer;
-        Settings settings;
+        public Board board;
+        public Character character;
+        public int points;
+        public int time;
+        public bool isPlayer;
+        public Settings settings;
     }
 }
