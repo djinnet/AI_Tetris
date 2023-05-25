@@ -24,6 +24,7 @@ namespace AITetris.Pages
     /// </summary>
     public partial class GameBoard : Page
     {
+<<<<<<< Updated upstream
         // Timer varibles for the scoreboard timer
         private DispatcherTimer scoreboardTimer;
         private DateTime startTime;
@@ -32,6 +33,10 @@ namespace AITetris.Pages
         private bool isScoreboardTimerPaused;
         private Character character;
         
+=======
+        Character character;
+        Board board;
+>>>>>>> Stashed changes
         public GameBoard(Character character)
         {
             InitializeComponent();
@@ -41,6 +46,7 @@ namespace AITetris.Pages
             this.character = character;
             
             GameBoardScorePlayerLbl.Content = character.name;
+<<<<<<< Updated upstream
             
             // Scoreboard timer
             scoreboardTimer = new DispatcherTimer();
@@ -127,6 +133,51 @@ namespace AITetris.Pages
             timer.Start();
         }      
 
+=======
+            this.board = new Board(10, 20);
+            ClearLine();
+            //AddPoint(1);
+        }
+
+        private void ClearLine()
+        {
+            int linesCleared = 0;
+            int clearIf10 = 0;
+            for(int y = board.grid.GetLength(1) - 1; y >= 0; y--)
+            {
+                Debug.WriteLine("this is y" + y);
+                for (int x = 0; x < board.grid.GetLength(0); x++)
+                {
+                    Debug.WriteLine("this is x" + x);
+                    if (board.grid[x, y])
+                    {
+                        clearIf10++;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                if(clearIf10 == 10)
+                {
+                    linesCleared++;
+                    foreach(Classes.Block block in board.blocks)
+                    {
+                        if(block.coordinateY > y)
+                        {
+                            block.coordinateY--;
+                        }
+                    }
+                }
+                clearIf10 = 0;
+            }
+            if (linesCleared > 0)
+            {
+                AddPoint(linesCleared);
+            }
+        }
+
+>>>>>>> Stashed changes
         private void AddPoint(int lines)
         {
             GameBoardScorePointLbl.Content = "Point: " + (Convert.ToInt32(((string)GameBoardScorePointLbl.Content).Remove(0,7)) + (Math.Pow(2, lines) * 100)).ToString();
