@@ -24,7 +24,6 @@ namespace AITetris.Pages
     /// </summary>
     public partial class GameBoard : Page
     {
-<<<<<<< Updated upstream
         // Timer varibles for the scoreboard timer
         private DispatcherTimer scoreboardTimer;
         private DateTime startTime;
@@ -32,11 +31,7 @@ namespace AITetris.Pages
         private TimeSpan pausedTime;
         private bool isScoreboardTimerPaused;
         private Character character;
-        
-=======
-        Character character;
-        Board board;
->>>>>>> Stashed changes
+        private Board board;
         public GameBoard(Character character)
         {
             InitializeComponent();
@@ -46,11 +41,11 @@ namespace AITetris.Pages
             this.character = character;
             
             GameBoardScorePlayerLbl.Content = character.name;
-<<<<<<< Updated upstream
             
             // Scoreboard timer
             scoreboardTimer = new DispatcherTimer();
             StartTime(scoreboardTimer);
+            board = new Board(10, 20);
         }
 
         private void StartTime(DispatcherTimer timer)
@@ -133,12 +128,6 @@ namespace AITetris.Pages
             timer.Start();
         }      
 
-=======
-            this.board = new Board(10, 20);
-            ClearLine();
-            //AddPoint(1);
-        }
-
         private void ClearLine()
         {
             int linesCleared = 0;
@@ -177,7 +166,6 @@ namespace AITetris.Pages
             }
         }
 
->>>>>>> Stashed changes
         private void AddPoint(int lines)
         {
             GameBoardScorePointLbl.Content = "Point: " + (Convert.ToInt32(((string)GameBoardScorePointLbl.Content).Remove(0,7)) + (Math.Pow(2, lines) * 100)).ToString();
@@ -191,17 +179,17 @@ namespace AITetris.Pages
 
         private void GameBoardActionsConsumeOneBtn_Click(object sender, RoutedEventArgs e)
         {
-            //AddPoint(2);
+
         }
 
         private void GameBoardActionsConsumeTwoBtn_Click(object sender, RoutedEventArgs e)
         {
-            //AddPoint(3);
+
         }
 
         private void GameBoardActionsConsumeThreeBtn_Click(object sender, RoutedEventArgs e)
         {
-            //AddPoint(4);
+
         }
 
         // Test buttons to control the timer
