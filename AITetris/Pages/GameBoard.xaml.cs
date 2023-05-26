@@ -48,8 +48,8 @@ namespace AITetris.Pages
             scoreboardTimer = new DispatcherTimer();
             StartTime(scoreboardTimer);
             
+            CreateDynamicGameGrid(10, 20);
             AddFigure();
-            CreateDynamicGameGrid(5, 10);
         }
 
         private void AddFigure()
