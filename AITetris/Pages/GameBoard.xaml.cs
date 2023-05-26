@@ -47,8 +47,32 @@ namespace AITetris.Pages
             // Scoreboard timer
             scoreboardTimer = new DispatcherTimer();
             StartTime(scoreboardTimer);
-
+            
+            AddFigure();
             CreateDynamicGameGrid(5, 10);
+        }
+
+        private void AddFigure()
+        {
+            TetrisFigure figure = GenerateRandomFigure();
+            Image[] images = new Image[figure.squares.Length];
+            Debug.WriteLine("Figure: " + figure.figureType.ToString() + ". Length: " + figure.squares.Length);
+            for (int i = 0; i < figure.squares.Length; i++)
+            {
+                Debug.WriteLine(i + ": " + figure.squares[i].coordinateX + " / " + figure.squares[i].coordinateY);
+                images[i] = new Image();
+                images[i].Source = new BitmapImage(new Uri(figure.squares[i].spritePath, UriKind.Absolute));
+                Grid.SetColumn(images[i], figure.squares[i].coordinateX);
+                Grid.SetRow(images[i], figure.squares[i].coordinateY);
+                GameBoardGameGrid.Children.Add(images[i]);
+            }
+        }
+
+        private TetrisFigure GenerateRandomFigure()
+        {
+            Random rand = new Random();
+            var i = rand.Next(0, Enum.GetNames(typeof(FigureType)).Length);
+            return new TetrisFigure(new int[]{ 5,3},(FigureType)i);
         }
 
         private void CreateDynamicGameGrid(int cols, int rows)
