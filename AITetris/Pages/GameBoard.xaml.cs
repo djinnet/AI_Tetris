@@ -69,7 +69,7 @@ namespace AITetris.Pages
             for (int i = 0; i < figure.squares.Length; i++)
             {
                 images[i] = new Image();
-                //images[i].Source = new BitmapImage(new Uri(figure.squares[i].spritePath, UriKind.Absolute));
+                images[i].Source = new BitmapImage(new Uri(figure.squares[i].spritePath, UriKind.Relative));
                 Grid.SetColumn(images[i], figure.squares[i].coordinateX);
                 Grid.SetRow(images[i], figure.squares[i].coordinateY);
                 GameBoardGameGrid.Children.Add(images[i]);
@@ -86,8 +86,13 @@ namespace AITetris.Pages
 
         private void RotateFigure()
         {
+
             DeleteFigure();
             figure.Rotate();
+            if (collision("rotate"))
+            {
+                return;
+            }
             AddFigure();
         }
 
@@ -101,6 +106,16 @@ namespace AITetris.Pages
             DeleteFigure();
             figure.Move(destination);
             AddFigure();
+        }
+
+        private void InstaDrop()
+        {
+            while (!collision("down"))
+            {
+                DeleteFigure();
+                figure.Move("down");
+                AddFigure();
+            }
         }
 
         private void GenerateRandomFigure()
@@ -145,6 +160,22 @@ namespace AITetris.Pages
                         }
                         break;
                     case "rotate":
+                        if (square.coordinateX < minWidth)
+                        {
+                            figure.Move("right");
+                        }
+                        else if (square.coordinateX > maxWidth - 1)
+                        {
+                            figure.Move("left");
+                        }
+                        else if (square.coordinateY < minHeight)
+                        {
+                            figure.Move("down");
+                        }
+                        else if (square.coordinateY > maxHeight - 1)
+                        {
+                            figure.Move("up");
+                        }
                         break;
                     default:
                         break;
@@ -285,7 +316,7 @@ namespace AITetris.Pages
         private void ClearLine()
         {
             int linesCleared = 0;
-            int clearIf10 = 0;
+            int clearIfMax = 0;
             for(int y = board.grid.GetLength(1) - 1; y >= 0; y--)
             {
                 Debug.WriteLine("this is y" + y);
@@ -294,14 +325,14 @@ namespace AITetris.Pages
                     Debug.WriteLine("this is x" + x);
                     if (board.grid[x, y])
                     {
-                        clearIf10++;
+                        clearIfMax++;
                     }
                     else
                     {
                         break;
                     }
                 }
-                if(clearIf10 == 10)
+                if(clearIfMax == maxWidth)
                 {
                     linesCleared++;
                     for(int i = 0; i < board.squares.Length; i++)
@@ -316,7 +347,7 @@ namespace AITetris.Pages
                         }
                     }
                 }
-                clearIf10 = 0;
+                clearIfMax = 0;
             }
             if (linesCleared > 0)
             {
@@ -356,18 +387,24 @@ namespace AITetris.Pages
             switch (e.Key)
             {
                 case Key.A:
+                    MoveFigure("left");
                     break;
                 case Key.D:
+                    MoveFigure("right");
                     break;
                 case Key.W:
+                    RotateFigure();
                     break;
                 case Key.S:
+                    MoveFigure("down");
                     break;
                 case Key.Space:
+                    InstaDrop();
                     break;
                 case Key.Escape:
                     break;
                 case Key.E:
+                    GenerateRandomFigure();
                     break;
             }
         }

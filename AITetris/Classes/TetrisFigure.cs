@@ -47,17 +47,17 @@ namespace AITetris.Classes
         {
             switch (direction)
             {
-                case "right":
-                    referenceCoords[0] += 1;
-                    break;
                 case "left":
                     referenceCoords[0] -= 1;
                     break;
+                case "right":
+                    referenceCoords[0] += 1;
+                    break;
                 case "up":
-                    referenceCoords[1] += 1;
+                    referenceCoords[1] -= 1;
                     break;
                 case "down":
-                    referenceCoords[1] -= 1;
+                    referenceCoords[1] += 1;
                     break;
                 default:
                     break;
