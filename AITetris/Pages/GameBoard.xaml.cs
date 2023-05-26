@@ -33,7 +33,7 @@ namespace AITetris.Pages
 
         // Character variables
         private Character character;
-        
+        private Board board;
         public GameBoard(Character character)
         {
             InitializeComponent();
@@ -47,7 +47,7 @@ namespace AITetris.Pages
             // Scoreboard timer
             scoreboardTimer = new DispatcherTimer();
             StartTime(scoreboardTimer);
-            
+            board = new Board(10, 20);  
             CreateDynamicGameGrid(10, 20);
             AddFigure();
         }
@@ -200,6 +200,44 @@ namespace AITetris.Pages
             timer.Start();
         }      
 
+        private void ClearLine()
+        {
+            int linesCleared = 0;
+            int clearIf10 = 0;
+            for(int y = board.grid.GetLength(1) - 1; y >= 0; y--)
+            {
+                Debug.WriteLine("this is y" + y);
+                for (int x = 0; x < board.grid.GetLength(0); x++)
+                {
+                    Debug.WriteLine("this is x" + x);
+                    if (board.grid[x, y])
+                    {
+                        clearIf10++;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                if(clearIf10 == 10)
+                {
+                    linesCleared++;
+                    foreach(Classes.Block block in board.blocks)
+                    {
+                        if(block.coordinateY > y)
+                        {
+                            block.coordinateY--;
+                        }
+                    }
+                }
+                clearIf10 = 0;
+            }
+            if (linesCleared > 0)
+            {
+                AddPoint(linesCleared);
+            }
+        }
+
         private void AddPoint(int lines)
         {
             GameBoardScorePointLbl.Content = "Point: " + (Convert.ToInt32(((string)GameBoardScorePointLbl.Content).Remove(0,7)) + (Math.Pow(2, lines) * 100)).ToString();
@@ -213,17 +251,17 @@ namespace AITetris.Pages
 
         private void GameBoardActionsConsumeOneBtn_Click(object sender, RoutedEventArgs e)
         {
-            //AddPoint(2);
+
         }
 
         private void GameBoardActionsConsumeTwoBtn_Click(object sender, RoutedEventArgs e)
         {
-            //AddPoint(3);
+
         }
 
         private void GameBoardActionsConsumeThreeBtn_Click(object sender, RoutedEventArgs e)
         {
-            //AddPoint(4);
+
         }
 
         // Test buttons to control the timer
