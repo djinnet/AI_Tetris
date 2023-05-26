@@ -33,7 +33,7 @@ namespace AITetris.Pages
 
         // Character variables
         private Character character;
-        
+        private Board board;
         public GameBoard(Character character)
         {
             InitializeComponent();
@@ -47,8 +47,32 @@ namespace AITetris.Pages
             // Scoreboard timer
             scoreboardTimer = new DispatcherTimer();
             StartTime(scoreboardTimer);
-
+            board = new Board(10, 20);  
             CreateDynamicGameGrid(10, 20);
+            AddFigure();
+        }
+        
+        private void AddFigure()
+        {
+            TetrisFigure figure = GenerateRandomFigure();
+            Image[] images = new Image[figure.squares.Length];
+            Debug.WriteLine("Figure: " + figure.figureType.ToString() + ". Length: " + figure.squares.Length);
+            for (int i = 0; i < figure.squares.Length; i++)
+            {
+                Debug.WriteLine(i + ": " + figure.squares[i].coordinateX + " / " + figure.squares[i].coordinateY);
+                images[i] = new Image();
+                images[i].Source = new BitmapImage(new Uri(figure.squares[i].spritePath, UriKind.Absolute));
+                Grid.SetColumn(images[i], figure.squares[i].coordinateX);
+                Grid.SetRow(images[i], figure.squares[i].coordinateY);
+                GameBoardGameGrid.Children.Add(images[i]);
+            }
+        }
+
+        private TetrisFigure GenerateRandomFigure()
+        {
+            Random rand = new Random();
+            var i = rand.Next(0, Enum.GetNames(typeof(FigureType)).Length);
+            return new TetrisFigure(new int[]{ 5,3},(FigureType)i);
         }
 
         private void CreateDynamicGameGrid(int cols, int rows)
@@ -180,6 +204,44 @@ namespace AITetris.Pages
             timer.Start();
         }      
 
+        private void ClearLine()
+        {
+            int linesCleared = 0;
+            int clearIf10 = 0;
+            for(int y = board.grid.GetLength(1) - 1; y >= 0; y--)
+            {
+                Debug.WriteLine("this is y" + y);
+                for (int x = 0; x < board.grid.GetLength(0); x++)
+                {
+                    Debug.WriteLine("this is x" + x);
+                    if (board.grid[x, y])
+                    {
+                        clearIf10++;
+                    }
+                    else
+                    {
+                        break;
+                    }
+                }
+                if(clearIf10 == 10)
+                {
+                    linesCleared++;
+                    foreach(Classes.Block block in board.blocks)
+                    {
+                        if(block.coordinateY > y)
+                        {
+                            block.coordinateY--;
+                        }
+                    }
+                }
+                clearIf10 = 0;
+            }
+            if (linesCleared > 0)
+            {
+                AddPoint(linesCleared);
+            }
+        }
+
         private void AddPoint(int lines)
         {
             GameBoardScorePointLbl.Content = "Point: " + (Convert.ToInt32(((string)GameBoardScorePointLbl.Content).Remove(0,7)) + (Math.Pow(2, lines) * 100)).ToString();
@@ -193,17 +255,17 @@ namespace AITetris.Pages
 
         private void GameBoardActionsConsumeOneBtn_Click(object sender, RoutedEventArgs e)
         {
-            //AddPoint(2);
+
         }
 
         private void GameBoardActionsConsumeTwoBtn_Click(object sender, RoutedEventArgs e)
         {
-            //AddPoint(3);
+
         }
 
         private void GameBoardActionsConsumeThreeBtn_Click(object sender, RoutedEventArgs e)
         {
-            //AddPoint(4);
+
         }
 
         // Test buttons to control the timer

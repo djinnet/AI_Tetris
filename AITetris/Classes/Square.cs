@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace AITetris.Classes
 {
-    public class Block
+    public class Square
     {
-        public Block(int coordinateX, int coordinateY)
+        public Square(int coordinateX, int coordinateY)
         {
             this.coordinateX = coordinateX;
             this.coordinateY = coordinateY;
-            spritePath = "../Assets/Sprits/BlueGreenPrimary.png";
+            spritePath = "C:\\Users\\Sebas\\source\\repos\\AI_Tetris\\AI_Tetris\\AITetris\\Assets\\Sprits\\BlueGreenPrimary.png";
         }
         public int coordinateX;
         public int coordinateY;
