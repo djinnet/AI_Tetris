@@ -51,7 +51,7 @@ namespace AITetris.Pages
             CreateDynamicGameGrid(10, 20);
             AddFigure();
         }
-
+        
         private void AddFigure()
         {
             TetrisFigure figure = GenerateRandomFigure();
@@ -109,6 +109,10 @@ namespace AITetris.Pages
                     Border border = new Border();
                     border.BorderBrush = Brushes.Silver;
                     border.BorderThickness = new Thickness(1);
+
+                    // Child alignment
+                    border.HorizontalAlignment = HorizontalAlignment.Stretch;
+                    border.VerticalAlignment = VerticalAlignment.Stretch;
 
                     // Add coordinates to the border
                     Grid.SetRow(border, row);
