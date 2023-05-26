@@ -222,15 +222,15 @@ namespace AITetris.Pages
                 if(clearIf10 == 10)
                 {
                     linesCleared++;
-                    for(int i = 0; i < board.blocks.Length; i++)
+                    for(int i = 0; i < board.squares.Length; i++)
                     {
-                        if(board.blocks[i].coordinateY == y)
+                        if(board.squares[i].coordinateY == y)
                         {
-                            board.blocks[i] = null;
+                            board.squares[i] = null;
                         }
-                        if(board.blocks[i].coordinateY > y)
+                        if(board.squares[i].coordinateY > y)
                         {
-                            board.blocks[i].coordinateY--;
+                            board.squares[i].coordinateY--;
                         }
                     }
                 }
