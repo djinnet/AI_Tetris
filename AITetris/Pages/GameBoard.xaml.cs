@@ -30,6 +30,8 @@ namespace AITetris.Pages
         private TimeSpan elapsedTime;
         private TimeSpan pausedTime;
         private bool isScoreboardTimerPaused;
+
+        // Character variables
         private Character character;
         private Board board;
         public GameBoard(Character character)
@@ -45,7 +47,77 @@ namespace AITetris.Pages
             // Scoreboard timer
             scoreboardTimer = new DispatcherTimer();
             StartTime(scoreboardTimer);
-            board = new Board(10, 20);
+            board = new Board(10, 20);  
+            CreateDynamicGameGrid(10, 20);
+            AddFigure();
+        }
+
+        private void AddFigure()
+        {
+            TetrisFigure figure = GenerateRandomFigure();
+            Image[] images = new Image[figure.squares.Length];
+            Debug.WriteLine("Figure: " + figure.figureType.ToString() + ". Length: " + figure.squares.Length);
+            for (int i = 0; i < figure.squares.Length; i++)
+            {
+                Debug.WriteLine(i + ": " + figure.squares[i].coordinateX + " / " + figure.squares[i].coordinateY);
+                images[i] = new Image();
+                images[i].Source = new BitmapImage(new Uri(figure.squares[i].spritePath, UriKind.Absolute));
+                Grid.SetColumn(images[i], figure.squares[i].coordinateX);
+                Grid.SetRow(images[i], figure.squares[i].coordinateY);
+                GameBoardGameGrid.Children.Add(images[i]);
+            }
+        }
+
+        private TetrisFigure GenerateRandomFigure()
+        {
+            Random rand = new Random();
+            var i = rand.Next(0, Enum.GetNames(typeof(FigureType)).Length);
+            return new TetrisFigure(new int[]{ 5,3},(FigureType)i);
+        }
+
+        private void CreateDynamicGameGrid(int cols, int rows)
+        {
+            // Gamegrid
+            Grid gamegrid = GameBoardGameGrid;
+
+            // Clear current gamegrid
+            gamegrid.Children.Clear();
+
+            // Remove current definitions
+            gamegrid.RowDefinitions.Clear();
+            gamegrid.ColumnDefinitions.Clear();
+
+            // Create new row definitions
+            for (int i = 0; i < rows; i++)
+            {
+                gamegrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+            }
+
+            // Create new row definitions
+            for (int i = 0; i < cols; i++)
+            {
+                gamegrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            }
+
+            // Looping all rows
+            for (int row = 0; row < rows; row++)
+            {
+                // Looping all columns
+                for (int column = 0; column < cols; column++)
+                {
+                    // Creating a border
+                    Border border = new Border();
+                    border.BorderBrush = Brushes.Silver;
+                    border.BorderThickness = new Thickness(1);
+
+                    // Add coordinates to the border
+                    Grid.SetRow(border, row);
+                    Grid.SetColumn(border, column);
+
+                    // Add child to grid
+                    gamegrid.Children.Add(border);
+                }
+            }
         }
 
         private void StartTime(DispatcherTimer timer)
