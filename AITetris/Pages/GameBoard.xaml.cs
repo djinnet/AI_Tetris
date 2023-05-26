@@ -272,6 +272,27 @@ namespace AITetris.Pages
 
         }
 
+        private void GamePage_KeyDown(object sender, KeyEventArgs e)
+        {
+            switch (e.Key)
+            {
+                case Key.A:
+                    break;
+                case Key.D:
+                    break;
+                case Key.W:
+                    break;
+                case Key.S:
+                    break;
+                case Key.Space:
+                    break;
+                case Key.Escape:
+                    break;
+                case Key.E:
+                    break;
+            }
+        }
+
         // Test buttons to control the timer
 
         //private void GameBoardActionsStartTimeTestBtn_Click(object sender, RoutedEventArgs e)
