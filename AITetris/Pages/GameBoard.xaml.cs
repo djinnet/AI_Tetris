@@ -150,11 +150,15 @@ namespace AITetris.Pages
                 if(clearIf10 == 10)
                 {
                     linesCleared++;
-                    foreach(Classes.Block block in board.blocks)
+                    for(int i = 0; i < board.blocks.Length; i++)
                     {
-                        if(block.coordinateY > y)
+                        if(board.blocks[i].coordinateY == y)
                         {
-                            block.coordinateY--;
+                            board.blocks[i] = null;
+                        }
+                        if(board.blocks[i].coordinateY > y)
+                        {
+                            board.blocks[i].coordinateY--;
                         }
                     }
                 }
