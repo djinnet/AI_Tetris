@@ -48,7 +48,7 @@ namespace AITetris.Pages
             scoreboardTimer = new DispatcherTimer();
             StartTime(scoreboardTimer);
 
-            CreateDynamicGameGrid(5, 10);
+            CreateDynamicGameGrid(10, 20);
         }
 
         private void CreateDynamicGameGrid(int cols, int rows)
@@ -85,6 +85,10 @@ namespace AITetris.Pages
                     Border border = new Border();
                     border.BorderBrush = Brushes.Silver;
                     border.BorderThickness = new Thickness(1);
+
+                    // Child alignment
+                    border.HorizontalAlignment = HorizontalAlignment.Stretch;
+                    border.VerticalAlignment = VerticalAlignment.Stretch;
 
                     // Add coordinates to the border
                     Grid.SetRow(border, row);

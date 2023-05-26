@@ -50,6 +50,8 @@
             Grid.Column="2"
             Grid.ColumnSpan="3"
             Grid.Row="2"
+            Width="300"
+            Height="600"
             Grid.RowSpan="6"
             BorderThickness="2"
             BorderBrush="Silver">
