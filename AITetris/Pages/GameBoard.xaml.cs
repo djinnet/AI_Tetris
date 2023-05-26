@@ -66,9 +66,8 @@ namespace AITetris.Pages
 
         private TetrisFigure GenerateRandomFigure()
         {
-            int enumRange = Enum.GetNames(typeof(FigureType)).Length;
             Random rand = new Random();
-            var i = rand.Next(0,enumRange);
+            var i = rand.Next(0, Enum.GetNames(typeof(FigureType)).Length);
             return new TetrisFigure(new int[]{ 5,3},(FigureType)i);
         }
 
