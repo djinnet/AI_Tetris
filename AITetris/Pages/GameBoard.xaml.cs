@@ -226,11 +226,15 @@ namespace AITetris.Pages
                 if(clearIf10 == 10)
                 {
                     linesCleared++;
-                    foreach(Classes.Block block in board.blocks)
+                    for(int i = 0; i < board.squares.Length; i++)
                     {
-                        if(block.coordinateY > y)
+                        if(board.squares[i].coordinateY == y)
                         {
-                            block.coordinateY--;
+                            board.squares[i] = null;
+                        }
+                        if(board.squares[i].coordinateY > y)
+                        {
+                            board.squares[i].coordinateY--;
                         }
                     }
                 }
