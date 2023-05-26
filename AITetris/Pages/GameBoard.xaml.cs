@@ -37,7 +37,7 @@ namespace AITetris.Pages
         public GameBoard(Character character)
         {
             InitializeComponent();
-            
+
             // Initialize variables
             isScoreboardTimerPaused = false;
             this.character = character;
@@ -51,7 +51,7 @@ namespace AITetris.Pages
             CreateDynamicGameGrid(10, 20);
             AddFigure();
         }
-        
+
         private void AddFigure()
         {
             TetrisFigure figure = GenerateRandomFigure();
@@ -61,7 +61,7 @@ namespace AITetris.Pages
             {
                 Debug.WriteLine(i + ": " + figure.squares[i].coordinateX + " / " + figure.squares[i].coordinateY);
                 images[i] = new Image();
-                images[i].Source = new BitmapImage(new Uri(figure.squares[i].spritePath, UriKind.Absolute));
+                //images[i].Source = new BitmapImage(new Uri(figure.squares[i].spritePath, UriKind.Absolute));
                 Grid.SetColumn(images[i], figure.squares[i].coordinateX);
                 Grid.SetRow(images[i], figure.squares[i].coordinateY);
                 GameBoardGameGrid.Children.Add(images[i]);
@@ -271,9 +271,10 @@ namespace AITetris.Pages
         {
 
         }
-
+        
         private void GamePage_KeyDown(object sender, KeyEventArgs e)
         {
+            Debug.WriteLine(e.Key);
             switch (e.Key)
             {
                 case Key.A:
@@ -291,6 +292,11 @@ namespace AITetris.Pages
                 case Key.E:
                     break;
             }
+        }
+
+        private void GamePage_Loaded(object sender, RoutedEventArgs e)
+        {
+            Window.GetWindow(this).KeyDown += GamePage_KeyDown;
         }
 
         // Test buttons to control the timer

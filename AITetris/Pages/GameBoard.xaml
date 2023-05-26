@@ -6,7 +6,7 @@
       xmlns:local="clr-namespace:AITetris.Pages"
       mc:Ignorable="d" 
       d:DesignHeight="450" d:DesignWidth="800"
-      Title="GameBoard" KeyDown="GamePage_KeyDown">
+      Title="GameBoard" Loaded="GamePage_Loaded">
 
     <Grid>
         <Grid.ColumnDefinitions>
