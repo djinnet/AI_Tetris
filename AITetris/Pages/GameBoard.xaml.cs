@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Linq;
 using System.Text;
@@ -31,11 +32,19 @@ namespace AITetris.Pages
         private TimeSpan pausedTime;
         private bool isScoreboardTimerPaused;
 
+        // Grid variables
+        private int minHeight = 0;
+        private int maxHeight = 20;
+        private int minWidth = 0;
+        private int maxWidth = 10;
+
         // Character variables
         private Character character;
         private Board board;
         private TetrisFigure figure;
         private Image[] images = new Image[4];
+
+        //
         public GameBoard(Character character)
         {
             InitializeComponent();
@@ -49,20 +58,16 @@ namespace AITetris.Pages
             // Scoreboard timer
             scoreboardTimer = new DispatcherTimer();
             StartTime(scoreboardTimer);
-            board = new Board(10, 20);  
-            CreateDynamicGameGrid(10, 20);
+            board = new Board(maxWidth, maxHeight);  
+            CreateDynamicGameGrid(maxWidth, maxHeight);
 
-            figure = GenerateRandomFigure();
-            AddFigure();
+            GenerateRandomFigure();
         }
         
         private void AddFigure()
         {
-            Debug.WriteLine("Figure: " + figure.figureType.ToString() + ". Length: " + figure.squares.Length);
-
             for (int i = 0; i < figure.squares.Length; i++)
             {
-                Debug.WriteLine(i + ": " + figure.squares[i].coordinateX + " / " + figure.squares[i].coordinateY);
                 images[i] = new Image();
                 images[i].Source = new BitmapImage(new Uri(figure.squares[i].spritePath, UriKind.Absolute));
                 Grid.SetColumn(images[i], figure.squares[i].coordinateX);
@@ -71,22 +76,81 @@ namespace AITetris.Pages
             }
         }
 
-        private void RotateFigure()
+        private void DeleteFigure()
         {
             foreach (Image image in images)
             {
                 GameBoardGameGrid.Children.Remove(image);
             }
+        }
 
+        private void RotateFigure()
+        {
+            DeleteFigure();
             figure.Rotate();
             AddFigure();
         }
 
-        private TetrisFigure GenerateRandomFigure()
+        private void MoveFigure(string destination)
+        {
+            if (collision(destination))
+            {
+                return;
+            }
+
+            DeleteFigure();
+            figure.Move(destination);
+            AddFigure();
+        }
+
+        private void GenerateRandomFigure()
         {
             Random rand = new Random();
             var i = rand.Next(0, Enum.GetNames(typeof(FigureType)).Length);
-            return new TetrisFigure(new int[]{ 5,3},(FigureType)i);
+            figure = new TetrisFigure(new int[]{ 4,0},(FigureType)i);
+
+            AddFigure();
+        }
+
+        private bool collision(string move)
+        {
+            bool result = false;
+
+            foreach (Square square in figure.squares)
+            {
+                switch (move)
+                {
+                    case "left":
+                        if (square.coordinateX == minWidth)
+                        {
+                            result = true;
+                        }
+                        break;
+                    case "right":
+                        if (square.coordinateX == maxWidth - 1)
+                        {
+                            result = true;
+                        }
+                        break;
+                    case "up":
+                        if (square.coordinateY == minHeight)
+                        {
+                            result = true;
+                        }
+                        break;
+                    case "down":
+                        if (square.coordinateY == maxHeight - 1)
+                        {
+                            result = true;
+                        }
+                        break;
+                    case "rotate":
+                        break;
+                    default:
+                        break;
+                }
+            }
+            return result;
         }
 
         private void CreateDynamicGameGrid(int cols, int rows)
@@ -268,26 +332,28 @@ namespace AITetris.Pages
 
         private void GameBoardActionsPauseBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            RotateFigure();
         }
 
         private void GameBoardActionsConsumeOneBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            DeleteFigure();
+            GenerateRandomFigure();
         }
 
         private void GameBoardActionsConsumeTwoBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            MoveFigure("left");
         }
 
         private void GameBoardActionsConsumeThreeBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            MoveFigure("right");
         }
 
         private void GamePage_KeyDown(object sender, KeyEventArgs e)
         {
+            Debug.WriteLine(e.Key.ToString());
             switch (e.Key)
             {
                 case Key.A:

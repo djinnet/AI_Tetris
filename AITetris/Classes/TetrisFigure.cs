@@ -43,6 +43,28 @@ namespace AITetris.Classes
             ShapeToBoard();
         }
 
+        public void Move(string direction)
+        {
+            switch (direction)
+            {
+                case "right":
+                    referenceCoords[0] += 1;
+                    break;
+                case "left":
+                    referenceCoords[0] -= 1;
+                    break;
+                case "up":
+                    referenceCoords[1] += 1;
+                    break;
+                case "down":
+                    referenceCoords[1] -= 1;
+                    break;
+                default:
+                    break;
+            }
+            ShapeToBoard();
+        }
+
         private void SetStartShape()
         {
             switch (figureType)
