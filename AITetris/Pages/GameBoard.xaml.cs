@@ -59,7 +59,7 @@ namespace AITetris.Pages
                 images[i] = new Image();
                 images[i].Source = new BitmapImage(new Uri(figure.squares[i].spritePath, UriKind.Absolute));
                 Grid.SetColumn(images[i], figure.squares[i].coordinateX);
-                Grid.SetColumn(images[i], figure.squares[i].coordinateY);
+                Grid.SetRow(images[i], figure.squares[i].coordinateY);
                 GameBoardGameGrid.Children.Add(images[i]);
             }
         }
