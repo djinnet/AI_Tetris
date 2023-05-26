@@ -34,6 +34,8 @@ namespace AITetris.Pages
         // Character variables
         private Character character;
         private Board board;
+        private TetrisFigure figure;
+        private Image[] images = new Image[4];
         public GameBoard(Character character)
         {
             InitializeComponent();
@@ -49,14 +51,15 @@ namespace AITetris.Pages
             StartTime(scoreboardTimer);
             board = new Board(10, 20);  
             CreateDynamicGameGrid(10, 20);
+
+            figure = GenerateRandomFigure();
             AddFigure();
         }
         
         private void AddFigure()
         {
-            TetrisFigure figure = GenerateRandomFigure();
-            Image[] images = new Image[figure.squares.Length];
             Debug.WriteLine("Figure: " + figure.figureType.ToString() + ". Length: " + figure.squares.Length);
+
             for (int i = 0; i < figure.squares.Length; i++)
             {
                 Debug.WriteLine(i + ": " + figure.squares[i].coordinateX + " / " + figure.squares[i].coordinateY);
@@ -66,6 +69,17 @@ namespace AITetris.Pages
                 Grid.SetRow(images[i], figure.squares[i].coordinateY);
                 GameBoardGameGrid.Children.Add(images[i]);
             }
+        }
+
+        private void RotateFigure()
+        {
+            foreach (Image image in images)
+            {
+                GameBoardGameGrid.Children.Remove(image);
+            }
+
+            figure.Rotate();
+            AddFigure();
         }
 
         private TetrisFigure GenerateRandomFigure()

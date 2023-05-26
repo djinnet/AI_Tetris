@@ -12,21 +12,39 @@ namespace AITetris.Classes
         public TetrisFigure(int[] coordinates, FigureType figureType)
         {
             this.figureType = figureType;
-            shape = setStartShape(coordinates);
+            referenceCoords = coordinates;
+            SetStartShape();
             squares = new Square[shape.GetLength(0)];
+
             for (int i = 0; i < shape.GetLength(0); i++)
             {
                 squares[i] = new Square(shape[i, 0], shape[i, 1]);
             }
+
+            ShapeToBoard();
         }
 
         public int[,] shape;
         public Square[] squares;
         public FigureType figureType;
 
-        private int[,] setStartShape(int[] coords)
+        private int[] referenceCoords;
+
+        public void Rotate()
         {
-            int[,] result;
+            for (int i = 0; i < shape.GetLength(0); i++)
+            {
+                var x = shape[i, 1];
+                var y = -shape[i, 0];
+
+                shape[i, 0] = x;
+                shape[i, 1] = y;
+            }
+            ShapeToBoard();
+        }
+
+        private void SetStartShape()
+        {
             switch (figureType)
             {
                 case FigureType.I:
@@ -34,8 +52,8 @@ namespace AITetris.Classes
                     //  x x x x
                     //  * * * *
                     //  * * * *
-                    result = new int[,] { { -1, 0 }, { 0, 0 }, { 1, 0 }, { 2, 0 } };
-                    //result = new bool[,] { { false, false, true, false },
+                    shape = new int[,] { { -1, 0 }, { 0, 0 }, { 1, 0 }, { 2, 0 } };
+                    //shape = new bool[,] { { false, false, true, false },
                     //                       { false, false, true, false },
                     //                       { false, false, true, false },
                     //                       { false, false, true, false }
@@ -45,8 +63,8 @@ namespace AITetris.Classes
                     //  x * *
                     //  x x x
                     //  * * *
-                    result = new int[,] { { -1, 1 }, { -1, 0 }, { 0, 0 }, { 1, 0 } };
-                    //result = new bool[,] { { false, true, true },
+                    shape = new int[,] { { -1, 1 }, { -1, 0 }, { 0, 0 }, { 1, 0 } };
+                    //shape = new bool[,] { { false, true, true },
                     //                       { false, true, false },
                     //                       { false, true, false }
                     //                     };
@@ -55,19 +73,18 @@ namespace AITetris.Classes
                     //  * * x
                     //  x x x
                     //  * * *
-                    result = new int[,] { { -1, 0 }, { 0, 0 }, { 1, 0 }, { 1, 1 } };
-                    //result = new bool[,] { { false, true, false },
+                    shape = new int[,] { { -1, 0 }, { 0, 0 }, { 1, 0 }, { 1, 1 } };
+                    //shape = new bool[,] { { false, true, false },
                     //                       { false, true, false },
                     //                       { false, true, true }
                     //                     };
-
                     break;
                 case FigureType.O:
                     //  * x x *
                     //  * x x *
                     //  * * * *
-                    result = new int[,] { { 0, 1 }, { 0, 0 }, { 1, 1 }, { 1, 0 } };
-                    //result = new bool[,] { { false, false, false },
+                    shape = new int[,] { { 0, 1 }, { 0, 0 }, { 1, 1 }, { 1, 0 } };
+                    //shape = new bool[,] { { false, false, false },
                     //                       { false, true, true, },
                     //                       { false, true, true, },
                     //                       { false, false, false }
@@ -77,8 +94,8 @@ namespace AITetris.Classes
                     //  * x x
                     //  x x *
                     //  * * *
-                    result = new int[,] { { -1, 0 }, { 0, 0 }, { 0, 1 }, { 1, 1 } };
-                    //result = new bool[,] { { false, true, false },
+                    shape = new int[,] { { -1, 0 }, { 0, 0 }, { 0, 1 }, { 1, 1 } };
+                    //shape = new bool[,] { { false, true, false },
                     //                       { false, true, true },
                     //                       { false, false, true }
                     //                     };
@@ -87,8 +104,8 @@ namespace AITetris.Classes
                     //  * x *
                     //  x x x
                     //  * * *
-                    result = new int[,] { { -1, 0 }, { 0, 0 }, { 0, 1 }, { 1, 0 } };
-                    //result = new bool[,] { { false, true, false },
+                    shape = new int[,] { { -1, 0 }, { 0, 0 }, { 0, 1 }, { 1, 0 } };
+                    //shape = new bool[,] { { false, true, false },
                     //                       { false, true, true },
                     //                       { false, true, false }
                     //                     };
@@ -97,28 +114,25 @@ namespace AITetris.Classes
                     //  x x *
                     //  * x x
                     //  * * *
-                    result = new int[,] { { -1, 1 }, { 0, 0 }, { 0, 1 }, { 1, 0 } };
-                    //result = new bool[,] { { false, false, true },
+                    shape = new int[,] { { -1, 1 }, { 0, 0 }, { 0, 1 }, { 1, 0 } };
+                    //shape = new bool[,] { { false, false, true },
                     //                       { false, true, true },
                     //                       { false, true, false }
                     //                     };
                     break;
                 default:
-                    result = new int[0, 0];
+                    shape = new int[0, 0];
                     break;
             }
-            return RelativeToAbsolute( coords, result);
         }
 
-        private int[,] RelativeToAbsolute(int[] absolute, int[,] relative)
+        private void ShapeToBoard()
         {
-            int[,] result = new int[4, 2];
-            for (int i = 0; i < relative.GetLength(0); i++)
+            for (int i = 0; i < squares.Length; i++)
             {
-                result[i,0] = relative[i,0] + absolute[0];
-                result[i, 1] = relative[i, 1] + absolute[1];
+                squares[i].coordinateX = shape[i,0] + referenceCoords[0];
+                squares[i].coordinateY = shape[i, 1] + referenceCoords[1];
             }
-            return result;
         }
     }
 
