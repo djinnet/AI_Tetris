@@ -76,7 +76,6 @@ namespace AITetris.Pages
 
         private void AddFigure()
         {
-            Debug.WriteLine("Add");
             for (int i = 0; i < figure.squares.Length; i++)
             {
                 string imageSource = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + figure.squares[i].spritePath;
@@ -154,7 +153,6 @@ namespace AITetris.Pages
         private void FigureToBoard()
         {
             board.squares.AddRange(figure.squares);
-            Debug.WriteLine(board.squares.Count);
             GenerateRandomFigure();
         }
 
@@ -222,8 +220,8 @@ namespace AITetris.Pages
                     break;
             }
 
-            int test = board.squares.Where(board => board.coordinateX == square.coordinateX + x && board.coordinateY == square.coordinateY + y).Count();
-            if (test != 0)
+            int collide = board.squares.Where(board => board.coordinateX == square.coordinateX + x && board.coordinateY == square.coordinateY + y).Count();
+            if (collide != 0)
             {
                 result = true;
             }
@@ -236,12 +234,9 @@ namespace AITetris.Pages
             foreach (Square square in figure.squares)
             {
                 int collide = board.squares.Where(board => board.coordinateX == square.coordinateX && board.coordinateY == square.coordinateY).Count();
-                bool inWidth = square.coordinateX < minWidth && square.coordinateX > maxWidth - 1;
-                bool inHeigth = square.coordinateY < minHeight && square.coordinateY > maxHeight - 1;
 
                 if (collide != 0)
                 {
-                    Debug.WriteLine("Collision!");
                     return false;
                 }
             }
