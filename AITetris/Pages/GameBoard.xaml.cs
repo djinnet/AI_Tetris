@@ -32,6 +32,9 @@ namespace AITetris.Pages
         private TimeSpan pausedTime;
         private bool isScoreboardTimerPaused;
 
+        // Timer variables for the automovement
+        private DispatcherTimer autoMoveTimer;
+
         // Grid variables
         private int minHeight = 0;
         private int maxHeight = 20;
@@ -125,6 +128,7 @@ namespace AITetris.Pages
             figure = new TetrisFigure(new int[]{ 4,0},(FigureType)i);
 
             AddFigure();
+            StartAutoMove(autoMoveTimer);
         }
 
         private bool collision(string move)
@@ -231,6 +235,29 @@ namespace AITetris.Pages
                     gamegrid.Children.Add(border);
                 }
             }
+        }
+
+        private void StartAutoMove(DispatcherTimer timer)
+        {
+            // Set the interval of the timer in milliseconds
+            timer.Interval = TimeSpan.FromSeconds(1);
+
+            // Set the event that happends on tick
+            timer.Tick += AutoMove_Tick;
+
+            // Start the timer
+            timer.Start();
+        }
+
+        private void AutoMove_Tick(object sender, EventArgs e)
+        {
+            MoveFigure("down");
+        }
+
+        private void StopAutoMove(DispatcherTimer timer)
+        {
+            // Stop the timer
+            timer.Stop();
         }
 
         private void StartTime(DispatcherTimer timer)
