@@ -368,7 +368,7 @@
 
                 <Label
                     x:Name="GameBoardControlsSave"
-                    Content="Save (Left Shift)"
+                    Content="Save (E)"
                     HorizontalContentAlignment="Center"
                     FontFamily="Tahoma"
                     FontSize="10"
@@ -376,7 +376,7 @@
 
                 <Label
                     x:Name="GameBoardControlsRotate"
-                    Content="Rotate (Up Arrow)"
+                    Content="Rotate (W)"
                     HorizontalContentAlignment="Center"
                     FontFamily="Tahoma"
                     FontSize="10"
@@ -384,7 +384,7 @@
 
                 <Label
                     x:Name="GameBoardControlsLeft"
-                    Content="Left (Left Arrow)"
+                    Content="Left (A)"
                     HorizontalContentAlignment="Center"
                     FontFamily="Tahoma"
                     FontSize="10"
@@ -392,7 +392,7 @@
 
                 <Label
                     x:Name="GameBoardControlsRight"
-                    Content="Right (Right Arrow)"
+                    Content="Right (D)"
                     HorizontalContentAlignment="Center"
                     FontFamily="Tahoma"
                     FontSize="10"
@@ -400,7 +400,7 @@
 
                 <Label
                     x:Name="GameBoardControlsDown"
-                    Content="Down (Down Arrow)"
+                    Content="Down (S)"
                     HorizontalContentAlignment="Center"
                     FontFamily="Tahoma"
                     FontSize="10"
