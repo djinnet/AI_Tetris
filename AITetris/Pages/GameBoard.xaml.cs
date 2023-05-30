@@ -46,7 +46,12 @@ namespace AITetris.Pages
         private Board board;
         private TetrisFigure figure;
 
-        //
+        //Execution directory
+        private string exeDir;
+
+        //Audio variables
+        private MediaPlayer backgroundMusic = new MediaPlayer();
+        private MediaPlayer SFX = new MediaPlayer();
         public GameBoard(Character character)
         {
             InitializeComponent();
@@ -54,7 +59,8 @@ namespace AITetris.Pages
             // Initialize variables
             isScoreboardTimerPaused = false;
             this.character = character;
-            
+            exeDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+
             GameBoardScorePlayerLbl.Content = character.name;
             
             // Scoreboard timer
@@ -65,6 +71,16 @@ namespace AITetris.Pages
             CreateDynamicGameGrid(maxWidth, maxHeight);
 
             GenerateRandomFigure();
+
+            //Music start
+            backgroundMusic.Open(new Uri(exeDir + "\\Assets\\Sound\\Tetris99MainTheme.mp3", UriKind.Absolute));
+            backgroundMusic.Volume = 0.15;
+            backgroundMusic.MediaEnded += new EventHandler((sender, e) =>
+            {
+                backgroundMusic.Position = TimeSpan.Zero;
+                backgroundMusic.Play();
+            });
+            backgroundMusic.Play();
         }
 
         private void FillBoard()
@@ -457,6 +473,16 @@ namespace AITetris.Pages
 
         private void AddPoint(int lines)
         {
+            if(lines == 4)
+            {
+                SFX.Open(new Uri(exeDir + "\\Assets\\Sound\\TetrisClear.mp3", UriKind.Absolute));
+                SFX.Play();
+            }
+            else
+            {
+                SFX.Open(new Uri(exeDir + "\\Assets\\Sound\\TetrisLineClear.mp3", UriKind.Absolute));
+                SFX.Play();
+            }
             GameBoardScorePointLbl.Content = "Point: " + (Convert.ToInt32(((string)GameBoardScorePointLbl.Content).Remove(0,7)) + (Math.Pow(2, lines) * 100)).ToString();
         }
 
