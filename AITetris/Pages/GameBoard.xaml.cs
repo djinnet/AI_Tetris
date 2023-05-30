@@ -45,7 +45,6 @@ namespace AITetris.Pages
         private Character character;
         private Board board;
         private TetrisFigure figure;
-        private Image[] images = new Image[4];
 
         //
         public GameBoard(Character character)
@@ -77,24 +76,21 @@ namespace AITetris.Pages
             }
         }
 
-        private void AddFigure()
+        private void DrawSquares(Square[] squares)
         {
-            for (int i = 0; i < figure.squares.Length; i++)
+            foreach (Square square in squares)
             {
-                string imageSource = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + figure.squares[i].spritePath;
-                images[i] = new Image();
-                images[i].Source = new BitmapImage(new Uri(imageSource, UriKind.Absolute));
-                Grid.SetColumn(images[i], figure.squares[i].coordinateX);
-                Grid.SetRow(images[i], figure.squares[i].coordinateY);
-                GameBoardGameGrid.Children.Add(images[i]);
+                Grid.SetColumn(square.image, square.coordinateX);
+                Grid.SetRow(square.image, square.coordinateY);
+                GameBoardGameGrid.Children.Add(square.image);
             }
         }
 
-        private void DeleteFigure()
+        private void EraseSquares(Square[] squares)
         {
-            foreach (Image image in images)
+            foreach (Square square in squares)
             {
-                GameBoardGameGrid.Children.Remove(image);
+                GameBoardGameGrid.Children.Remove(square.image);
             }
         }
 
@@ -103,7 +99,7 @@ namespace AITetris.Pages
             
             if (CanRotate())
             {
-                DeleteFigure();
+                EraseSquares(figure.squares);
                 figure.Rotate();
                 if (!CanRotate())
                 {
@@ -112,7 +108,7 @@ namespace AITetris.Pages
                     figure.Rotate();
                 }
                 Kickback();
-                AddFigure();
+                DrawSquares(figure.squares);
             }
         }
 
@@ -127,36 +123,37 @@ namespace AITetris.Pages
                 return;
             }
 
-            DeleteFigure();
+            EraseSquares(figure.squares);
             figure.Move(destination);
-            AddFigure();
+            DrawSquares(figure.squares);
         }
 
         private void InstaDrop()
         {
             while (!Collision("down"))
             {
-                DeleteFigure();
+                EraseSquares(figure.squares);
                 figure.Move("down");
-                AddFigure();
+                DrawSquares(figure.squares);
             }
             MoveFigure("down");
         }
 
         private void GenerateRandomFigure()
         {
-            Debug.WriteLine("Generate");
             Random rand = new Random();
             var i = rand.Next(0, Enum.GetNames(typeof(FigureType)).Length);
             figure = new TetrisFigure(new int[]{ 4,0},(FigureType)i);
 
-            AddFigure();
-            StartAutoMove(autoMoveTimer);
+            DrawSquares(figure.squares);
+            StartAutoMove();
         }
 
         private void FigureToBoard()
         {
             board.squares.AddRange(figure.squares);
+            ClearLine();
+            StopAutoMove();
             GenerateRandomFigure();
         }
 
@@ -319,16 +316,52 @@ namespace AITetris.Pages
             }
         }
 
-        private void StartAutoMove(DispatcherTimer timer)
+        private void ClearLine()
         {
+            int linesCleared = 0;
+
+            // Check and clear the line
+            for (int i = 0; i < maxHeight; i++)
+            {
+                List<Square> line = board.squares.Where(s => s.coordinateY == i && s.coordinateX >= 0 && s.coordinateX < maxWidth).ToList();
+                if (line.Count() == maxWidth)
+                {
+                    foreach (Square square in line)
+                    {
+                        board.squares.Remove(square);
+                        GameBoardGameGrid.Children.Remove(square.image);
+                    }
+
+                    List<Square> above = board.squares.Where(s => s.coordinateY < i && s.coordinateX >= 0 && s.coordinateX < maxWidth).ToList();
+                    foreach (Square square in above)
+                    {
+                        square.coordinateY++;
+                    }
+                    EraseSquares(above.ToArray());
+                    DrawSquares(above.ToArray());
+
+                    linesCleared++;
+                }
+            }
+
+            if (linesCleared > 0)
+            {
+                AddPoint(linesCleared);
+            }
+        }
+
+        private void StartAutoMove()
+        {
+            autoMoveTimer = new DispatcherTimer();
+
             // Set the interval of the timer in milliseconds
-            timer.Interval = TimeSpan.FromSeconds(1);
+            autoMoveTimer.Interval = TimeSpan.FromSeconds(1);
 
             // Set the event that happends on tick
-            timer.Tick += AutoMove_Tick;
+            autoMoveTimer.Tick += AutoMove_Tick;
 
             // Start the timer
-            timer.Start();
+            autoMoveTimer.Start();
         }
 
         private void AutoMove_Tick(object sender, EventArgs e)
@@ -336,10 +369,10 @@ namespace AITetris.Pages
             MoveFigure("down");
         }
 
-        private void StopAutoMove(DispatcherTimer timer)
+        private void StopAutoMove()
         {
             // Stop the timer
-            timer.Stop();
+            autoMoveTimer.Stop();
         }
 
         private void StartTime(DispatcherTimer timer)
@@ -421,48 +454,6 @@ namespace AITetris.Pages
             // Start the timer
             timer.Start();
         }      
-
-        private void ClearLine()
-        {
-            int linesCleared = 0;
-            int clearIfMax = 0;
-            for(int y = board.grid.GetLength(1) - 1; y >= 0; y--)
-            {
-                Debug.WriteLine("this is y" + y);
-                for (int x = 0; x < board.grid.GetLength(0); x++)
-                {
-                    Debug.WriteLine("this is x" + x);
-                    if (board.grid[x, y])
-                    {
-                        clearIfMax++;
-                    }
-                    else
-                    {
-                        break;
-                    }
-                }
-                if(clearIfMax == maxWidth)
-                {
-                    linesCleared++;
-                    for(int i = 0; i < board.squares.Count; i++)
-                    {
-                        if(board.squares[i].coordinateY == y)
-                        {
-                            board.squares[i] = null;
-                        }
-                        if(board.squares[i].coordinateY > y)
-                        {
-                            board.squares[i].coordinateY--;
-                        }
-                    }
-                }
-                clearIfMax = 0;
-            }
-            if (linesCleared > 0)
-            {
-                AddPoint(linesCleared);
-            }
-        }
 
         private void AddPoint(int lines)
         {
