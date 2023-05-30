@@ -25,6 +25,9 @@ namespace AITetris.Pages
         public StartGameMenu()
         {
             InitializeComponent();
+
+            // Set the focus of the page to this textbox
+            Nametxtbox.Focus();
         }
 
         private void PlayAsAichb_Click(object sender, RoutedEventArgs e)
