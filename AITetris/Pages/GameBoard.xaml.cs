@@ -61,18 +61,30 @@ namespace AITetris.Pages
             // Scoreboard timer
             scoreboardTimer = new DispatcherTimer();
             StartTime(scoreboardTimer);
-            board = new Board(maxWidth, maxHeight);  
+            board = new Board(maxWidth+2, maxHeight);
+            FillBoard();
             CreateDynamicGameGrid(maxWidth, maxHeight);
 
             GenerateRandomFigure();
         }
 
+        private void FillBoard()
+        {
+            for (int i = 0; i < maxHeight; i++)
+            {
+                board.squares.Add(new Square(-1, i));
+                board.squares.Add(new Square(maxWidth, i));
+            }
+        }
+
         private void AddFigure()
         {
+            Debug.WriteLine("Add");
             for (int i = 0; i < figure.squares.Length; i++)
             {
+                string imageSource = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + figure.squares[i].spritePath;
                 images[i] = new Image();
-                images[i].Source = new BitmapImage(new Uri(figure.squares[i].spritePath, UriKind.Relative));
+                images[i].Source = new BitmapImage(new Uri(imageSource, UriKind.Absolute));
                 Grid.SetColumn(images[i], figure.squares[i].coordinateX);
                 Grid.SetRow(images[i], figure.squares[i].coordinateY);
                 GameBoardGameGrid.Children.Add(images[i]);
@@ -89,20 +101,30 @@ namespace AITetris.Pages
 
         private void RotateFigure()
         {
-
-            DeleteFigure();
-            figure.Rotate();
-            if (collision("rotate"))
+            
+            if (CanRotate())
             {
-                return;
+                DeleteFigure();
+                figure.Rotate();
+                if (!CanRotate())
+                {
+                    figure.Rotate();
+                    figure.Rotate();
+                    figure.Rotate();
+                }
+                Kickback();
+                AddFigure();
             }
-            AddFigure();
         }
 
         private void MoveFigure(string destination)
         {
-            if (collision(destination))
+            if (Collision(destination))
             {
+                if (destination == "down")
+                {
+                    FigureToBoard();
+                }
                 return;
             }
 
@@ -113,16 +135,18 @@ namespace AITetris.Pages
 
         private void InstaDrop()
         {
-            while (!collision("down"))
+            while (!Collision("down"))
             {
                 DeleteFigure();
                 figure.Move("down");
                 AddFigure();
             }
+            MoveFigure("down");
         }
 
         private void GenerateRandomFigure()
         {
+            Debug.WriteLine("Generate");
             Random rand = new Random();
             var i = rand.Next(0, Enum.GetNames(typeof(FigureType)).Length);
             figure = new TetrisFigure(new int[]{ 4,0},(FigureType)i);
@@ -131,7 +155,14 @@ namespace AITetris.Pages
             StartAutoMove(autoMoveTimer);
         }
 
-        private bool collision(string move)
+        private void FigureToBoard()
+        {
+            board.squares.AddRange(figure.squares);
+            Debug.WriteLine(board.squares.Count);
+            GenerateRandomFigure();
+        }
+
+        private bool Collision(string move)
         {
             bool result = false;
 
@@ -140,45 +171,27 @@ namespace AITetris.Pages
                 switch (move)
                 {
                     case "left":
-                        if (square.coordinateX == minWidth)
+                        if (square.coordinateX == minWidth || BlockCollision(square, move))
                         {
                             result = true;
                         }
                         break;
                     case "right":
-                        if (square.coordinateX == maxWidth - 1)
+                        if (square.coordinateX == maxWidth - 1 || BlockCollision(square, move))
                         {
                             result = true;
                         }
                         break;
                     case "up":
-                        if (square.coordinateY == minHeight)
+                        if (square.coordinateY == minHeight || BlockCollision(square, move))
                         {
                             result = true;
                         }
                         break;
                     case "down":
-                        if (square.coordinateY == maxHeight - 1)
+                        if (square.coordinateY == maxHeight - 1 || BlockCollision(square, move))
                         {
                             result = true;
-                        }
-                        break;
-                    case "rotate":
-                        if (square.coordinateX < minWidth)
-                        {
-                            figure.Move("right");
-                        }
-                        else if (square.coordinateX > maxWidth - 1)
-                        {
-                            figure.Move("left");
-                        }
-                        else if (square.coordinateY < minHeight)
-                        {
-                            figure.Move("down");
-                        }
-                        else if (square.coordinateY > maxHeight - 1)
-                        {
-                            figure.Move("up");
                         }
                         break;
                     default:
@@ -186,6 +199,80 @@ namespace AITetris.Pages
                 }
             }
             return result;
+        }
+
+        private bool BlockCollision(Square square, string direction)
+        {
+            bool result = false;
+
+            int x = 0;
+            int y = 0;
+
+            switch (direction)
+            {
+                case "left":
+                    x = -1;
+                    break;
+                case "right":
+                    x = 1;
+                    break;
+                case "up":
+                    y = -1;
+                    break;
+                case "down":
+                    y = 1;
+                    break;
+                default:
+                    break;
+            }
+
+            int test = board.squares.Where(board => board.coordinateX == square.coordinateX + x && board.coordinateY == square.coordinateY + y).Count();
+            if (test != 0)
+            {
+                result = true;
+            }
+
+            return result;
+        }
+
+        private bool CanRotate()
+        {
+            foreach (Square square in figure.squares)
+            {
+                int collide = board.squares.Where(board => board.coordinateX == square.coordinateX && board.coordinateY == square.coordinateY).Count();
+                bool inWidth = square.coordinateX < minWidth && square.coordinateX > maxWidth - 1;
+                bool inHeigth = square.coordinateY < minHeight && square.coordinateY > maxHeight - 1;
+
+                if (collide != 0)
+                {
+                    Debug.WriteLine("Collision!");
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        private void Kickback()
+        {
+            foreach (Square square in figure.squares)
+            {
+                if (square.coordinateX < minWidth)
+                {
+                    figure.Move("right");
+                }
+                else if (square.coordinateX > maxWidth - 1)
+                {
+                    figure.Move("left");
+                }
+                else if (square.coordinateY < minHeight)
+                {
+                    figure.Move("down");
+                }
+                else if (square.coordinateY > maxHeight - 1)
+                {
+                    figure.Move("up");
+                }
+            }
         }
 
         private void CreateDynamicGameGrid(int cols, int rows)
@@ -362,7 +449,7 @@ namespace AITetris.Pages
                 if(clearIfMax == maxWidth)
                 {
                     linesCleared++;
-                    for(int i = 0; i < board.squares.Length; i++)
+                    for(int i = 0; i < board.squares.Count; i++)
                     {
                         if(board.squares[i].coordinateY == y)
                         {
@@ -390,23 +477,22 @@ namespace AITetris.Pages
 
         private void GameBoardActionsPauseBtn_Click(object sender, RoutedEventArgs e)
         {
-            RotateFigure();
+
         }
 
         private void GameBoardActionsConsumeOneBtn_Click(object sender, RoutedEventArgs e)
         {
-            DeleteFigure();
-            GenerateRandomFigure();
+
         }
 
         private void GameBoardActionsConsumeTwoBtn_Click(object sender, RoutedEventArgs e)
         {
-            MoveFigure("left");
+
         }
 
         private void GameBoardActionsConsumeThreeBtn_Click(object sender, RoutedEventArgs e)
         {
-            MoveFigure("right");
+
         }
         
         private void GamePage_KeyDown(object sender, KeyEventArgs e)
@@ -420,7 +506,8 @@ namespace AITetris.Pages
                     MoveFigure("right");
                     break;
                 case Key.W:
-                    RotateFigure();
+                    // TODO: Added up button to W, need to remove that from the final build.
+                    MoveFigure("up");
                     break;
                 case Key.S:
                     MoveFigure("down");
@@ -431,7 +518,8 @@ namespace AITetris.Pages
                 case Key.Escape:
                     break;
                 case Key.E:
-                    GenerateRandomFigure();
+                    //GenerateRandomFigure();
+                    RotateFigure();
                     break;
             }
         }

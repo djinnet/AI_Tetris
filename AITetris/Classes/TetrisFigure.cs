@@ -34,8 +34,8 @@ namespace AITetris.Classes
         {
             for (int i = 0; i < shape.GetLength(0); i++)
             {
-                var x = shape[i, 1];
-                var y = -shape[i, 0];
+                var x = -shape[i, 1];
+                var y = shape[i, 0];
 
                 shape[i, 0] = x;
                 shape[i, 1] = y;

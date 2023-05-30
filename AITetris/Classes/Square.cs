@@ -13,7 +13,7 @@ namespace AITetris.Classes
         {
             this.coordinateX = coordinateX;
             this.coordinateY = coordinateY;
-            spritePath = "/Assets/Sprits/BlueGreenPrimary.png";
+            spritePath = "\\Assets\\Sprits\\BlueGreenPrimary.png";
         }
         public int coordinateX;
         public int coordinateY;
