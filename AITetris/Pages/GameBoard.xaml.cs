@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -49,7 +50,16 @@ namespace AITetris.Pages
         private int linesCleared;
         private int points;
 
-        //
+        //Execution directory
+        private string exeDir;
+
+        //Audio variables
+        private MediaPlayer backgroundMusic = new MediaPlayer();
+        private SoundPlayer SFXMove;
+        private SoundPlayer SFXDrop;
+        private SoundPlayer SFXLineClear;
+        private SoundPlayer SFXTetrisClear;
+
         public GameBoard(Character character)
         {
             InitializeComponent();
@@ -57,7 +67,8 @@ namespace AITetris.Pages
             // Initialize variables
             isScoreboardTimerPaused = false;
             this.character = character;
-            
+            exeDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+
             GameBoardScorePlayerLbl.Content = character.name;
             
             // Scoreboard timer
@@ -68,6 +79,19 @@ namespace AITetris.Pages
             CreateDynamicGameGrid(maxWidth, maxHeight);
 
             GenerateRandomFigure();
+
+            //Music start
+            backgroundMusic.Open(new Uri(exeDir + "\\Assets\\Sound\\Tetris99MainTheme.mp3", UriKind.Absolute));
+            backgroundMusic.Volume = 0.10;
+            backgroundMusic.MediaEnded += new EventHandler((sender, e) =>
+            {
+                ((MediaPlayer)sender).Position = TimeSpan.Zero;
+            });
+            backgroundMusic.Play();
+            SFXMove = new SoundPlayer(exeDir + "\\Assets\\Sound\\SFXMove.wav");
+            SFXDrop = new SoundPlayer(exeDir + "\\Assets\\Sound\\SFXDrop.wav");
+            SFXLineClear = new SoundPlayer(exeDir + "\\Assets\\Sound\\SFXLineClear.wav");
+            SFXTetrisClear = new SoundPlayer(exeDir + "\\Assets\\Sound\\SFXTetrisClear.wav");
         }
 
         private void FillBoard()
@@ -121,6 +145,7 @@ namespace AITetris.Pages
             {
                 if (destination == "down")
                 {
+                    SFXDrop.Play();
                     FigureToBoard();
                 }
                 return;
@@ -475,12 +500,20 @@ namespace AITetris.Pages
 
         private void AddPoint(int lines)
         {
+            if(lines == 4)
+            {               
+                SFXTetrisClear.Play();
+            }
+            else
+            {
+                SFXLineClear.Play();
+            }
+            
             points += (int)Math.Pow(2, lines) * 100;
             linesCleared += lines;
 
             GameBoardScorePointLbl.Content = "Point: " + points;
             GameBoardScoreLineClearedLbl.Content = "Lines: " + linesCleared;
-
         }
 
 
@@ -509,9 +542,11 @@ namespace AITetris.Pages
             switch (e.Key)
             {
                 case Key.A:
+                    SFXMove.Play();
                     MoveFigure("left");
                     break;
                 case Key.D:
+                    SFXMove.Play();
                     MoveFigure("right");
                     break;
                 case Key.W:
