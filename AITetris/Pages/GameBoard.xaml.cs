@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
 using System.Linq;
+using System.Media;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -51,10 +52,10 @@ namespace AITetris.Pages
 
         //Audio variables
         private MediaPlayer backgroundMusic = new MediaPlayer();
-        private MediaPlayer SFXMove = new MediaPlayer();
-        private MediaPlayer SFXDrop = new MediaPlayer();
-        private MediaPlayer SFXLineClear = new MediaPlayer();
-        private MediaPlayer SFXTetrisClear = new MediaPlayer();
+        private SoundPlayer SFXMove;
+        private SoundPlayer SFXDrop;
+        private SoundPlayer SFXLineClear;
+        private SoundPlayer SFXTetrisClear;
         public GameBoard(Character character)
         {
             InitializeComponent();
@@ -77,38 +78,16 @@ namespace AITetris.Pages
 
             //Music start
             backgroundMusic.Open(new Uri(exeDir + "\\Assets\\Sound\\Tetris99MainTheme.mp3", UriKind.Absolute));
-            backgroundMusic.Volume = 0.15;
-            backgroundMusic.Position = TimeSpan.FromMinutes(4.5);
+            backgroundMusic.Volume = 0.10;
             backgroundMusic.MediaEnded += new EventHandler((sender, e) =>
             {
                 ((MediaPlayer)sender).Position = TimeSpan.Zero;
-                //((MediaPlayer)sender).Play();
             });
             backgroundMusic.Play();
-            SFXMove.Open(new Uri(exeDir + "\\Assets\\Sound\\SFXMove.mp3", UriKind.Absolute));
-            SFXMove.MediaEnded += new EventHandler((sender, e) =>
-            {
-                ((MediaPlayer)sender).Position = TimeSpan.Zero;
-                ((MediaPlayer)sender).Stop();
-            });
-            SFXDrop.Open(new Uri(exeDir + "\\Assets\\Sound\\SFXDrop.mp3", UriKind.Absolute));
-            SFXDrop.MediaEnded += new EventHandler((sender, e) =>
-            {
-                ((MediaPlayer)sender).Position = TimeSpan.Zero;
-                ((MediaPlayer)sender).Stop();
-            });
-            SFXLineClear.Open(new Uri(exeDir + "\\Assets\\Sound\\SFXLineClear.mp3", UriKind.Absolute));
-            SFXLineClear.MediaEnded += new EventHandler((sender, e) =>
-            {
-                ((MediaPlayer)sender).Position = TimeSpan.Zero;
-                ((MediaPlayer)sender).Stop();
-            });
-            SFXTetrisClear.Open(new Uri(exeDir + "\\Assets\\Sound\\SFXTetrisClear.mp3", UriKind.Absolute));
-            SFXTetrisClear.MediaEnded += new EventHandler((sender, e) =>
-            {
-                ((MediaPlayer)sender).Position = TimeSpan.Zero;
-                ((MediaPlayer)sender).Stop();
-            });
+            SFXMove = new SoundPlayer(exeDir + "\\Assets\\Sound\\SFXMove.wav");
+            SFXDrop = new SoundPlayer(exeDir + "\\Assets\\Sound\\SFXDrop.wav");
+            SFXLineClear = new SoundPlayer(exeDir + "\\Assets\\Sound\\SFXLineClear.wav");
+            SFXTetrisClear = new SoundPlayer(exeDir + "\\Assets\\Sound\\SFXTetrisClear.wav");
         }
 
         private void FillBoard()
