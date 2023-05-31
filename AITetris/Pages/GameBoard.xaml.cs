@@ -57,6 +57,7 @@ namespace AITetris.Pages
 
         //Audio variables
         private MediaPlayer backgroundMusic = new MediaPlayer();
+        private SoundPlayer gameOverMelody;
         private SoundPlayer SFXMove;
         private SoundPlayer SFXDrop;
         private SoundPlayer SFXLineClear;
@@ -83,17 +84,7 @@ namespace AITetris.Pages
             GenerateRandomFigure();
 
             //Music start
-            backgroundMusic.Open(new Uri(exeDir + "\\Assets\\Sound\\Tetris99MainTheme.mp3", UriKind.Absolute));
-            backgroundMusic.Volume = 0.10;
-            backgroundMusic.MediaEnded += new EventHandler((sender, e) =>
-                {
-                    ((MediaPlayer)sender).Position = TimeSpan.Zero;
-                });
-            backgroundMusic.Play();
-            SFXMove = new SoundPlayer(exeDir + "\\Assets\\Sound\\SFXMove.wav");
-            SFXDrop = new SoundPlayer(exeDir + "\\Assets\\Sound\\SFXDrop.wav");
-            SFXLineClear = new SoundPlayer(exeDir + "\\Assets\\Sound\\SFXLineClear.wav");
-            SFXTetrisClear = new SoundPlayer(exeDir + "\\Assets\\Sound\\SFXTetrisClear.wav");
+            MusicStart();
         }
 
         private void FillBoard()
@@ -410,9 +401,8 @@ namespace AITetris.Pages
 
             StopTime(scoreboardTimer);
 
-            backgroundMusic.Open(new Uri(exeDir + "\\Assets\\Sound\\MusicGameOver.mp3", UriKind.Absolute));
-            backgroundMusic.Play();
             backgroundMusic.Close();
+            gameOverMelody.Play();
         }
 
         private void StartAutoMove()
@@ -518,7 +508,23 @@ namespace AITetris.Pages
 
             // Start the timer
             timer.Start();
-        }      
+        }    
+        
+        private void MusicStart()
+        {
+            backgroundMusic.Open(new Uri(exeDir + "\\Assets\\Sound\\Tetris99MainTheme.mp3", UriKind.Absolute));
+            backgroundMusic.Volume = 0.10;
+            backgroundMusic.MediaEnded += new EventHandler((sender, e) =>
+            {
+                ((MediaPlayer)sender).Position = TimeSpan.Zero;
+            });
+            backgroundMusic.Play();
+            gameOverMelody = new SoundPlayer(exeDir + "\\Assets\\Sound\\MusicGameOver.wav");
+            SFXMove = new SoundPlayer(exeDir + "\\Assets\\Sound\\SFXMove.wav");
+            SFXDrop = new SoundPlayer(exeDir + "\\Assets\\Sound\\SFXDrop.wav");
+            SFXLineClear = new SoundPlayer(exeDir + "\\Assets\\Sound\\SFXLineClear.wav");
+            SFXTetrisClear = new SoundPlayer(exeDir + "\\Assets\\Sound\\SFXTetrisClear.wav");
+        }
 
         private void SpeedUp()
         {
