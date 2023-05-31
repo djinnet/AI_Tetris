@@ -28,7 +28,7 @@ namespace AITetris.Classes
         public Square[] squares;
         public FigureType figureType;
 
-        private int[] referenceCoords;
+        public int[] referenceCoords;
 
         public void Rotate()
         {
@@ -62,6 +62,13 @@ namespace AITetris.Classes
                 default:
                     break;
             }
+            ShapeToBoard();
+        }
+
+        public void MoveTo(int[] coords)
+        {
+            referenceCoords = coords;
+            SetStartShape();
             ShapeToBoard();
         }
 
