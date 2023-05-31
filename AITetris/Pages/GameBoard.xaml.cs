@@ -36,6 +36,7 @@ namespace AITetris.Pages
 
         // Timer variables for the automovement
         private DispatcherTimer autoMoveTimer;
+        private TimeSpan autoMoveTimerInterval = TimeSpan.FromMilliseconds(1000);
 
         // Grid variables
         private int minHeight = 0;
@@ -48,7 +49,7 @@ namespace AITetris.Pages
         private Board board;
         private TetrisFigure figure;
 
-        private int linesCleared;
+        private int totalLinesCleared;
         private int points;
 
         //Execution directory
@@ -372,6 +373,8 @@ namespace AITetris.Pages
                     EraseSquares(above.ToArray());
                     DrawSquares(above.ToArray());
 
+                    totalLinesCleared++;
+                    SpeedUp();
                     linesCleared++;
                 }
             }
@@ -417,7 +420,7 @@ namespace AITetris.Pages
             autoMoveTimer = new DispatcherTimer();
 
             // Set the interval of the timer in milliseconds
-            autoMoveTimer.Interval = TimeSpan.FromSeconds(1);
+            autoMoveTimer.Interval = autoMoveTimerInterval;
 
             // Set the event that happends on tick
             autoMoveTimer.Tick += AutoMove_Tick;
@@ -517,6 +520,14 @@ namespace AITetris.Pages
             timer.Start();
         }      
 
+        private void SpeedUp()
+        {
+            if (totalLinesCleared % 10 == 0)
+            {
+                autoMoveTimerInterval -= autoMoveTimerInterval * 0.1;
+            }
+        }
+
         private void AddPoint(int lines)
         {
             if(lines == 4)
@@ -529,10 +540,9 @@ namespace AITetris.Pages
             }
             
             points += (int)Math.Pow(2, lines) * 100;
-            linesCleared += lines;
 
             GameBoardScorePointLbl.Content = "Point: " + points;
-            GameBoardScoreLineClearedLbl.Content = "Lines: " + linesCleared;
+            GameBoardScoreLineClearedLbl.Content = "Lines: " + totalLinesCleared;
         }
 
 
