@@ -18,6 +18,7 @@ using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
 using AITetris.Classes;
+using AITetris.Controllers;
 
 namespace AITetris.Pages
 {
@@ -84,9 +85,9 @@ namespace AITetris.Pages
             backgroundMusic.Open(new Uri(exeDir + "\\Assets\\Sound\\Tetris99MainTheme.mp3", UriKind.Absolute));
             backgroundMusic.Volume = 0.10;
             backgroundMusic.MediaEnded += new EventHandler((sender, e) =>
-            {
-                ((MediaPlayer)sender).Position = TimeSpan.Zero;
-            });
+                {
+                    ((MediaPlayer)sender).Position = TimeSpan.Zero;
+                });
             backgroundMusic.Play();
             SFXMove = new SoundPlayer(exeDir + "\\Assets\\Sound\\SFXMove.wav");
             SFXDrop = new SoundPlayer(exeDir + "\\Assets\\Sound\\SFXDrop.wav");
@@ -386,11 +387,29 @@ namespace AITetris.Pages
             bool result = false;
             if (board.squares.Where(s => s.coordinateY == 0).Count() > 2)
             {
+                GameOver();
                 Debug.WriteLine("You lose!");
                 result = true;
 
             }
             return result;
+        }
+
+        private void GameOver()
+        {
+            GameOverMenu menu = new GameOverMenu();
+            GameBoardMainGrid.Children.Add(menu);
+            Grid.SetColumn(menu, 1);
+            Grid.SetRow(menu, 1);
+
+            Grid.SetColumnSpan(menu, 5);
+            Grid.SetRowSpan(menu, 7);
+
+            StopTime(scoreboardTimer);
+
+            backgroundMusic.Open(new Uri(exeDir + "\\Assets\\Sound\\MusicGameOver.mp3", UriKind.Absolute));
+            backgroundMusic.Play();
+            backgroundMusic.Close();
         }
 
         private void StartAutoMove()

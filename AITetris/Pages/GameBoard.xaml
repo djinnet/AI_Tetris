@@ -8,7 +8,7 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="GameBoard" Loaded="GamePage_Loaded">
 
-    <Grid>
+    <Grid x:Name="GameBoardMainGrid">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="25" />
             <ColumnDefinition Width="*" />
