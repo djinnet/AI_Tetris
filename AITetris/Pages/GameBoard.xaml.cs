@@ -47,6 +47,9 @@ namespace AITetris.Pages
         private Character character;
         private Board board;
         private TetrisFigure figure;
+        private TetrisFigure nextFigure;
+        private TetrisFigure swappedFigure;
+        private bool hasSwapped = false;
 
         private int linesCleared;
         private int points;
@@ -80,6 +83,7 @@ namespace AITetris.Pages
             CreateDynamicGameGrid(maxWidth, maxHeight);
 
             GenerateRandomFigure();
+            NextToGame();
 
             //Music start
             backgroundMusic.Open(new Uri(exeDir + "\\Assets\\Sound\\Tetris99MainTheme.mp3", UriKind.Absolute));
@@ -104,21 +108,21 @@ namespace AITetris.Pages
             }
         }
 
-        private void DrawSquares(Square[] squares)
+        private void DrawSquares(Square[] squares, Grid grid)
         {
             foreach (Square square in squares)
             {
                 Grid.SetColumn(square.image, square.coordinateX);
                 Grid.SetRow(square.image, square.coordinateY);
-                GameBoardGameGrid.Children.Add(square.image);
+                grid.Children.Add(square.image);
             }
         }
 
-        private void EraseSquares(Square[] squares)
+        private void EraseSquares(Square[] squares, Grid grid)
         {
             foreach (Square square in squares)
             {
-                GameBoardGameGrid.Children.Remove(square.image);
+                grid.Children.Remove(square.image);
             }
         }
 
@@ -127,7 +131,7 @@ namespace AITetris.Pages
             
             if (CanRotate())
             {
-                EraseSquares(figure.squares);
+                EraseSquares(figure.squares, GameBoardGameGrid);
                 figure.Rotate();
                 if (!CanRotate())
                 {
@@ -136,7 +140,7 @@ namespace AITetris.Pages
                     figure.Rotate();
                 }
                 Kickback();
-                DrawSquares(figure.squares);
+                DrawSquares(figure.squares, GameBoardGameGrid);
             }
         }
 
@@ -152,18 +156,18 @@ namespace AITetris.Pages
                 return;
             }
 
-            EraseSquares(figure.squares);
+            EraseSquares(figure.squares, GameBoardGameGrid);
             figure.Move(destination);
-            DrawSquares(figure.squares);
+            DrawSquares(figure.squares, GameBoardGameGrid);
         }
 
         private void InstaDrop()
         {
             while (!Collision("down"))
             {
-                EraseSquares(figure.squares);
+                EraseSquares(figure.squares, GameBoardGameGrid);
                 figure.Move("down");
-                DrawSquares(figure.squares);
+                DrawSquares(figure.squares, GameBoardGameGrid);
             }
             MoveFigure("down");
         }
@@ -172,10 +176,52 @@ namespace AITetris.Pages
         {
             Random rand = new Random();
             var i = rand.Next(0, Enum.GetNames(typeof(FigureType)).Length);
-            figure = new TetrisFigure(new int[]{ 4,0},(FigureType)i);
+            nextFigure = new TetrisFigure(new int[]{ 1,0},(FigureType)i);
 
-            DrawSquares(figure.squares);
-            StartAutoMove();
+            DrawSquares(nextFigure.squares, GameBoardNextGrid);
+        }
+
+        private void NextToGame()
+        {
+            EraseSquares(nextFigure.squares, GameBoardNextGrid);
+            figure = nextFigure;
+            figure.MoveTo(new int[]{4,0});
+            DrawSquares(figure.squares, GameBoardGameGrid);
+            if (!hasSwapped) StartAutoMove();
+
+            GenerateRandomFigure();
+        }
+
+        private void Swap()
+        {
+            TetrisFigure reserve;
+
+            EraseSquares(figure.squares, GameBoardGameGrid);
+
+            if (swappedFigure == null)
+            {
+                
+                swappedFigure = figure;
+                swappedFigure.MoveTo(new int[] { 1, 0 });
+
+                NextToGame();
+            }
+            else
+            {
+                EraseSquares(swappedFigure.squares, GameBoardSwapGrid);
+
+                reserve = swappedFigure;
+
+                swappedFigure = figure;
+                swappedFigure.MoveTo(new int[] { 1, 0 });
+
+                figure = reserve;
+                figure.MoveTo(new int[] { 4, 0 });
+
+                DrawSquares(figure.squares, GameBoardGameGrid);
+            }
+
+            DrawSquares(swappedFigure.squares, GameBoardSwapGrid);
         }
 
         private void FigureToBoard()
@@ -183,9 +229,10 @@ namespace AITetris.Pages
             board.squares.AddRange(figure.squares);
             ClearLine();
             StopAutoMove();
+            hasSwapped = false;
             if (!LoseGame())
             {
-                GenerateRandomFigure();
+                NextToGame();
             }
         }
 
@@ -369,8 +416,8 @@ namespace AITetris.Pages
                     {
                         square.coordinateY++;
                     }
-                    EraseSquares(above.ToArray());
-                    DrawSquares(above.ToArray());
+                    EraseSquares(above.ToArray(), GameBoardGameGrid);
+                    DrawSquares(above.ToArray(), GameBoardGameGrid);
 
                     linesCleared++;
                 }
@@ -569,8 +616,7 @@ namespace AITetris.Pages
                     MoveFigure("right");
                     break;
                 case Key.W:
-                    // TODO: Added up button to W, need to remove that from the final build.
-                    MoveFigure("up");
+                    RotateFigure();
                     break;
                 case Key.S:
                     MoveFigure("down");
@@ -581,8 +627,12 @@ namespace AITetris.Pages
                 case Key.Escape:
                     break;
                 case Key.E:
-                    //GenerateRandomFigure();
-                    RotateFigure();
+                    if (!hasSwapped)
+                    {
+                        hasSwapped = true;
+                        Swap();
+                    }
+                    
                     break;
             }
         }

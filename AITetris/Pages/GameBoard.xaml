@@ -117,11 +117,22 @@
                     FontWeight="Bold"
                     Margin="0, 10" />
 
-                <Image 
-                    Source="C:\Users\Christoffer Petersen\Desktop\Svendeprøve\AI_Tetris\AITetris\Assets\Sprits\BlueHole.png"
-                    Stretch="Uniform"
-                    Width="50"
-                    Margin="5" />
+                <Grid
+                x:Name="GameBoardNextGrid" Height="50" Width="50">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                </Grid>
 
             </StackPanel>
         </Border>
@@ -147,11 +158,22 @@
                     FontWeight="Bold"
                     Margin="0, 10" />
 
-                <Image 
-                    Source="C:\Users\Christoffer Petersen\Desktop\Svendeprøve\AI_Tetris\AITetris\Assets\Sprits\BlueHole.png"
-                    Stretch="Uniform"
-                    Width="50"
-                    Margin="5" />
+                <Grid
+                x:Name="GameBoardSwapGrid" Height="50" Width="50">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+                </Grid>
 
             </StackPanel>
         </Border>
