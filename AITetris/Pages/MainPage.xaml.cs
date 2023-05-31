@@ -47,7 +47,7 @@ namespace AITetris.Pages
 
         private void MainMenuSettingsBtn_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Uri("Pages/Settings.xaml", UriKind.Relative));
+            NavigationService.Navigate(new Uri("Pages/SettingsMenu.xaml", UriKind.Relative));
         }
 
         private void MainMenuExitBtn_Click(object sender, RoutedEventArgs e)

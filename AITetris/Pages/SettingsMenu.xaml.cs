@@ -13,17 +13,32 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Text.Json;
+using System.IO;
+using AITetris.Classes;
 
 namespace AITetris.Pages
 {
     /// <summary>
     /// Interaction logic for Settings.xaml
     /// </summary>
-    public partial class Settings : Page
+    public partial class SettingsMenu : Page
     {
-        public Settings()
+        private string exeDir;
+        private Settings settings;
+
+        public SettingsMenu()
         {
             InitializeComponent();
+            exeDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            Debug.WriteLine(File.ReadAllText(exeDir + "/Assets/JSON/Settings.json"));
+            settings = JsonSerializer.Deserialize<Settings>(File.ReadAllText(exeDir + "/Assets/JSON/Settings.json"));
+            SettingsSliderVolume.Value = settings.volume;
+            SettingsSliderSpeed.Value = settings.startSpeed;
+            SettingsSliderDeltaSpeed.Value = settings.gameSpeed;
+            SettingsSliderAITraining.Value = Convert.ToInt32(settings.enableTraining);
+            SettingsSliderSaveBlock.Value = Convert.ToInt32(settings.enableSwapBlock);
+            SettingsSliderNextBlock.Value = Convert.ToInt32(settings.enableNextBlock);
         }
 
         private void SettingsSliderVolume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)

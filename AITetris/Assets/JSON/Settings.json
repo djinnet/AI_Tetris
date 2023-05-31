@@ -1,0 +1,17 @@
+﻿{
+  "gameSpeed": 10.0,
+  "startSpeed": 1000.0,
+  "enableSwapBlock": false,
+  "enableNextBlock": true,
+  "volume": 50,
+  "enableTraining": false,
+  "KeyBinds": {
+    "insta": 18,
+    "drop": 62,
+    "rotate": 66,
+    "right": 47,
+    "left": 44,
+    "swap": 48,
+    "pause": 13
+  }
+}
