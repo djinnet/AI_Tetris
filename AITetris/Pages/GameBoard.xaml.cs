@@ -47,6 +47,9 @@ namespace AITetris.Pages
         private Board board;
         private TetrisFigure figure;
 
+        private int linesCleared;
+        private int points;
+
         //Execution directory
         private string exeDir;
 
@@ -56,6 +59,7 @@ namespace AITetris.Pages
         private SoundPlayer SFXDrop;
         private SoundPlayer SFXLineClear;
         private SoundPlayer SFXTetrisClear;
+
         public GameBoard(Character character)
         {
             InitializeComponent();
@@ -178,7 +182,10 @@ namespace AITetris.Pages
             board.squares.AddRange(figure.squares);
             ClearLine();
             StopAutoMove();
-            GenerateRandomFigure();
+            if (!LoseGame())
+            {
+                GenerateRandomFigure();
+            }
         }
 
         private bool Collision(string move)
@@ -374,6 +381,18 @@ namespace AITetris.Pages
             }
         }
 
+        private bool LoseGame()
+        {
+            bool result = false;
+            if (board.squares.Where(s => s.coordinateY == 0).Count() > 2)
+            {
+                Debug.WriteLine("You lose!");
+                result = true;
+
+            }
+            return result;
+        }
+
         private void StartAutoMove()
         {
             autoMoveTimer = new DispatcherTimer();
@@ -489,7 +508,12 @@ namespace AITetris.Pages
             {
                 SFXLineClear.Play();
             }
-            GameBoardScorePointLbl.Content = "Point: " + (Convert.ToInt32(((string)GameBoardScorePointLbl.Content).Remove(0,7)) + (Math.Pow(2, lines) * 100)).ToString();
+            
+            points += (int)Math.Pow(2, lines) * 100;
+            linesCleared += lines;
+
+            GameBoardScorePointLbl.Content = "Point: " + points;
+            GameBoardScoreLineClearedLbl.Content = "Lines: " + linesCleared;
         }
 
 
