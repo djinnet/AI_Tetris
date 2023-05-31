@@ -503,11 +503,9 @@ namespace AITetris.Pages
 
         private void SpeedUp()
         {
-            Debug.WriteLine(totalLinesCleared);
             if (totalLinesCleared % 10 == 0)
             {
-                autoMoveTimerInterval = autoMoveTimer.Interval - autoMoveTimer.Interval * 0.1;
-                Debug.WriteLine("SpeedUp");
+                autoMoveTimerInterval -= autoMoveTimerInterval * 0.1;
             }
         }
 
