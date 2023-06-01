@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Media;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -36,7 +38,7 @@ namespace AITetris.Pages
 
         // Timer variables for the automovement
         private DispatcherTimer autoMoveTimer;
-        private TimeSpan autoMoveTimerInterval = TimeSpan.FromMilliseconds(1000);
+        private TimeSpan autoMoveTimerInterval;
 
         // Grid variables
         private int minHeight = 0;
@@ -66,6 +68,9 @@ namespace AITetris.Pages
         private SoundPlayer SFXLineClear;
         private SoundPlayer SFXTetrisClear;
 
+        //Settings variable
+        private Settings settings;
+
         public GameBoard(Character character)
         {
             InitializeComponent();
@@ -86,6 +91,9 @@ namespace AITetris.Pages
 
             GenerateRandomFigure();
             NextToGame();
+
+            settings = JsonSerializer.Deserialize<Settings>(File.ReadAllText(exeDir + "/Assets/JSON/Settings.json"));
+            autoMoveTimerInterval = TimeSpan.FromMilliseconds(settings.startSpeed);
 
             //Music start
             MusicStart();
@@ -560,7 +568,7 @@ namespace AITetris.Pages
         private void MusicStart()
         {
             backgroundMusic.Open(new Uri(exeDir + "\\Assets\\Sound\\Tetris99MainTheme.mp3", UriKind.Absolute));
-            backgroundMusic.Volume = 0.10;
+            backgroundMusic.Volume = Convert.ToDouble(settings.volume) / 100;
             backgroundMusic.MediaEnded += new EventHandler((sender, e) =>
             {
                 ((MediaPlayer)sender).Position = TimeSpan.Zero;
@@ -577,7 +585,7 @@ namespace AITetris.Pages
         {
             if (totalLinesCleared % 10 == 0)
             {
-                autoMoveTimerInterval -= autoMoveTimerInterval * 0.1;
+                autoMoveTimerInterval -= autoMoveTimerInterval * 0.5;
             }
         }
 
@@ -623,32 +631,31 @@ namespace AITetris.Pages
         {
             switch (e.Key)
             {
-                case Key.A:
+                case Key k when k == settings.KeyBinds.left:
                     SFXMove.Play();
                     MoveFigure("left");
                     break;
-                case Key.D:
+                case Key k when k == settings.KeyBinds.right:
                     SFXMove.Play();
                     MoveFigure("right");
                     break;
-                case Key.W:
+                case Key k when k == settings.KeyBinds.rotate:
                     RotateFigure();
                     break;
-                case Key.S:
+                case Key k when k == settings.KeyBinds.drop:
                     MoveFigure("down");
                     break;
-                case Key.Space:
+                case Key k when k == settings.KeyBinds.insta:
                     InstaDrop();
                     break;
-                case Key.Escape:
+                case Key k when k == settings.KeyBinds.pause:
                     break;
-                case Key.E:
+                case Key k when k == settings.KeyBinds.swap:
                     if (!hasSwapped)
                     {
                         hasSwapped = true;
                         Swap();
                     }
-                    
                     break;
             }
         }
