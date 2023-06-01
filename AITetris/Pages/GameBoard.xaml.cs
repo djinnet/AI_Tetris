@@ -585,7 +585,7 @@ namespace AITetris.Pages
         {
             if (totalLinesCleared % 10 == 0)
             {
-                autoMoveTimerInterval -= autoMoveTimerInterval * (settings.gameSpeed / 100);
+                autoMoveTimerInterval -= autoMoveTimerInterval * (game.settings.gameSpeed / 100);
             }
         }
 

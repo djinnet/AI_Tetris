@@ -71,7 +71,7 @@ namespace AITetris.Pages
 
         private void SettingsSliderSaveBlock_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if ((int)((Slider)sender).Value == 0)
+            if (e.NewValue == 0)
             {
                 settings.enableSwapBlock = false;
                 SettingsSliderValueSaveBlock.Content = "Off";
@@ -85,7 +85,7 @@ namespace AITetris.Pages
 
         private void SettingsSliderNextBlock_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if ((int)((Slider)sender).Value == 0)
+            if (e.NewValue == 0)
             {
                 settings.enableNextBlock = false;
                 SettingsSliderValueNextBlock.Content = "Off";
