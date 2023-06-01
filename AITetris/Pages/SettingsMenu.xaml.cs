@@ -31,7 +31,6 @@ namespace AITetris.Pages
         {
             InitializeComponent();
             exeDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            Debug.WriteLine(File.ReadAllText(exeDir + "/Assets/JSON/Settings.json"));
             settings = JsonSerializer.Deserialize<Settings>(File.ReadAllText(exeDir + "/Assets/JSON/Settings.json"));
             SettingsSliderVolume.Value = settings.volume;
             SettingsSliderSpeed.Value = settings.startSpeed;
@@ -43,57 +42,57 @@ namespace AITetris.Pages
 
         private void SettingsSliderVolume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            Debug.WriteLine(SettingsSliderVolume.Value);
+            settings.volume = (int)((Slider)sender).Value;
         }
 
         private void SettingsSliderSpeed_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            Debug.WriteLine(SettingsSliderSpeed.Value);
+            settings.startSpeed = ((Slider)sender).Value;
         }
 
         private void SettingsSliderDeltaSpeed_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            Debug.WriteLine(SettingsSliderDeltaSpeed.Value);
+            settings.gameSpeed = ((Slider)sender).Value;
         }
 
         private void SettingsSliderAITraining_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            int value = (int)SettingsSliderAITraining.Value;
-
-            if(value == 0)
+            if((int)((Slider)sender).Value == 0)
             {
+                settings.enableTraining = false;
                 SettingsSliderValueAITraining.Content = "Off";
             }
             else
             {
+                settings.enableTraining = true;
                 SettingsSliderValueAITraining.Content = "On";
             }
         }
 
         private void SettingsSliderSaveBlock_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            int value = (int)SettingsSliderSaveBlock.Value;
-
-            if (value == 0)
+            if ((int)((Slider)sender).Value == 0)
             {
+                settings.enableSwapBlock = false;
                 SettingsSliderValueSaveBlock.Content = "Off";
             }
             else
             {
+                settings.enableSwapBlock = true;
                 SettingsSliderValueSaveBlock.Content = "On";
             }
         }
 
         private void SettingsSliderNextBlock_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            int value = (int)SettingsSliderNextBlock.Value;
-
-            if (value == 0)
+            if ((int)((Slider)sender).Value == 0)
             {
+                settings.enableSwapBlock = false;
                 SettingsSliderValueNextBlock.Content = "Off";
             }
             else
             {
+                settings.enableSwapBlock = true;
                 SettingsSliderValueNextBlock.Content = "On";
             }
         }
@@ -105,7 +104,7 @@ namespace AITetris.Pages
 
         private void SettingsControlsApplySettings_Click(object sender, RoutedEventArgs e)
         {
-
+            File.WriteAllText(exeDir + "/Assets/JSON/Settings.json", JsonSerializer.Serialize(settings, new JsonSerializerOptions() { WriteIndented = true }));
         }
 
         private void SettingsControlsMainMenu_Click(object sender, RoutedEventArgs e)
