@@ -11,7 +11,13 @@ namespace AITetris.Classes
     {
         public KeyBinds()
         {
-
+            insta = Key.Space;
+            drop = Key.S;
+            rotate = Key.W;
+            right = Key.D;
+            left = Key.A;
+            swap = Key.E;
+            pause = Key.Escape;
         }
 
         public Key insta { get; set; }

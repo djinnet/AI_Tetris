@@ -11,6 +11,12 @@ namespace AITetris.Classes
     {
         public Settings()
         {
+            gameSpeed = 10.0;
+            startSpeed = 1000.0;
+            enableSwapBlock = false;
+            enableNextBlock = true;
+            volume = 50;
+            enableTraining = false;
             KeyBinds = new KeyBinds();
         }
 

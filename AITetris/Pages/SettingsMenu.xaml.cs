@@ -57,7 +57,7 @@ namespace AITetris.Pages
 
         private void SettingsSliderAITraining_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            if((int)((Slider)sender).Value == 0)
+            if (e.NewValue == 0)
             {
                 settings.enableTraining = false;
                 SettingsSliderValueAITraining.Content = "Off";
@@ -87,12 +87,12 @@ namespace AITetris.Pages
         {
             if ((int)((Slider)sender).Value == 0)
             {
-                settings.enableSwapBlock = false;
+                settings.enableNextBlock = false;
                 SettingsSliderValueNextBlock.Content = "Off";
             }
             else
             {
-                settings.enableSwapBlock = true;
+                settings.enableNextBlock = true;
                 SettingsSliderValueNextBlock.Content = "On";
             }
         }
