@@ -18,7 +18,7 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="25" />
-            <RowDefinition Height="50" />
+            <RowDefinition Height="100" />
             <RowDefinition Height="*" />
             <RowDefinition Height="25" />
         </Grid.RowDefinitions>
@@ -73,7 +73,8 @@
                         Content="Volume"
                         FontFamily="Tahoma"
                         FontSize="15"
-                        FontWeight="Bold"/>
+                        FontWeight="Bold"
+                        ToolTip="Game volume range (0% - 100%)"/>
 
                 <Slider 
                         x:Name="SettingsSliderVolume"
@@ -85,14 +86,16 @@
                         IsSnapToTickEnabled="True"
                         ValueChanged="SettingsSliderVolume_ValueChanged"/>
 
-                <Label
+                <TextBox
                         x:Name="SettingsSliderValueVolume"
                         Grid.Column="3"
                         Grid.Row="1"
-                        Content="{Binding ElementName=SettingsSliderVolume, Path=Value, UpdateSourceTrigger=PropertyChanged}"
+                        Text="{Binding ElementName=SettingsSliderVolume, Path=Value, UpdateSourceTrigger=PropertyChanged}"
                         FontFamily="Tahoma"
                         FontSize="15"
-                        FontWeight="Bold"/>
+                        FontWeight="Bold">
+                    
+                </TextBox>
 
                 <!-- Speed -->
                 <Label
@@ -102,26 +105,29 @@
                         Content="Speed"
                         FontFamily="Tahoma"
                         FontSize="15"
-                        FontWeight="Bold"/>
+                        FontWeight="Bold"
+                        ToolTip="Game starting speed range (0 - 10000), the lower the value the faster it goes."/>
 
                 <Slider 
                         x:Name="SettingsSliderSpeed"
                         Grid.Column="2"
                         Grid.Row="2"
-                        Maximum="100"
+                        Maximum="10000"
                         TickPlacement="BottomRight"
-                        TickFrequency="5"
+                        TickFrequency="1"
                         IsSnapToTickEnabled="True"
                         ValueChanged="SettingsSliderSpeed_ValueChanged"/>
 
-                <Label
+                <TextBox
                         x:Name="SettingsSliderValueSpeed"
                         Grid.Column="3"
                         Grid.Row="2"
-                        Content="{Binding ElementName=SettingsSliderSpeed, Path=Value, UpdateSourceTrigger=PropertyChanged}"
+                        Text="{Binding ElementName=SettingsSliderSpeed, Path=Value, UpdateSourceTrigger=PropertyChanged}"
                         FontFamily="Tahoma"
                         FontSize="15"
-                        FontWeight="Bold"/>
+                        FontWeight="Bold">
+                    
+                </TextBox>
 
                 <!-- DeltaSpeed -->
                 <Label
@@ -131,7 +137,8 @@
                         Content="Delta Speed"
                         FontFamily="Tahoma"
                         FontSize="15"
-                        FontWeight="Bold"/>
+                        FontWeight="Bold"
+                        ToolTip="Game delta speed range (0% - 100%), the higher the value the faster it goes."/>
 
                 <Slider 
                         x:Name="SettingsSliderDeltaSpeed"
@@ -143,14 +150,16 @@
                         IsSnapToTickEnabled="True"
                         ValueChanged="SettingsSliderDeltaSpeed_ValueChanged"/>
 
-                <Label
+                <TextBox
                         x:Name="SettingsSliderValueDeltaSpeed"
                         Grid.Column="3"
                         Grid.Row="3"
-                        Content="{Binding ElementName=SettingsSliderDeltaSpeed, Path=Value, UpdateSourceTrigger=PropertyChanged}"
+                        Text="{Binding ElementName=SettingsSliderDeltaSpeed, Path=Value, UpdateSourceTrigger=PropertyChanged}"
                         FontFamily="Tahoma"
                         FontSize="15"
-                        FontWeight="Bold"/>
+                        FontWeight="Bold">
+                    
+                </TextBox>
 
                 <!-- AI Training -->
                 <Label
@@ -160,7 +169,8 @@
                         Content="AI Training"
                         FontFamily="Tahoma"
                         FontSize="15"
-                        FontWeight="Bold"/>
+                        FontWeight="Bold"
+                        ToolTip="Toggle Ai training on and off"/>
 
                 <Slider 
                         x:Name="SettingsSliderAITraining"
@@ -189,7 +199,8 @@
                         Content="Save Block"
                         FontFamily="Tahoma"
                         FontSize="15"
-                        FontWeight="Bold"/>
+                        FontWeight="Bold"
+                        ToolTip="Toggle Save block on and off"/>
 
                 <Slider 
                         x:Name="SettingsSliderSaveBlock"
@@ -218,7 +229,8 @@
                         Content="Next Block"
                         FontFamily="Tahoma"
                         FontSize="15"
-                        FontWeight="Bold"/>
+                        FontWeight="Bold"
+                        ToolTip="Toggle Next block on and off"/>
 
                 <Slider 
                         x:Name="SettingsSliderNextBlock"
