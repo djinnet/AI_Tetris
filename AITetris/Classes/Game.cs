@@ -8,13 +8,13 @@ namespace AITetris.Classes
 {
     public class Game
     {
-        public Game(Board board, Character character, bool isPlayer, Settings settings)
+        public Game(Board board, Character character, Settings settings)
         {
             this.board = board;
             this.character = character;
             this.points = 0;
             this.time = 0;
-            this.isPlayer = isPlayer;
+            this.isPlayer = character.GetType() == typeof(Player);
             this.settings = settings;
         }
         public Board board;
