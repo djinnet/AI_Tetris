@@ -50,7 +50,9 @@ namespace AITetris.Pages
         private TetrisFigure figure;
         private TetrisFigure nextFigure;
         private TetrisFigure swappedFigure;
+
         private bool hasSwapped = false;
+        private bool hasLost = false;
 
         private int totalLinesCleared;
         private int points;
@@ -92,8 +94,6 @@ namespace AITetris.Pages
 
             GenerateRandomFigure();
             NextToGame();
-
-            autoMoveTimerInterval = TimeSpan.FromMilliseconds(game.settings.startSpeed);
 
             //Music start
             MusicStart();
@@ -230,7 +230,8 @@ namespace AITetris.Pages
             ClearLine();
             StopAutoMove();
             hasSwapped = false;
-            if (!LoseGame())
+            LoseGame();
+            if (!hasLost)
             {
                 NextToGame();
             }
@@ -431,25 +432,20 @@ namespace AITetris.Pages
             }
         }
 
-        private bool LoseGame()
+        private void LoseGame()
         {
-            bool result = false;
             if (game.board.squares.Where(s => s.coordinateY == 0).Count() > 2)
             {
                 GameOver();
                 Debug.WriteLine("You lose!");
-                result = true;
+                hasLost = true;
 
             }
-            return result;
         }
 
         private void GameOver()
         {
-            GameBoardGameGrid.Children.Clear();
-            GameBoardNextGrid.Children.Clear();
-            GameBoardSwapGrid.Children.Clear();
-
+            gameOverMelody.Play();
             GameOverMenu menu = new GameOverMenu();
             GameBoardMainGrid.Children.Add(menu);
             Grid.SetColumn(menu, 1);
@@ -460,8 +456,26 @@ namespace AITetris.Pages
 
             StopTime(scoreboardTimer);
 
+            ClearBoard();
+        }
+
+        private void ClearBoard()
+        {
+            GameBoardGameGrid.Children.Clear();
+            GameBoardNextGrid.Children.Clear();
+            GameBoardSwapGrid.Children.Clear();
+
             backgroundMusic.Close();
-            gameOverMelody.Play();
+            gameOverMelody.Dispose();
+            SFXMove.Dispose();
+            SFXDrop.Dispose();
+            SFXLineClear.Dispose();
+            SFXTetrisClear.Dispose();
+        }
+
+        private void SetBoard()
+        {
+
         }
 
         private void StartAutoMove()
@@ -572,7 +586,6 @@ namespace AITetris.Pages
         private void MusicStart()
         {
             backgroundMusic.Open(new Uri(exeDir + "\\Assets\\Sound\\Tetris99MainTheme.mp3", UriKind.Absolute));
-            backgroundMusic.Volume = Convert.ToDouble(game.settings.volume) / 100;
             backgroundMusic.MediaEnded += new EventHandler((sender, e) =>
             {
                 ((MediaPlayer)sender).Position = TimeSpan.Zero;
@@ -596,7 +609,7 @@ namespace AITetris.Pages
         private void AddPoint(int lines)
         {
             if(lines == 4)
-            {               
+            {
                 SFXTetrisClear.Play();
             }
             else
@@ -629,6 +642,10 @@ namespace AITetris.Pages
             {
                 GameBoardSaveBlockBorder.Visibility = Visibility.Hidden;
             }
+
+            autoMoveTimerInterval = TimeSpan.FromMilliseconds(game.settings.startSpeed);
+
+            backgroundMusic.Volume = Convert.ToDouble(game.settings.volume) / 100;
         }
 
 
@@ -654,34 +671,37 @@ namespace AITetris.Pages
         
         private void GamePage_KeyDown(object sender, KeyEventArgs e)
         {
-            switch (e.Key)
+            if (!hasLost)
             {
-                case Key k when k == game.settings.KeyBinds.left:
-                    SFXMove.Play();
-                    MoveFigure("left");
-                    break;
-                case Key k when k == game.settings.KeyBinds.right:
-                    SFXMove.Play();
-                    MoveFigure("right");
-                    break;
-                case Key k when k == game.settings.KeyBinds.rotate:
-                    RotateFigure();
-                    break;
-                case Key k when k == game.settings.KeyBinds.drop:
-                    MoveFigure("down");
-                    break;
-                case Key k when k == game.settings.KeyBinds.insta:
-                    InstaDrop();
-                    break;
-                case Key k when k == game.settings.KeyBinds.pause:
-                    break;
-                case Key k when k == game.settings.KeyBinds.swap:
-                    if (!hasSwapped && game.settings.enableSwapBlock)
-                    {
-                        hasSwapped = true;
-                        Swap();
-                    }
-                    break;
+                switch (e.Key)
+                {
+                    case Key k when k == game.settings.KeyBinds.left:
+                        SFXMove.Play();
+                        MoveFigure("left");
+                        break;
+                    case Key k when k == game.settings.KeyBinds.right:
+                        SFXMove.Play();
+                        MoveFigure("right");
+                        break;
+                    case Key k when k == game.settings.KeyBinds.rotate:
+                        RotateFigure();
+                        break;
+                    case Key k when k == game.settings.KeyBinds.drop:
+                        MoveFigure("down");
+                        break;
+                    case Key k when k == game.settings.KeyBinds.insta:
+                        InstaDrop();
+                        break;
+                    case Key k when k == game.settings.KeyBinds.pause:
+                        break;
+                    case Key k when k == game.settings.KeyBinds.swap:
+                        if (!hasSwapped && game.settings.enableSwapBlock)
+                        {
+                            hasSwapped = true;
+                            Swap();
+                        }
+                        break;
+                }
             }
         }
 
