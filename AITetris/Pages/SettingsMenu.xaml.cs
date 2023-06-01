@@ -16,6 +16,8 @@ using System.Windows.Shapes;
 using System.Text.Json;
 using System.IO;
 using AITetris.Classes;
+using AITetris.Controllers;
+using AITetris.Controls;
 
 namespace AITetris.Pages
 {
@@ -25,7 +27,7 @@ namespace AITetris.Pages
     public partial class SettingsMenu : Page
     {
         private string exeDir;
-        private Settings settings;
+        public Settings settings;
 
         public SettingsMenu()
         {
@@ -99,7 +101,13 @@ namespace AITetris.Pages
 
         private void SettingsControlsKeybinds_Click(object sender, RoutedEventArgs e)
         {
+            KeybindsMenu menu = new KeybindsMenu(this);
+            SettingsMenuGrid.Children.Add(menu);
+            Grid.SetColumn(menu, 1);
+            Grid.SetRow(menu, 1);
 
+            Grid.SetColumnSpan(menu, 2);
+            Grid.SetRowSpan(menu, 2);
         }
 
         private void SettingsControlsApplySettings_Click(object sender, RoutedEventArgs e)
