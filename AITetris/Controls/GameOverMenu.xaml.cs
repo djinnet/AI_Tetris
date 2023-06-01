@@ -36,7 +36,7 @@ namespace AITetris.Controllers
         }
 
         private void GameOverMenuControlQuitGame_Click(object sender, RoutedEventArgs e)
-        {            
+        {
             ((NavigationWindow)Window.GetWindow(this)).NavigationService.Navigate(new Uri("Pages/MainPage.xaml", UriKind.Relative));
         }
     }
