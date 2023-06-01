@@ -438,6 +438,10 @@ namespace AITetris.Pages
 
         private void GameOver()
         {
+            GameBoardGameGrid.Children.Clear();
+            GameBoardNextGrid.Children.Clear();
+            GameBoardSwapGrid.Children.Clear();
+
             GameOverMenu menu = new GameOverMenu();
             GameBoardMainGrid.Children.Add(menu);
             Grid.SetColumn(menu, 1);
