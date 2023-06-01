@@ -14,12 +14,12 @@ namespace AITetris.Classes
 
         }
 
-        public Key insta;
-        public Key drop;
-        public Key rotate;
-        public Key right;
-        public Key left;
-        public Key swap;
-        public Key pause;
+        public Key insta { get; set; }
+        public Key drop { get; set; }
+        public Key rotate { get; set; }
+        public Key right { get; set; }
+        public Key left { get; set; }
+        public Key swap { get; set; }
+        public Key pause { get; set; }
     }
 }
