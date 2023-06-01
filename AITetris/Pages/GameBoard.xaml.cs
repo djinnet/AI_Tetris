@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Media;
 using System.Text;
+using System.Text.Json;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
@@ -36,7 +38,7 @@ namespace AITetris.Pages
 
         // Timer variables for the automovement
         private DispatcherTimer autoMoveTimer;
-        private TimeSpan autoMoveTimerInterval = TimeSpan.FromMilliseconds(1000);
+        private TimeSpan autoMoveTimerInterval;
 
         // Grid variables
         private int minHeight = 0;
@@ -45,8 +47,6 @@ namespace AITetris.Pages
         private int maxWidth = 10;
 
         // Character variables
-        private Character character;
-        private Board board;
         private TetrisFigure figure;
         private TetrisFigure nextFigure;
         private TetrisFigure swappedFigure;
@@ -66,26 +66,34 @@ namespace AITetris.Pages
         private SoundPlayer SFXLineClear;
         private SoundPlayer SFXTetrisClear;
 
+        private Game game;
+
         public GameBoard(Character character)
         {
             InitializeComponent();
 
             // Initialize variables
             isScoreboardTimerPaused = false;
-            this.character = character;
             exeDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
 
+            game = new Game(
+                new Board(maxWidth + 2, maxHeight),
+                character,
+                JsonSerializer.Deserialize<Settings>(File.ReadAllText(exeDir + "/Assets/JSON/Settings.json")));
+
             GameBoardScorePlayerLbl.Content = character.name;
+            ApplySettings();
             
             // Scoreboard timer
             scoreboardTimer = new DispatcherTimer();
             StartTime(scoreboardTimer);
-            board = new Board(maxWidth+2, maxHeight);
             FillBoard();
             CreateDynamicGameGrid(maxWidth, maxHeight);
 
             GenerateRandomFigure();
             NextToGame();
+
+            autoMoveTimerInterval = TimeSpan.FromMilliseconds(game.settings.startSpeed);
 
             //Music start
             MusicStart();
@@ -95,8 +103,8 @@ namespace AITetris.Pages
         {
             for (int i = 0; i < maxHeight; i++)
             {
-                board.squares.Add(new Square(-1, i));
-                board.squares.Add(new Square(maxWidth, i));
+                game.board.squares.Add(new Square(-1, i));
+                game.board.squares.Add(new Square(maxWidth, i));
             }
         }
 
@@ -218,7 +226,7 @@ namespace AITetris.Pages
 
         private void FigureToBoard()
         {
-            board.squares.AddRange(figure.squares);
+            game.board.squares.AddRange(figure.squares);
             ClearLine();
             StopAutoMove();
             hasSwapped = false;
@@ -292,7 +300,7 @@ namespace AITetris.Pages
                     break;
             }
 
-            int collide = board.squares.Where(board => board.coordinateX == square.coordinateX + x && board.coordinateY == square.coordinateY + y).Count();
+            int collide = game.board.squares.Where(board => board.coordinateX == square.coordinateX + x && board.coordinateY == square.coordinateY + y).Count();
             if (collide != 0)
             {
                 result = true;
@@ -305,7 +313,7 @@ namespace AITetris.Pages
         {
             foreach (Square square in figure.squares)
             {
-                int collide = board.squares.Where(board => board.coordinateX == square.coordinateX && board.coordinateY == square.coordinateY).Count();
+                int collide = game.board.squares.Where(board => board.coordinateX == square.coordinateX && board.coordinateY == square.coordinateY).Count();
 
                 if (collide != 0)
                 {
@@ -394,16 +402,16 @@ namespace AITetris.Pages
             // Check and clear the line
             for (int i = 0; i < maxHeight; i++)
             {
-                List<Square> line = board.squares.Where(s => s.coordinateY == i && s.coordinateX >= 0 && s.coordinateX < maxWidth).ToList();
+                List<Square> line = game.board.squares.Where(s => s.coordinateY == i && s.coordinateX >= 0 && s.coordinateX < maxWidth).ToList();
                 if (line.Count() == maxWidth)
                 {
                     foreach (Square square in line)
                     {
-                        board.squares.Remove(square);
+                        game.board.squares.Remove(square);
                         GameBoardGameGrid.Children.Remove(square.image);
                     }
 
-                    List<Square> above = board.squares.Where(s => s.coordinateY < i && s.coordinateX >= 0 && s.coordinateX < maxWidth).ToList();
+                    List<Square> above = game.board.squares.Where(s => s.coordinateY < i && s.coordinateX >= 0 && s.coordinateX < maxWidth).ToList();
                     foreach (Square square in above)
                     {
                         square.coordinateY++;
@@ -426,7 +434,7 @@ namespace AITetris.Pages
         private bool LoseGame()
         {
             bool result = false;
-            if (board.squares.Where(s => s.coordinateY == 0).Count() > 2)
+            if (game.board.squares.Where(s => s.coordinateY == 0).Count() > 2)
             {
                 GameOver();
                 Debug.WriteLine("You lose!");
@@ -560,7 +568,7 @@ namespace AITetris.Pages
         private void MusicStart()
         {
             backgroundMusic.Open(new Uri(exeDir + "\\Assets\\Sound\\Tetris99MainTheme.mp3", UriKind.Absolute));
-            backgroundMusic.Volume = 0.10;
+            backgroundMusic.Volume = Convert.ToDouble(game.settings.volume) / 100;
             backgroundMusic.MediaEnded += new EventHandler((sender, e) =>
             {
                 ((MediaPlayer)sender).Position = TimeSpan.Zero;
@@ -577,7 +585,7 @@ namespace AITetris.Pages
         {
             if (totalLinesCleared % 10 == 0)
             {
-                autoMoveTimerInterval -= autoMoveTimerInterval * 0.1;
+                autoMoveTimerInterval -= autoMoveTimerInterval * 0.5;
             }
         }
 
@@ -596,6 +604,27 @@ namespace AITetris.Pages
 
             GameBoardScorePointLbl.Content = "Point: " + points;
             GameBoardScoreLineClearedLbl.Content = "Lines: " + totalLinesCleared;
+        }
+
+        private void ApplySettings()
+        {
+            if (game.settings.enableNextBlock)
+            {
+                GameBoardNextBlockBorder.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                GameBoardNextBlockBorder.Visibility = Visibility.Hidden;
+            }
+
+            if (game.settings.enableSwapBlock)
+            {
+                GameBoardSaveBlockBorder.Visibility = Visibility.Visible;
+            }
+            else
+            {
+                GameBoardSaveBlockBorder.Visibility = Visibility.Hidden;
+            }
         }
 
 
@@ -623,32 +652,31 @@ namespace AITetris.Pages
         {
             switch (e.Key)
             {
-                case Key.A:
+                case Key k when k == game.settings.KeyBinds.left:
                     SFXMove.Play();
                     MoveFigure("left");
                     break;
-                case Key.D:
+                case Key k when k == game.settings.KeyBinds.right:
                     SFXMove.Play();
                     MoveFigure("right");
                     break;
-                case Key.W:
+                case Key k when k == game.settings.KeyBinds.rotate:
                     RotateFigure();
                     break;
-                case Key.S:
+                case Key k when k == game.settings.KeyBinds.drop:
                     MoveFigure("down");
                     break;
-                case Key.Space:
+                case Key k when k == game.settings.KeyBinds.insta:
                     InstaDrop();
                     break;
-                case Key.Escape:
+                case Key k when k == game.settings.KeyBinds.pause:
                     break;
-                case Key.E:
-                    if (!hasSwapped)
+                case Key k when k == game.settings.KeyBinds.swap:
+                    if (!hasSwapped && game.settings.enableSwapBlock)
                     {
                         hasSwapped = true;
                         Swap();
                     }
-                    
                     break;
             }
         }
