@@ -42,7 +42,7 @@ namespace AITetris.Pages
             int columnCount = leaderboardGrid.ColumnDefinitions.Count;
 
             // Running for each row in the leaderboard
-            for (int i = 0; i < rowCount + 1; i++)
+            for (int i = 0; i < rowCount; i++)
             {
                 // Running for each column in the leaderboard
                 for (int j = 0; j < columnCount; j++)
@@ -109,7 +109,7 @@ namespace AITetris.Pages
                         Label label = new Label();
 
                         // Add content and styling to the label
-                        label.Content = "";
+                        label.Content = "Test: " + i.ToString() + " - " + j.ToString();
                         label.HorizontalAlignment = HorizontalAlignment.Center;
                         label.VerticalAlignment = VerticalAlignment.Center;
                         label.FontFamily = new FontFamily("Tahomaa");
