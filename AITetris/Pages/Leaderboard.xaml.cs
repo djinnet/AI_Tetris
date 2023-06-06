@@ -132,5 +132,10 @@ namespace AITetris.Pages
         {
             NavigationService.Navigate(new Uri("Pages/MainPage.xaml", UriKind.Relative));
         }
+
+        private void LeaderboardControlsFindPlayerBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

@@ -72,20 +72,57 @@
             </Grid>
         </Border>
 
-        <Button
-            x:Name="LeaderboardBackToMainBtn"
+        <Border
+            x:Name="LeaderbordControlsBorder"
             Grid.Column="1"
-            Grid.Row="3"
-            Height="35"
-            Content="Main Menu"
-            HorizontalContentAlignment="Center"
-            VerticalContentAlignment="Center"
-            FontFamily="Tahoma"
-            FontSize="12"
-            FontWeight="Bold" 
-            Margin="0, 5"
-            Click="LeaderboardBackToMainBtn_Click">
-            
-        </Button>
+            Grid.Row="3">
+
+            <StackPanel
+                x:Name="LeaderboardControlsSP"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                MinWidth="300">
+
+                <Label 
+                    x:Name="LeaderboardControlsFindPlayerLbl"
+                    Content="Enter a name"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="12"
+                    FontWeight="Bold"/>
+
+                <TextBox
+                    x:Name="LeaderboardControlsFindPlayerTxtbox"
+                    TextWrapping="Wrap"
+                    Margin="0, 5" />
+
+                <Button
+                    x:Name="LeaderboardControlsFindPlayerBtn"
+                    Content="Find player"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="12"
+                    FontWeight="Bold" 
+                    Margin="0, 5"
+                    Click="LeaderboardControlsFindPlayerBtn_Click">
+                    
+                </Button>
+
+                <Button
+                    x:Name="LeaderboardBackToMainBtn"
+                    Content="Main Menu"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="12"
+                    FontWeight="Bold" 
+                    Margin="0, 5"
+                    Click="LeaderboardBackToMainBtn_Click">
+
+                </Button>
+            </StackPanel>
+        </Border>
     </Grid>
 </Page>
