@@ -9,6 +9,82 @@
       Title="Leaderboard">
 
     <Grid>
-        
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="25" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="25" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25" />
+            <RowDefinition Height="100" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="25" />
+        </Grid.RowDefinitions>
+
+        <Label
+            x:Name="LeaderboardTitleLbl"
+            Grid.Column="1"
+            Grid.Row="1"
+            Content="Leaderboard"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            FontFamily="Tahoma"
+            FontSize="25"
+            FontWeight="Bold" />
+
+        <Border
+            x:Name="LeaderboardGridBorder"
+            Grid.Column="1"
+            Grid.Row="2"
+            BorderBrush="Silver"
+            BorderThickness="2"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+
+            <Grid
+                x:Name="LeaderboardGrid">
+                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+                
+                
+            </Grid>
+        </Border>
+
+        <Button
+            x:Name="LeaderboardBackToMainBtn"
+            Grid.Column="1"
+            Grid.Row="3"
+            Height="35"
+            Content="Main Menu"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            FontFamily="Tahoma"
+            FontSize="12"
+            FontWeight="Bold" 
+            Margin="0, 5"
+            Click="LeaderboardBackToMainBtn_Click">
+            
+        </Button>
     </Grid>
 </Page>
