@@ -26,6 +26,7 @@ namespace AITetris.Controls
     public partial class KeybindsMenu : UserControl
     {
         SettingsMenu prev;
+        GameBoard gamePrev;
         private bool isListeningForKey = false;
         private TextBox textbox;
         private string typeOfKeybind;
@@ -44,6 +45,22 @@ namespace AITetris.Controls
             KeybindsMenuKeybindLeftTxtbox.Text = prev.settings.KeyBinds.left.ToString();
             KeybindsMenuKeybindRightTxtbox.Text = prev.settings.KeyBinds.right.ToString();
             KeybindsMenuKeybindDownTxtbox.Text = prev.settings.KeyBinds.drop.ToString();
+        }
+
+        public KeybindsMenu(GameBoard prev)
+        {
+            InitializeComponent();
+
+            gamePrev = prev;
+
+            // Set keybinds from settings
+            KeybindsMenuKeybindPauseTxtbox.Text = prev.game.settings.KeyBinds.pause.ToString();
+            KeybindsMenuKeybindSwitchTxtbox.Text = prev.game.settings.KeyBinds.swap.ToString();
+            KeybindsMenuKeybindInstantDropTxtbox.Text = prev.game.settings.KeyBinds.insta.ToString();
+            KeybindsMenuKeybindRotateTxtbox.Text = prev.game.settings.KeyBinds.rotate.ToString();
+            KeybindsMenuKeybindLeftTxtbox.Text = prev.game.settings.KeyBinds.left.ToString();
+            KeybindsMenuKeybindRightTxtbox.Text = prev.game.settings.KeyBinds.right.ToString();
+            KeybindsMenuKeybindDownTxtbox.Text = prev.game.settings.KeyBinds.drop.ToString();
         }
 
         private void KeybindsMenuBackToSettings_Click(object sender, RoutedEventArgs e)

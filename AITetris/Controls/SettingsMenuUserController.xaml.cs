@@ -26,7 +26,8 @@ namespace AITetris.Controls
     {
         private string exeDir;
         public Settings settings;
-        public SettingsMenuUserController()
+        private GameBoard game;
+        public SettingsMenuUserController(GameBoard game)
         {
             InitializeComponent();
 
@@ -38,27 +39,29 @@ namespace AITetris.Controls
             SettingsSliderAITraining.Value = Convert.ToInt32(settings.enableTraining);
             SettingsSliderSaveBlock.Value = Convert.ToInt32(settings.enableSwapBlock);
             SettingsSliderNextBlock.Value = Convert.ToInt32(settings.enableNextBlock);
+            this.game = game;
         }
 
         private void SettingsControlsPauseMenu_Click(object sender, RoutedEventArgs e)
         {
-            //NavigationService.Navigate(new Uri("Pages/MainPage.xaml", UriKind.Relative));
+            game.GameBoardMainGrid.Children.Remove(this);
         }
 
         private void SettingsControlsApplySettings_Click(object sender, RoutedEventArgs e)
         {
             File.WriteAllText(exeDir + "/Assets/JSON/Settings.json", JsonSerializer.Serialize(settings, new JsonSerializerOptions() { WriteIndented = true }));
+            game.ApplySettings(settings);
         }
 
         private void SettingsControlsKeybinds_Click(object sender, RoutedEventArgs e)
         {
-            //KeybindsMenu menu = new KeybindsMenu(this);
-            //SettingsMenuGrid.Children.Add(menu);
-            //Grid.SetColumn(menu, 1);
-            //Grid.SetRow(menu, 1);
+            KeybindsMenu menu = new KeybindsMenu(game);
+            game.GameBoardMainGrid.Children.Add(menu);
+            Grid.SetColumn(menu, 1);
+            Grid.SetRow(menu, 1);
 
-            //Grid.SetColumnSpan(menu, 2);
-            //Grid.SetRowSpan(menu, 2);
+            Grid.SetColumnSpan(menu, 5);
+            Grid.SetRowSpan(menu, 7);
         }
 
         private void SettingsSliderNextBlock_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)

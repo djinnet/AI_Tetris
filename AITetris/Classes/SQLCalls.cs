@@ -18,7 +18,7 @@ namespace AITetris.Classes
 
             using(SqlConnection conn = new SqlConnection(connectionString))
             {
-                string query = "SELECT TOP 10 Name, Points, LinesCleared, GameTimeInMs, IsPlayer FROM Leaderboard ORDER BY Points DESC";
+                string query = "SELECT TOP 10 Name, Points, LinesCleared, GameTimeInMs, IsPlayer, Rank FROM Leaderboard ORDER BY Points DESC";
                 SqlCommand cmd = new SqlCommand(query, conn);
 
                 conn.Open();
@@ -26,7 +26,7 @@ namespace AITetris.Classes
 
                 while (reader.Read())
                 {
-                    games.Add(new Game(new Character(reader.GetString(0)), reader.GetInt32(1), reader.GetInt32(3), Convert.ToBoolean(reader.GetInt32(4)), reader.GetInt32(2)));
+                    games.Add(new Game(new Character(reader.GetString(0)), reader.GetInt32(1), reader.GetInt32(2), reader.GetInt32(3), Convert.ToBoolean(reader.GetInt32(4)), reader.GetInt32(5)));
                 }
 
                 reader.Close();

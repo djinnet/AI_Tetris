@@ -18,14 +18,16 @@ namespace AITetris.Classes
             this.settings = settings;
         }
 
-        public Game(Character character, int points, int time, bool isPlayer, int linesCleared)
+        public Game(Character character, int points, int linesCleared, int time, bool isPlayer, int rank)
         {
             this.character = character;
             this.points = points;
             this.time = time;
             this.isPlayer = isPlayer;
             this.linesCleared = linesCleared;
+            this.rank = rank;
         }
+
 
         public Board board;
         public Character character;
@@ -33,6 +35,7 @@ namespace AITetris.Classes
         public int time;
         public int linesCleared;
         public bool isPlayer;
+        public int rank;
         public Settings settings;
     }
 }

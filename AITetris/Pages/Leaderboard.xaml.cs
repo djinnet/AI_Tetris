@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -36,7 +37,7 @@ namespace AITetris.Pages
             Grid leaderboardGrid = LeaderboardGrid;
 
             // Amount of rows in the leaderboard
-            int rowCount = leaderboardGrid.RowDefinitions.Count;
+            int rowCount = scores.Count + 1;
 
             // Amount of columns in the leaderboard
             int columnCount = leaderboardGrid.ColumnDefinitions.Count;
@@ -115,12 +116,12 @@ namespace AITetris.Pages
 
                         label.Content = j switch
                         {
-                            0 => i.ToString(),
-                            1 => scores[i-1].character.name,
-                            2 => scores[i-1].points,
-                            3 => scores[i-1].linesCleared,
-                            4 => scores[i-1].time,
-                            5 => scores[i-1].isPlayer ? "Player" : "AI",
+                            0 => scores[i - 1].rank,
+                            1 => scores[i - 1].character.name,
+                            2 => scores[i - 1].points,
+                            3 => scores[i - 1].linesCleared,
+                            4 => scores[i - 1].time,
+                            5 => scores[i - 1].isPlayer ? "Player" : "AI",
                             _ => ""
                         };
 
