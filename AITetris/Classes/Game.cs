@@ -17,10 +17,21 @@ namespace AITetris.Classes
             this.isPlayer = character.GetType() == typeof(Player);
             this.settings = settings;
         }
+
+        public Game(Character character, int points, int time, bool isPlayer, int linesCleared)
+        {
+            this.character = character;
+            this.points = points;
+            this.time = time;
+            this.isPlayer = isPlayer;
+            this.linesCleared = linesCleared;
+        }
+
         public Board board;
         public Character character;
         public int points;
         public int time;
+        public int linesCleared;
         public bool isPlayer;
         public Settings settings;
     }

@@ -30,7 +30,7 @@ namespace AITetris.Pages
 
         private void FillLeaderboard()
         {
-            // List<Leaderboard> scores = new List<Leaderboard>();
+            List<Game> scores = SQLCalls.GetLeaderboardTop10();
 
             // Leaderbordgrid
             Grid leaderboardGrid = LeaderboardGrid;
@@ -112,14 +112,17 @@ namespace AITetris.Pages
                         Label label = new Label();
 
                         // Add content and styling to the label
-                        if(j == 0)
+
+                        label.Content = j switch
                         {
-                            label.Content = i.ToString();
-                        }
-                        else
-                        {
-                            label.Content = "Test: " + i.ToString() + " - " + j.ToString();
-                        }
+                            0 => i.ToString(),
+                            1 => scores[i-1].character.name,
+                            2 => scores[i-1].points,
+                            3 => scores[i-1].linesCleared,
+                            4 => scores[i-1].time,
+                            5 => scores[i-1].isPlayer ? "Player" : "AI",
+                            _ => ""
+                        };
 
                         label.HorizontalAlignment = HorizontalAlignment.Center;
                         label.VerticalAlignment = VerticalAlignment.Center;
