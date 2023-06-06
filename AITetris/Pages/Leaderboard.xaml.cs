@@ -63,18 +63,21 @@ namespace AITetris.Pages
                         switch (j)
                         {
                             case 0:
-                                label.Content = "Name";
+                                label.Content = "Rank";
                                 break;
                             case 1:
-                                label.Content = "Point";
+                                label.Content = "Name";
                                 break;
                             case 2:
-                                label.Content = "Lines";
+                                label.Content = "Point";
                                 break;
                             case 3:
-                                label.Content = "Time";
+                                label.Content = "Lines";
                                 break;
                             case 4:
+                                label.Content = "Time";
+                                break;
+                            case 5:
                                 label.Content = "Character";
                                 break;
 
@@ -109,7 +112,15 @@ namespace AITetris.Pages
                         Label label = new Label();
 
                         // Add content and styling to the label
-                        label.Content = "Test: " + i.ToString() + " - " + j.ToString();
+                        if(j == 0)
+                        {
+                            label.Content = i.ToString();
+                        }
+                        else
+                        {
+                            label.Content = "Test: " + i.ToString() + " - " + j.ToString();
+                        }
+
                         label.HorizontalAlignment = HorizontalAlignment.Center;
                         label.VerticalAlignment = VerticalAlignment.Center;
                         label.FontFamily = new FontFamily("Tahomaa");
