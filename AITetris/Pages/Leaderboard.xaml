@@ -110,6 +110,49 @@
                     
                 </Button>
 
+                <Grid
+                    x:Name="LeaderboardControlsNextPrievious">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Button
+                        x:Name="LeaderboardPrieviousTenBtn"
+                        Grid.Column="0"
+                        Grid.Row="0"
+                        Content="Prievious 10"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold" 
+                        Margin="2, 5"
+                        Click="LeaderboardPrieviousTenBtn_Click">
+
+                    </Button>
+
+                    <Button
+                        x:Name="LeaderboardNextTenBtn"
+                        Grid.Column="1"
+                        Grid.Row="0"
+                        Content="Next 10"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold" 
+                        Margin="2, 5"
+                        Click="LeaderboardNextTenBtn_Click">
+
+                    </Button>
+                </Grid>
+
                 <Button
                     x:Name="LeaderboardBackToMainBtn"
                     Content="Main Menu"

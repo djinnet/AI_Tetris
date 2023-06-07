@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AITetris.Classes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,15 +27,16 @@ namespace AITetris.Controls
 
             FillLeaderboard();
         }
+
         private void FillLeaderboard()
         {
-            // List<Leaderboard> scores = new List<Leaderboard>();
+            List<Game> scores = SQLCalls.GetLeaderboardTop10();
 
             // Leaderbordgrid
             Grid leaderboardGrid = LeaderboardGrid;
 
             // Amount of rows in the leaderboard
-            int rowCount = leaderboardGrid.RowDefinitions.Count;
+            int rowCount = scores.Count + 1;
 
             // Amount of columns in the leaderboard
             int columnCount = leaderboardGrid.ColumnDefinitions.Count;
@@ -61,18 +63,21 @@ namespace AITetris.Controls
                         switch (j)
                         {
                             case 0:
-                                label.Content = "Name";
+                                label.Content = "Rank";
                                 break;
                             case 1:
-                                label.Content = "Point";
+                                label.Content = "Name";
                                 break;
                             case 2:
-                                label.Content = "Lines";
+                                label.Content = "Point";
                                 break;
                             case 3:
-                                label.Content = "Time";
+                                label.Content = "Lines";
                                 break;
                             case 4:
+                                label.Content = "Time";
+                                break;
+                            case 5:
                                 label.Content = "Character";
                                 break;
 
@@ -107,7 +112,18 @@ namespace AITetris.Controls
                         Label label = new Label();
 
                         // Add content and styling to the label
-                        label.Content = "Test: " + i.ToString() + " - " + j.ToString();
+
+                        label.Content = j switch
+                        {
+                            0 => scores[i - 1].rank,
+                            1 => scores[i - 1].character.name,
+                            2 => scores[i - 1].points,
+                            3 => scores[i - 1].linesCleared,
+                            4 => scores[i - 1].time,
+                            5 => scores[i - 1].isPlayer ? "Player" : "AI",
+                            _ => ""
+                        };
+
                         label.HorizontalAlignment = HorizontalAlignment.Center;
                         label.VerticalAlignment = VerticalAlignment.Center;
                         label.FontFamily = new FontFamily("Tahomaa");
@@ -128,7 +144,22 @@ namespace AITetris.Controls
 
         private void LeaderboardBackToPauseBtn_Click(object sender, RoutedEventArgs e)
         {
-            // NavigationService.Navigate(new Uri("Pages/MainPage.xaml", UriKind.Relative));
+
+        }
+
+        private void LeaderboardControlsFindPlayerBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void LeaderboardPrieviousTenBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void LeaderboardNextTenBtn_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }
