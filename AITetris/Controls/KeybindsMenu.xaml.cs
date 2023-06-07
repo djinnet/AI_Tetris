@@ -26,6 +26,8 @@ namespace AITetris.Controls
     public partial class KeybindsMenu : UserControl
     {
         SettingsMenu prev;
+        GameBoard gamePrev;
+        Settings pauseMenuSettings;
         private bool isListeningForKey = false;
         private TextBox textbox;
         private string typeOfKeybind;
@@ -46,9 +48,33 @@ namespace AITetris.Controls
             KeybindsMenuKeybindDownTxtbox.Text = prev.settings.KeyBinds.drop.ToString();
         }
 
+        public KeybindsMenu(GameBoard prev, Settings pauseMenuSettings)
+        {
+            InitializeComponent();
+
+            gamePrev = prev;
+            this.pauseMenuSettings = pauseMenuSettings;
+
+            // Set keybinds from settings
+            KeybindsMenuKeybindPauseTxtbox.Text = pauseMenuSettings.KeyBinds.pause.ToString();
+            KeybindsMenuKeybindSwitchTxtbox.Text = pauseMenuSettings.KeyBinds.swap.ToString();
+            KeybindsMenuKeybindInstantDropTxtbox.Text = pauseMenuSettings.KeyBinds.insta.ToString();
+            KeybindsMenuKeybindRotateTxtbox.Text = pauseMenuSettings.KeyBinds.rotate.ToString();
+            KeybindsMenuKeybindLeftTxtbox.Text = pauseMenuSettings.KeyBinds.left.ToString();
+            KeybindsMenuKeybindRightTxtbox.Text = pauseMenuSettings.KeyBinds.right.ToString();
+            KeybindsMenuKeybindDownTxtbox.Text = pauseMenuSettings.KeyBinds.drop.ToString();
+        }
+
         private void KeybindsMenuBackToSettings_Click(object sender, RoutedEventArgs e)
         {
-            ((SettingsMenu)prev).SettingsMenuGrid.Children.Remove(this);
+            if(gamePrev != null)
+            {
+                gamePrev.GameBoardMainGrid.Children.Remove(this);
+            }
+            else
+            {
+                prev.SettingsMenuGrid.Children.Remove(this);
+            }
         }
 
         private void UserControl_PreviewKeyDown(object sender, KeyEventArgs e)
@@ -57,38 +83,77 @@ namespace AITetris.Controls
             {
                 Key pressedKey = e.Key;
 
-                switch (typeOfKeybind)
+                if(pauseMenuSettings != null)
                 {
-                    case "Pause":
-                        prev.settings.KeyBinds.pause = pressedKey;
-                        break;
+                    switch (typeOfKeybind)
+                    {
+                        case "Pause":
+                            pauseMenuSettings.KeyBinds.pause = pressedKey;
+                            break;
 
-                    case "Switch":
-                        prev.settings.KeyBinds.swap = pressedKey;
-                        break;
+                        case "Switch":
+                            pauseMenuSettings.KeyBinds.swap = pressedKey;
+                            break;
 
-                    case "InstantDrop":
-                        prev.settings.KeyBinds.insta = pressedKey;
-                        break;
+                        case "InstantDrop":
+                            pauseMenuSettings.KeyBinds.insta = pressedKey;
+                            break;
 
-                    case "Rotate":
-                        prev.settings.KeyBinds.rotate = pressedKey;
-                        break;
+                        case "Rotate":
+                            pauseMenuSettings.KeyBinds.rotate = pressedKey;
+                            break;
 
-                    case "Left":
-                        prev.settings.KeyBinds.left = pressedKey;
-                        break;
+                        case "Left":
+                            pauseMenuSettings.KeyBinds.left = pressedKey;
+                            break;
 
-                    case "Right":
-                        prev.settings.KeyBinds.right = pressedKey;
-                        break;
+                        case "Right":
+                            pauseMenuSettings.KeyBinds.right = pressedKey;
+                            break;
 
-                    case "Down":
-                        prev.settings.KeyBinds.drop = pressedKey;
-                        break;
+                        case "Down":
+                            pauseMenuSettings.KeyBinds.drop = pressedKey;
+                            break;
 
-                    default:
-                        break;
+                        default:
+                            break;
+                    }
+                }
+                else
+                {
+                    switch (typeOfKeybind)
+                    {
+                        case "Pause":
+                            prev.settings.KeyBinds.pause = pressedKey;
+                            break;
+
+                        case "Switch":
+                            prev.settings.KeyBinds.swap = pressedKey;
+                            break;
+
+                        case "InstantDrop":
+                            prev.settings.KeyBinds.insta = pressedKey;
+                            break;
+
+                        case "Rotate":
+                            prev.settings.KeyBinds.rotate = pressedKey;
+                            break;
+
+                        case "Left":
+                            prev.settings.KeyBinds.left = pressedKey;
+                            break;
+
+                        case "Right":
+                            prev.settings.KeyBinds.right = pressedKey;
+                            break;
+
+                        case "Down":
+                            prev.settings.KeyBinds.drop = pressedKey;
+                            break;
+
+                        default:
+                            break;
+                    }
                 }
 
                 textbox.Text = pressedKey.ToString();

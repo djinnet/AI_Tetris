@@ -21,6 +21,7 @@ using System.Windows.Shapes;
 using System.Windows.Threading;
 using AITetris.Classes;
 using AITetris.Controllers;
+using AITetris.Controls;
 
 namespace AITetris.Pages
 {
@@ -53,6 +54,7 @@ namespace AITetris.Pages
 
         private bool hasSwapped = false;
         private bool hasLost = false;
+        private bool isPaused = false;
 
         private int totalLinesCleared;
         private int points;
@@ -68,7 +70,9 @@ namespace AITetris.Pages
         private SoundPlayer SFXLineClear;
         private SoundPlayer SFXTetrisClear;
 
-        private Game game;
+        private PauseMenu pauseMenu;
+
+        public Game game;
 
         public GameBoard(Character character)
         {
@@ -97,6 +101,31 @@ namespace AITetris.Pages
 
             //Music start
             MusicStart();
+
+            pauseMenu = new PauseMenu(this);
+        }
+
+        public void TogglePauseGame()
+        {
+            if (!isPaused)
+            {
+                autoMoveTimer.Stop();
+                PauseTime(scoreboardTimer);
+                isPaused = true;
+                GameBoardMainGrid.Children.Add(pauseMenu);
+                Grid.SetColumn(pauseMenu, 1);
+                Grid.SetRow(pauseMenu, 1);
+
+                Grid.SetColumnSpan(pauseMenu, 5);
+                Grid.SetRowSpan(pauseMenu, 7);
+            }
+            else
+            {
+                isPaused = false;
+                autoMoveTimer.Start();
+                ResumeTime(scoreboardTimer);
+                GameBoardMainGrid.Children.Remove(pauseMenu);
+            }
         }
 
         private void FillBoard()
@@ -228,10 +257,10 @@ namespace AITetris.Pages
         {
             game.board.squares.AddRange(figure.squares);
             ClearLine();
-            StopAutoMove();
+            autoMoveTimer.Stop();
             hasSwapped = false;
             LoseGame();
-            if (!hasLost)
+            if (!hasLost && !isPaused)
             {
                 NextToGame();
             }
@@ -439,7 +468,15 @@ namespace AITetris.Pages
                 GameOver();
                 Debug.WriteLine("You lose!");
                 hasLost = true;
+            }
+        }
 
+        public void LoseGame(bool lose)
+        {
+            if (lose)
+            {
+                GameOver();
+                hasLost = true;
             }
         }
 
@@ -495,12 +532,6 @@ namespace AITetris.Pages
         private void AutoMove_Tick(object sender, EventArgs e)
         {
             MoveFigure("down");
-        }
-
-        private void StopAutoMove()
-        {
-            // Stop the timer
-            autoMoveTimer.Stop();
         }
 
         private void StartTime(DispatcherTimer timer)
@@ -648,10 +679,16 @@ namespace AITetris.Pages
             backgroundMusic.Volume = Convert.ToDouble(game.settings.volume) / 100;
         }
 
+        public void ApplySettings(Settings settings)
+        {
+            game.settings = settings;
+            ApplySettings();
+        }
+
 
         private void GameBoardActionsPauseBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            TogglePauseGame();
         }
 
         private void GameBoardActionsConsumeOneBtn_Click(object sender, RoutedEventArgs e)
@@ -673,34 +710,40 @@ namespace AITetris.Pages
         {
             if (!hasLost)
             {
-                switch (e.Key)
+                if(e.Key == game.settings.KeyBinds.pause)
                 {
-                    case Key k when k == game.settings.KeyBinds.left:
-                        SFXMove.Play();
-                        MoveFigure("left");
-                        break;
-                    case Key k when k == game.settings.KeyBinds.right:
-                        SFXMove.Play();
-                        MoveFigure("right");
-                        break;
-                    case Key k when k == game.settings.KeyBinds.rotate:
-                        RotateFigure();
-                        break;
-                    case Key k when k == game.settings.KeyBinds.drop:
-                        MoveFigure("down");
-                        break;
-                    case Key k when k == game.settings.KeyBinds.insta:
-                        InstaDrop();
-                        break;
-                    case Key k when k == game.settings.KeyBinds.pause:
-                        break;
-                    case Key k when k == game.settings.KeyBinds.swap:
-                        if (!hasSwapped && game.settings.enableSwapBlock)
-                        {
-                            hasSwapped = true;
-                            Swap();
-                        }
-                        break;
+                    TogglePauseGame();
+                }
+                if (!isPaused)
+                {
+                    switch (e.Key)
+                    {
+                        case Key k when k == game.settings.KeyBinds.left:
+                            SFXMove.Play();
+                            MoveFigure("left");
+                            break;
+                        case Key k when k == game.settings.KeyBinds.right:
+                            SFXMove.Play();
+                            MoveFigure("right");
+                            break;
+                        case Key k when k == game.settings.KeyBinds.rotate:
+                            RotateFigure();
+                            break;
+                        case Key k when k == game.settings.KeyBinds.drop:
+                            MoveFigure("down");
+                            break;
+                        case Key k when k == game.settings.KeyBinds.insta:
+                            InstaDrop();
+                            break;
+                        case Key k when k == game.settings.KeyBinds.swap:
+                            if (!hasSwapped && game.settings.enableSwapBlock)
+                            {
+                                hasSwapped = true;
+                                Swap();
+                            }
+                            break;
+                        default: break;
+                    }
                 }
             }
         }

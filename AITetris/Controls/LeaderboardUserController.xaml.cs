@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,31 +12,29 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using AITetris.Classes;
 
-namespace AITetris.Pages
+namespace AITetris.Controls
 {
     /// <summary>
-    /// Interaction logic for Leaderboard.xaml
+    /// Interaction logic for LeaderboardUserController.xaml
     /// </summary>
-    public partial class Leaderboard : Page
+    public partial class LeaderboardUserController : UserControl
     {
-        public Leaderboard()
+        public LeaderboardUserController()
         {
             InitializeComponent();
 
             FillLeaderboard();
         }
-
         private void FillLeaderboard()
         {
-            List<Game> scores = SQLCalls.GetLeaderboardTop10();
+            // List<Leaderboard> scores = new List<Leaderboard>();
 
             // Leaderbordgrid
             Grid leaderboardGrid = LeaderboardGrid;
 
             // Amount of rows in the leaderboard
-            int rowCount = scores.Count + 1;
+            int rowCount = leaderboardGrid.RowDefinitions.Count;
 
             // Amount of columns in the leaderboard
             int columnCount = leaderboardGrid.ColumnDefinitions.Count;
@@ -48,7 +45,7 @@ namespace AITetris.Pages
                 // Running for each column in the leaderboard
                 for (int j = 0; j < columnCount; j++)
                 {
-                    if(i == 0)
+                    if (i == 0)
                     {
                         // Border for each label
                         Border border = new Border();
@@ -64,21 +61,18 @@ namespace AITetris.Pages
                         switch (j)
                         {
                             case 0:
-                                label.Content = "Rank";
-                                break;
-                            case 1:
                                 label.Content = "Name";
                                 break;
-                            case 2:
+                            case 1:
                                 label.Content = "Point";
                                 break;
-                            case 3:
+                            case 2:
                                 label.Content = "Lines";
                                 break;
-                            case 4:
+                            case 3:
                                 label.Content = "Time";
                                 break;
-                            case 5:
+                            case 4:
                                 label.Content = "Character";
                                 break;
 
@@ -113,18 +107,7 @@ namespace AITetris.Pages
                         Label label = new Label();
 
                         // Add content and styling to the label
-
-                        label.Content = j switch
-                        {
-                            0 => scores[i - 1].rank,
-                            1 => scores[i - 1].character.name,
-                            2 => scores[i - 1].points,
-                            3 => scores[i - 1].linesCleared,
-                            4 => scores[i - 1].time,
-                            5 => scores[i - 1].isPlayer ? "Player" : "AI",
-                            _ => ""
-                        };
-
+                        label.Content = "Test: " + i.ToString() + " - " + j.ToString();
                         label.HorizontalAlignment = HorizontalAlignment.Center;
                         label.VerticalAlignment = VerticalAlignment.Center;
                         label.FontFamily = new FontFamily("Tahomaa");
@@ -143,14 +126,9 @@ namespace AITetris.Pages
             }
         }
 
-        private void LeaderboardBackToMainBtn_Click(object sender, RoutedEventArgs e)
+        private void LeaderboardBackToPauseBtn_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Uri("Pages/MainPage.xaml", UriKind.Relative));
-        }
-
-        private void LeaderboardControlsFindPlayerBtn_Click(object sender, RoutedEventArgs e)
-        {
-
+            // NavigationService.Navigate(new Uri("Pages/MainPage.xaml", UriKind.Relative));
         }
     }
 }
