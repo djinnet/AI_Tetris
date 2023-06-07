@@ -49,5 +49,10 @@ namespace AITetris.Controls
             game.TogglePauseGame();
             game.LoseGame(true);
         }
+
+        private void PauseMenuLeaderboard_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

@@ -73,20 +73,100 @@
             </Grid>
         </Border>
 
-        <Button
-            x:Name="LeaderboardBackToPauseBtn"
+        <Border
+            x:Name="LeaderbordControlsBorder"
             Grid.Column="1"
-            Grid.Row="3"
-            Height="35"
-            Content="Pause Menu"
-            HorizontalContentAlignment="Center"
-            VerticalContentAlignment="Center"
-            FontFamily="Tahoma"
-            FontSize="12"
-            FontWeight="Bold" 
-            Margin="0, 5"
-            Click="LeaderboardBackToPauseBtn_Click">
+            Grid.Row="3">
 
-        </Button>
+            <StackPanel
+                x:Name="LeaderboardControlsSP"
+                HorizontalAlignment="Center"
+                VerticalAlignment="Center"
+                MinWidth="300">
+
+                <Label 
+                    x:Name="LeaderboardControlsFindPlayerLbl"
+                    Content="Enter a name"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="12"
+                    FontWeight="Bold"/>
+
+                <TextBox
+                    x:Name="LeaderboardControlsFindPlayerTxtbox"
+                    TextWrapping="Wrap"
+                    Margin="0, 5" />
+
+                <Button
+                    x:Name="LeaderboardControlsFindPlayerBtn"
+                    Content="Find player"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="12"
+                    FontWeight="Bold" 
+                    Margin="0, 5"
+                    Click="LeaderboardControlsFindPlayerBtn_Click">
+
+                </Button>
+
+                <Grid
+                    x:Name="LeaderboardControlsNextPrievious">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <Button
+                        x:Name="LeaderboardPrieviousTenBtn"
+                        Grid.Column="0"
+                        Grid.Row="0"
+                        Content="Prievious 10"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold" 
+                        Margin="2, 5"
+                        Click="LeaderboardPrieviousTenBtn_Click">
+
+                    </Button>
+
+                    <Button
+                        x:Name="LeaderboardNextTenBtn"
+                        Grid.Column="1"
+                        Grid.Row="0"
+                        Content="Next 10"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold" 
+                        Margin="2, 5"
+                        Click="LeaderboardNextTenBtn_Click">
+
+                    </Button>
+                </Grid>
+
+                <Button
+                    x:Name="LeaderboardBackToPauseBtn"
+                    Content="Pause Menu"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="12"
+                    FontWeight="Bold" 
+                    Margin="0, 5"
+                    Click="LeaderboardBackToPauseBtn_Click">
+
+                </Button>
+            </StackPanel>
+        </Border>
     </Grid>
 </UserControl>

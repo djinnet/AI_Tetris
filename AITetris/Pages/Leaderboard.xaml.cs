@@ -152,5 +152,15 @@ namespace AITetris.Pages
         {
 
         }
+
+        private void LeaderboardPrieviousTenBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void LeaderboardNextTenBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }
