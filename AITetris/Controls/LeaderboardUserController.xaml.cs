@@ -1,6 +1,7 @@
-﻿using System;
+﻿using AITetris.Classes;
+using AITetris.Pages;
+using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -13,18 +14,19 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using AITetris.Classes;
 
-namespace AITetris.Pages
+namespace AITetris.Controls
 {
     /// <summary>
-    /// Interaction logic for Leaderboard.xaml
+    /// Interaction logic for LeaderboardUserController.xaml
     /// </summary>
-    public partial class Leaderboard : Page
+    public partial class LeaderboardUserController : UserControl
     {
-        public Leaderboard()
+        GameBoard game;
+        public LeaderboardUserController(GameBoard game)
         {
             InitializeComponent();
+            this.game = game;
 
             FillLeaderboard();
         }
@@ -67,7 +69,7 @@ namespace AITetris.Pages
                 // Running for each column in the leaderboard
                 for (int j = 0; j < columnCount; j++)
                 {
-                    if(i == 0)
+                    if (i == 0)
                     {
                         // Border for each label
                         Border border = new Border();
@@ -162,9 +164,9 @@ namespace AITetris.Pages
             }
         }
 
-        private void LeaderboardBackToMainBtn_Click(object sender, RoutedEventArgs e)
+        private void LeaderboardBackToPauseBtn_Click(object sender, RoutedEventArgs e)
         {
-            NavigationService.Navigate(new Uri("Pages/MainPage.xaml", UriKind.Relative));
+            game.GameBoardMainGrid.Children.Remove(this);
         }
 
         private void LeaderboardControlsFindPlayerBtn_Click(object sender, RoutedEventArgs e)
