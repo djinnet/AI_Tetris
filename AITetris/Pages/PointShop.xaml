@@ -9,6 +9,537 @@
       Title="PointShop">
 
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="25" />
+            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="25" />
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="25" />
+            <RowDefinition Height="100" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="25" />
+        </Grid.RowDefinitions>
+
+        <Label
+            x:Name="ShopTitleLbl"
+            Grid.Column="1"
+            Grid.Row="1"
+            Grid.ColumnSpan="2"
+            Content="Point shop"
+            HorizontalContentAlignment="Center"
+            VerticalContentAlignment="Center"
+            FontFamily="Tahoma"
+            FontSize="25"
+            FontWeight="Bold" />
         
+        <!-- Upgrades -->
+        <Border
+            x:Name="PointShopShopGridBorder"
+            Grid.Column="1"
+            Grid.Row="2"
+            MinWidth="375"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+
+            <Grid
+                x:Name="PointShopShopGrid">
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="*" />
+                </Grid.RowDefinitions>
+
+                <!-- Upgrades 1-12-->
+                <StackPanel
+                    x:Name="Upgrade1SP"
+                    Grid.Column="0"
+                    Grid.Row="0">
+
+                    <Label
+                        x:Name="Upgrade1_NameLbl"
+                        Content="Upgrade 1"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold" />
+
+                    <Label
+                        x:Name="Upgrade1_PriceLbl"
+                        Content="500 Meta"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="9"
+                        FontWeight="Bold" />
+
+                    <Button
+                        x:Name="Upgrade1_buyBtn"
+                        Content="Buy"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold" 
+                        Margin="0, 5"
+                        Click="Upgrade1_buyBtn_Click">
+                    </Button>
+
+                </StackPanel>
+
+                <StackPanel
+                    x:Name="Upgrade2SP"
+                    Grid.Column="1"
+                    Grid.Row="0">
+
+                    <Label
+                        x:Name="Upgrade2_NameLbl"
+                        Content="Upgrade 2"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold" />
+
+                    <Label
+                        x:Name="Upgrade2_PriceLbl"
+                        Content="500 Meta"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="9"
+                        FontWeight="Bold" />
+
+                    <Button
+                        x:Name="Upgrade2_buyBtn"
+                        Content="Buy"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold" 
+                        Margin="0, 5"
+                        Click="Upgrade2_buyBtn_Click">
+                    </Button>
+
+                </StackPanel>
+
+                <StackPanel
+                    x:Name="Upgrade3SP"
+                    Grid.Column="2"
+                    Grid.Row="0">
+
+                    <Label
+                        x:Name="Upgrade3_NameLbl"
+                        Content="Upgrade 3"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold" />
+
+                    <Label
+                        x:Name="Upgrade3_PriceLbl"
+                        Content="500 Meta"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="9"
+                        FontWeight="Bold" />
+
+                    <Button
+                        x:Name="Upgrade3_buyBtn"
+                        Content="Buy"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold" 
+                        Margin="0, 5"
+                        Click="Upgrade3_buyBtn_Click">
+                    </Button>
+
+                </StackPanel>
+
+                <StackPanel
+                    x:Name="Upgrade4SP"
+                    Grid.Column="0"
+                    Grid.Row="1">
+
+                    <Label
+                        x:Name="Upgrade4_NameLbl"
+                        Content="Upgrade 4"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold" />
+
+                    <Label
+                        x:Name="Upgrade4_PriceLbl"
+                        Content="500 Meta"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="9"
+                        FontWeight="Bold" />
+
+                    <Button
+                        x:Name="Upgrade4_buyBtn"
+                        Content="Buy"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold" 
+                        Margin="0, 5"
+                        Click="Upgrade4_buyBtn_Click">
+                    </Button>
+
+                </StackPanel>
+
+                <StackPanel
+                    x:Name="Upgrade5SP"
+                    Grid.Column="1"
+                    Grid.Row="1">
+
+                    <Label
+                        x:Name="Upgrade5_NameLbl"
+                        Content="Upgrade 5"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold" />
+
+                    <Label
+                        x:Name="Upgrade5_PriceLbl"
+                        Content="500 Meta"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="9"
+                        FontWeight="Bold" />
+
+                    <Button
+                        x:Name="Upgrade5_buyBtn"
+                        Content="Buy"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold" 
+                        Margin="0, 5"
+                        Click="Upgrade5_buyBtn_Click">
+                    </Button>
+
+                </StackPanel>
+
+                <StackPanel
+                    x:Name="Upgrade6SP"
+                    Grid.Column="2"
+                    Grid.Row="1">
+
+                    <Label
+                        x:Name="Upgrade6_NameLbl"
+                        Content="Upgrade 6"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold" />
+
+                    <Label
+                        x:Name="Upgrade6_PriceLbl"
+                        Content="500 Meta"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="9"
+                        FontWeight="Bold" />
+
+                    <Button
+                        x:Name="Upgrade6_buyBtn"
+                        Content="Buy"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold" 
+                        Margin="0, 5"
+                        Click="Upgrade6_buyBtn_Click">
+                    </Button>
+
+                </StackPanel>
+
+                <StackPanel
+                    x:Name="Upgrade7SP"
+                    Grid.Column="0"
+                    Grid.Row="2">
+
+                    <Label
+                        x:Name="Upgrade7_NameLbl"
+                        Content="Upgrade 7"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold" />
+
+                    <Label
+                        x:Name="Upgrade7_PriceLbl"
+                        Content="500 Meta"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="9"
+                        FontWeight="Bold" />
+
+                    <Button
+                        x:Name="Upgrade7_buyBtn"
+                        Content="Buy"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold" 
+                        Margin="0, 5"
+                        Click="Upgrade7_buyBtn_Click">
+                    </Button>
+
+                </StackPanel>
+
+                <StackPanel
+                    x:Name="Upgrade8SP"
+                    Grid.Column="1"
+                    Grid.Row="2">
+
+                    <Label
+                        x:Name="Upgrade8_NameLbl"
+                        Content="Upgrade 8"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold" />
+
+                    <Label
+                        x:Name="Upgrade8_PriceLbl"
+                        Content="500 Meta"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="9"
+                        FontWeight="Bold" />
+
+                    <Button
+                        x:Name="Upgrade8_buyBtn"
+                        Content="Buy"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold" 
+                        Margin="0, 5"
+                        Click="Upgrade8_buyBtn_Click">
+                    </Button>
+
+                </StackPanel>
+
+                <StackPanel
+                    x:Name="Upgrade9SP"
+                    Grid.Column="2"
+                    Grid.Row="2">
+
+                    <Label
+                        x:Name="Upgrade9_NameLbl"
+                        Content="Upgrade 9"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold" />
+
+                    <Label
+                        x:Name="Upgrade9_PriceLbl"
+                        Content="500 Meta"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="9"
+                        FontWeight="Bold" />
+
+                    <Button
+                        x:Name="Upgrade9_buyBtn"
+                        Content="Buy"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold" 
+                        Margin="0, 5"
+                        Click="Upgrade9_buyBtn_Click">
+                    </Button>
+
+                </StackPanel>
+
+                <StackPanel
+                    x:Name="Upgrade10SP"
+                    Grid.Column="0"
+                    Grid.Row="3">
+
+                    <Label
+                        x:Name="Upgrade10_NameLbl"
+                        Content="Upgrade 10"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold" />
+
+                    <Label
+                        x:Name="Upgrade10_PriceLbl"
+                        Content="500 Meta"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="9"
+                        FontWeight="Bold" />
+
+                    <Button
+                        x:Name="Upgrade10_buyBtn"
+                        Content="Buy"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold" 
+                        Margin="0, 5"
+                        Click="Upgrade10_buyBtn_Click">
+                    </Button>
+
+                </StackPanel>
+
+                <StackPanel
+                    x:Name="Upgrade11SP"
+                    Grid.Column="1"
+                    Grid.Row="3">
+
+                    <Label
+                        x:Name="Upgrade11_NameLbl"
+                        Content="Upgrade 11"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold" />
+
+                    <Label
+                        x:Name="Upgrade11_PriceLbl"
+                        Content="500 Meta"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="9"
+                        FontWeight="Bold" />
+
+                    <Button
+                        x:Name="Upgrade11_buyBtn"
+                        Content="Buy"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold" 
+                        Margin="0, 5"
+                        Click="Upgrade11_buyBtn_Click">
+                    </Button>
+
+                </StackPanel>
+
+                <StackPanel
+                    x:Name="Upgrade12SP"
+                    Grid.Column="2"
+                    Grid.Row="3">
+
+                    <Label
+                        x:Name="Upgrade12_NameLbl"
+                        Content="Upgrade 12"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold" />
+
+                    <Label
+                        x:Name="Upgrade12_PriceLbl"
+                        Content="500 Meta"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="9"
+                        FontWeight="Bold" />
+
+                    <Button
+                        x:Name="Upgrade12_buyBtn"
+                        Content="Buy"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold" 
+                        Margin="0, 5"
+                        Click="Upgrade12_buyBtn_Click">
+                    </Button>
+
+                </StackPanel>
+            </Grid>
+            
+        </Border>
+
+        <Border
+            x:Name="PointShopShopControlsBorder"
+            Grid.Column="1"
+            Grid.Row="3"
+            MinWidth="375"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Top">
+
+            <StackPanel
+                x:Name="PointShopShopControlsSP">
+
+                <Label
+                    x:Name="PointShopShopControlsMetaCurrency"
+                    Content="Wallet: 0"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="20"
+                    FontWeight="Bold" />
+
+                <Button
+                    x:Name="PointShopShopControlsBackToMainMenu"
+                    Content="Main Menu"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="15"
+                    FontWeight="Bold" 
+                    Margin="0, 10"
+                    Click="PointShopShopControlsBackToMainMenu_Click">
+                </Button>
+            </StackPanel>
+        </Border>
     </Grid>
 </Page>
