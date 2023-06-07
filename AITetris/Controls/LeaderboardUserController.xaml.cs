@@ -1,4 +1,5 @@
 ﻿using AITetris.Classes;
+using AITetris.Pages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -21,9 +22,11 @@ namespace AITetris.Controls
     /// </summary>
     public partial class LeaderboardUserController : UserControl
     {
-        public LeaderboardUserController()
+        GameBoard game;
+        public LeaderboardUserController(GameBoard game)
         {
             InitializeComponent();
+            this.game = game;
 
             FillLeaderboard();
         }
@@ -163,7 +166,7 @@ namespace AITetris.Controls
 
         private void LeaderboardBackToPauseBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            game.GameBoardMainGrid.Children.Remove(this);
         }
 
         private void LeaderboardControlsFindPlayerBtn_Click(object sender, RoutedEventArgs e)
