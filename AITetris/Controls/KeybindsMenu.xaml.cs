@@ -56,13 +56,13 @@ namespace AITetris.Controls
             this.pauseMenuSettings = pauseMenuSettings;
 
             // Set keybinds from settings
-            KeybindsMenuKeybindPauseTxtbox.Text = prev.game.settings.KeyBinds.pause.ToString();
-            KeybindsMenuKeybindSwitchTxtbox.Text = prev.game.settings.KeyBinds.swap.ToString();
-            KeybindsMenuKeybindInstantDropTxtbox.Text = prev.game.settings.KeyBinds.insta.ToString();
-            KeybindsMenuKeybindRotateTxtbox.Text = prev.game.settings.KeyBinds.rotate.ToString();
-            KeybindsMenuKeybindLeftTxtbox.Text = prev.game.settings.KeyBinds.left.ToString();
-            KeybindsMenuKeybindRightTxtbox.Text = prev.game.settings.KeyBinds.right.ToString();
-            KeybindsMenuKeybindDownTxtbox.Text = prev.game.settings.KeyBinds.drop.ToString();
+            KeybindsMenuKeybindPauseTxtbox.Text = pauseMenuSettings.KeyBinds.pause.ToString();
+            KeybindsMenuKeybindSwitchTxtbox.Text = pauseMenuSettings.KeyBinds.swap.ToString();
+            KeybindsMenuKeybindInstantDropTxtbox.Text = pauseMenuSettings.KeyBinds.insta.ToString();
+            KeybindsMenuKeybindRotateTxtbox.Text = pauseMenuSettings.KeyBinds.rotate.ToString();
+            KeybindsMenuKeybindLeftTxtbox.Text = pauseMenuSettings.KeyBinds.left.ToString();
+            KeybindsMenuKeybindRightTxtbox.Text = pauseMenuSettings.KeyBinds.right.ToString();
+            KeybindsMenuKeybindDownTxtbox.Text = pauseMenuSettings.KeyBinds.drop.ToString();
         }
 
         private void KeybindsMenuBackToSettings_Click(object sender, RoutedEventArgs e)
