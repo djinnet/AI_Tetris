@@ -253,7 +253,12 @@ namespace AITetris.Pages
                 }
                 else
                 {
-                    //TODO AI create
+                    int populationSize = 10;
+                    // (((xBoard.length + border) * yBoard.length) + gameFigure.squares + nextFigure.squares + swapFigure.squares) * outputAmount
+                    int inputSize = (((10 + 2) * 20) + 4 + 4 + 4) * 4;
+                    AI ai = new AI(Nametxtbox.Text,populationSize,inputSize);
+                    GameBoard gameBoard = new GameBoard(ai);
+                    NavigationService.Navigate(gameBoard);
                 }
             }
             else

@@ -11,9 +11,10 @@ namespace AITetris.Classes
         public Board(int xLength, int yLength)
         {
             squares = new List<Square>();
+            gridSize= xLength * yLength;
         }
 
-        public bool[,] grid;
+        public int gridSize;
         public List<Square> squares;
     }
 }
