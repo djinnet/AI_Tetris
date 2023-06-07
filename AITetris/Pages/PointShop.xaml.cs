@@ -28,9 +28,28 @@ namespace AITetris.Pages
         {
             InitializeComponent();
 
+            ChangeButtonEnabledState();
+
             // Todo - Set this to current meta currency
             metaCurrency = 1000;
             PointShopShopControlsMetaCurrency.Content = metaCurrency;
+        }
+
+        private void ChangeButtonEnabledState()
+        {
+            for (int i = 0; i < PointShopShopGrid.Children.Count; i++)
+            {
+                if (PointShopShopGrid.Children[i] is StackPanel stackPanel)
+                {
+                    foreach (var child in stackPanel.Children)
+                    {
+                        if (child is Button button)
+                        {
+                            button.IsEnabled = !upgradeStates[i];
+                        }
+                    }
+                }
+            }
         }
 
         private void BuyUpgrade(int index, int price, Button button)
