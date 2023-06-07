@@ -52,7 +52,13 @@ namespace AITetris.Controls
 
         private void PauseMenuLeaderboard_Click(object sender, RoutedEventArgs e)
         {
+            LeaderboardUserController leaderboard = new LeaderboardUserController(game);
+            game.GameBoardMainGrid.Children.Add(leaderboard);
+            Grid.SetColumn(leaderboard, 1);
+            Grid.SetRow(leaderboard, 1);
 
+            Grid.SetColumnSpan(leaderboard, 5);
+            Grid.SetRowSpan(leaderboard, 7);
         }
     }
 }
