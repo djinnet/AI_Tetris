@@ -32,7 +32,7 @@ namespace AITetris.Controls
             InitializeComponent();
 
             exeDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            settings = JsonSerializer.Deserialize<Settings>(File.ReadAllText(exeDir + "/Assets/JSON/Settings.json"));
+            settings = game.game.settings;
             SettingsSliderVolume.Value = settings.volume;
             SettingsSliderSpeed.Value = settings.startSpeed;
             SettingsSliderDeltaSpeed.Value = settings.gameSpeed;
