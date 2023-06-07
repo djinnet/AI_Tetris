@@ -47,7 +47,7 @@
             <Grid
                 x:Name="LeaderboardGrid">
 
-                <Grid.ColumnDefinitions>
+                <!--<Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
@@ -67,7 +67,7 @@
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
                     <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
+                </Grid.RowDefinitions>-->
 
 
             </Grid>
@@ -153,6 +153,19 @@
 
                     </Button>
                 </Grid>
+
+                <Button
+                    x:Name="LeaderboardRefreshBtn"
+                    Content="Refresh"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="12"
+                    FontWeight="Bold" 
+                    Margin="0, 5"
+                    Click="LeaderboardRefreshBtn_Click">
+
+                </Button>
 
                 <Button
                     x:Name="LeaderboardBackToPauseBtn"
