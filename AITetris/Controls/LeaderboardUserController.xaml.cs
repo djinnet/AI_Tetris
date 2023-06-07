@@ -35,11 +35,30 @@ namespace AITetris.Controls
             // Leaderbordgrid
             Grid leaderboardGrid = LeaderboardGrid;
 
+            // Clear current leaderboard
+            leaderboardGrid.Children.Clear();
+
+            // Remove current definitions
+            leaderboardGrid.RowDefinitions.Clear();
+            leaderboardGrid.ColumnDefinitions.Clear();
+
             // Amount of rows in the leaderboard
             int rowCount = scores.Count + 1;
 
             // Amount of columns in the leaderboard
-            int columnCount = leaderboardGrid.ColumnDefinitions.Count;
+            int columnCount = 6;
+
+            // Create new row definitions
+            for (int i = 0; i < rowCount; i++)
+            {
+                leaderboardGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
+            }
+
+            // Create new row definitions
+            for (int i = 0; i < columnCount; i++)
+            {
+                leaderboardGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
+            }
 
             // Running for each row in the leaderboard
             for (int i = 0; i < rowCount; i++)
@@ -158,6 +177,11 @@ namespace AITetris.Controls
         }
 
         private void LeaderboardNextTenBtn_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void LeaderboardRefreshBtn_Click(object sender, RoutedEventArgs e)
         {
 
         }

@@ -26,6 +26,8 @@ namespace AITetris
         public MainWindow()
         {
             InitializeComponent();
+            Loaded += MainWindow_Loaded;
+
             try
             {
                 File.ReadAllText(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "/Assets/JSON/Settings.json");
@@ -35,6 +37,11 @@ namespace AITetris
                 File.WriteAllText(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "/Assets/JSON/Settings.json", JsonSerializer.Serialize(new Settings(), new JsonSerializerOptions() { WriteIndented = true }));
             }
             NavigationService.Navigate(new Uri("Pages/MainPage.xaml", UriKind.Relative));
+        }
+        private void MainWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            WindowStyle = WindowStyle.None;
+            WindowState = WindowState.Maximized;
         }
     }
 }
