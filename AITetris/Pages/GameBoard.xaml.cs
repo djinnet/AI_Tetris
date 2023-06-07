@@ -62,11 +62,7 @@ namespace AITetris.Pages
         private bool hasLost = false;
         private bool isPaused = false;
 
-        // Scores
-        private int totalLinesCleared;
-        private int points;
-
-        // Execution directory
+        //Execution directory
         private string exeDir;
 
         // Audio variables
@@ -464,7 +460,7 @@ namespace AITetris.Pages
                     EraseSquares(above.ToArray(), GameBoardGameGrid);
                     DrawSquares(above.ToArray(), GameBoardGameGrid);
 
-                    totalLinesCleared++;
+                    game.linesCleared++;
                     SpeedUp();
                     linesCleared++;
                 }
@@ -497,11 +493,13 @@ namespace AITetris.Pages
 
         private void GameOver()
         {
+            game.time = Convert.ToInt32(elapsedTime.TotalMilliseconds);
+            SQLCalls.CreateLeaderboardEntry(game);
             StopTime(scoreboardTimer);
             autoMoveTimer.Stop();
 
             gameOverMelody.Play();
-            GameOverMenu menu = new GameOverMenu();
+            GameOverMenu menu = new GameOverMenu(game);
             GameBoardMainGrid.Children.Add(menu);
             Grid.SetColumn(menu, 1);
             Grid.SetRow(menu, 1);
@@ -762,7 +760,7 @@ namespace AITetris.Pages
 
         private void SpeedUp()
         {
-            if (totalLinesCleared % 10 == 0)
+            if (game.linesCleared % 10 == 0)
             {
                 autoMoveTimerInterval -= autoMoveTimerInterval * (game.settings.gameSpeed / 100);
             }
@@ -779,10 +777,10 @@ namespace AITetris.Pages
                 SFXLineClear.Play();
             }
             
-            points += (int)Math.Pow(2, lines) * 100;
+            game.points += (int)Math.Pow(2, lines) * 100;
 
-            GameBoardScorePointLbl.Content = "Point: " + points;
-            GameBoardScoreLineClearedLbl.Content = "Lines: " + totalLinesCleared;
+            GameBoardScorePointLbl.Content = "Point: " + game.points;
+            GameBoardScoreLineClearedLbl.Content = "Lines: " + game.linesCleared;
         }
 
         private void ApplySettings()

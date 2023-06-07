@@ -21,14 +21,16 @@ namespace AITetris.Controllers
     /// </summary>
     public partial class GameOverMenu : UserControl
     {
-        public GameOverMenu()
+        public GameOverMenu(Game game)
         {
             InitializeComponent();
-            FillLeaderboard();
+            game = SQLCalls.GetExactLeaderboardEntry(game);
+            List<Game> leaderboard = SQLCalls.Get4AboveCurrentRank(game.rank);
+            leaderboard.Add(game);
+            FillLeaderboard(leaderboard);
         }
-        private void FillLeaderboard()
+        private void FillLeaderboard(List<Game> scores)
         {
-            List<Game> scores = SQLCalls.GetLeaderboardTop10();
 
             // Leaderbordgrid
             Grid leaderboardGrid = LeaderboardGrid;
