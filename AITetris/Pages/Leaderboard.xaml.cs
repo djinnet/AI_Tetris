@@ -22,6 +22,8 @@ namespace AITetris.Pages
     /// </summary>
     public partial class Leaderboard : Page
     {
+        List<Game> scores = SQLCalls.GetLeaderboardTop10();
+        bool isSerching = false;
         public Leaderboard()
         {
             InitializeComponent();
@@ -31,8 +33,7 @@ namespace AITetris.Pages
 
         private void FillLeaderboard()
         {
-            List<Game> scores = SQLCalls.GetLeaderboardTop10();
-
+            
             // Leaderbordgrid
             Grid leaderboardGrid = LeaderboardGrid;
 
@@ -169,22 +170,84 @@ namespace AITetris.Pages
 
         private void LeaderboardControlsFindPlayerBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            scores = SQLCalls.SearchLeaderboardOnName(LeaderboardControlsFindPlayerTxtbox.Text);
+            LeaderboardGrid.Children.Clear();
+            isSerching = true;
+            FillLeaderboard();
         }
 
         private void LeaderboardPrieviousTenBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            if(isSerching)
+            {
+                if (SQLCalls.GetPrevious10Leaderboard(scores[0].rank, LeaderboardControlsFindPlayerTxtbox.Text).Count != 0)
+                {
+                    scores = SQLCalls.GetPrevious10Leaderboard(scores[0].rank, LeaderboardControlsFindPlayerTxtbox.Text);
+                    LeaderboardGrid.Children.Clear();
+                    FillLeaderboard();
+                    LeaderboardNextTenBtn.IsEnabled = true;
+                }
+                else
+                {
+                    LeaderboardPrieviousTenBtn.IsEnabled = false;
+                }
+            }
+            else
+            {
+                if (SQLCalls.GetPrevious10Leaderboard(scores[0].rank).Count != 0 )
+                {
+                    scores = SQLCalls.GetPrevious10Leaderboard(scores[0].rank);
+                    LeaderboardGrid.Children.Clear();
+                    FillLeaderboard();
+                    LeaderboardNextTenBtn.IsEnabled = true;
+                }
+                else
+                {
+                    LeaderboardPrieviousTenBtn.IsEnabled = false;
+                }
+            }
         }
 
         private void LeaderboardNextTenBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            if (isSerching)
+            {
+                if (SQLCalls.GetNext10Leaderboard(scores[scores.Count - 1].rank, LeaderboardControlsFindPlayerTxtbox.Text).Count != 0)
+                {
+                    scores = SQLCalls.GetNext10Leaderboard(scores[scores.Count - 1].rank, LeaderboardControlsFindPlayerTxtbox.Text);
+                    LeaderboardGrid.Children.Clear();
+                    FillLeaderboard();
+                    LeaderboardPrieviousTenBtn.IsEnabled = true;
+                }
+                else
+                {
+                    LeaderboardNextTenBtn.IsEnabled = false;
+                }
+            }
+            else
+            {
+                if(SQLCalls.GetNext10Leaderboard(scores[scores.Count - 1].rank).Count != 0)
+                {
+                    scores = SQLCalls.GetNext10Leaderboard(scores[scores.Count - 1].rank);
+                    LeaderboardGrid.Children.Clear();
+                    FillLeaderboard();
+                    LeaderboardPrieviousTenBtn.IsEnabled = true;
+                }
+                else
+                {
+                    LeaderboardNextTenBtn.IsEnabled = false;
+                }
+            }
         }
 
         private void LeaderboardRefreshBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            scores = SQLCalls.GetLeaderboardTop10();
+            LeaderboardGrid.Children.Clear();
+            isSerching = false;
+            LeaderboardPrieviousTenBtn.IsEnabled = true;
+            LeaderboardNextTenBtn.IsEnabled = true;
+            FillLeaderboard();
         }
     }
 }
