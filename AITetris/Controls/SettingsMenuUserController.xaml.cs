@@ -55,7 +55,7 @@ namespace AITetris.Controls
 
         private void SettingsControlsKeybinds_Click(object sender, RoutedEventArgs e)
         {
-            KeybindsMenu menu = new KeybindsMenu(game);
+            KeybindsMenu menu = new KeybindsMenu(game, settings);
             game.GameBoardMainGrid.Children.Add(menu);
             Grid.SetColumn(menu, 1);
             Grid.SetRow(menu, 1);
