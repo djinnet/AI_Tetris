@@ -18,7 +18,7 @@ namespace AITetris.Classes
 
             for (int i = 0; i < shape.GetLength(0); i++)
             {
-                squares[i] = new Square(shape[i, 0], shape[i, 1]);
+                squares[i] = new Square(shape[i, 0], shape[i, 1], color);
             }
 
             ShapeToBoard();
@@ -28,7 +28,8 @@ namespace AITetris.Classes
         public Square[] squares;
         public FigureType figureType;
 
-        public int[] referenceCoords;
+        private int[] referenceCoords;
+        private string color;
 
         public void Rotate()
         {
@@ -82,75 +83,60 @@ namespace AITetris.Classes
                     //  * * * *
                     //  * * * *
                     shape = new int[,] { { -1, 0 }, { 0, 0 }, { 1, 0 }, { 2, 0 } };
-                    //shape = new bool[,] { { false, false, true, false },
-                    //                       { false, false, true, false },
-                    //                       { false, false, true, false },
-                    //                       { false, false, true, false }
-                    //                     };
+                    color = "GreenBluePrimary";
+
                     break;
                 case FigureType.J:
                     //  x * *
                     //  x x x
                     //  * * *
                     shape = new int[,] { { -1, 1 }, { -1, 0 }, { 0, 0 }, { 1, 0 } };
-                    //shape = new bool[,] { { false, true, true },
-                    //                       { false, true, false },
-                    //                       { false, true, false }
-                    //                     };
+                    color = "BluePrimary";
+
                     break;
                 case FigureType.L:
                     //  * * x
                     //  x x x
                     //  * * *
                     shape = new int[,] { { -1, 0 }, { 0, 0 }, { 1, 0 }, { 1, 1 } };
-                    //shape = new bool[,] { { false, true, false },
-                    //                       { false, true, false },
-                    //                       { false, true, true }
-                    //                     };
+                    color = "RedPrimary";
+
                     break;
                 case FigureType.O:
                     //  * x x *
                     //  * x x *
                     //  * * * *
                     shape = new int[,] { { 0, 1 }, { 0, 0 }, { 1, 1 }, { 1, 0 } };
-                    //shape = new bool[,] { { false, false, false },
-                    //                       { false, true, true, },
-                    //                       { false, true, true, },
-                    //                       { false, false, false }
-                    //                     };
+                    color = "PurplePrimary";
+
                     break;
                 case FigureType.S:
                     //  * x x
                     //  x x *
                     //  * * *
                     shape = new int[,] { { -1, 0 }, { 0, 0 }, { 0, 1 }, { 1, 1 } };
-                    //shape = new bool[,] { { false, true, false },
-                    //                       { false, true, true },
-                    //                       { false, false, true }
-                    //                     };
+                    color = "GreenPrimary";
+
                     break;
                 case FigureType.T:
                     //  * x *
                     //  x x x
                     //  * * *
                     shape = new int[,] { { -1, 0 }, { 0, 0 }, { 0, 1 }, { 1, 0 } };
-                    //shape = new bool[,] { { false, true, false },
-                    //                       { false, true, true },
-                    //                       { false, true, false }
-                    //                     };
+                    color = "BlueMaroonPrimary";
+
                     break;
                 case FigureType.Z:
                     //  x x *
                     //  * x x
                     //  * * *
                     shape = new int[,] { { -1, 1 }, { 0, 0 }, { 0, 1 }, { 1, 0 } };
-                    //shape = new bool[,] { { false, false, true },
-                    //                       { false, true, true },
-                    //                       { false, true, false }
-                    //                     };
+                    color = "RedGreenPrimary";
+
                     break;
                 default:
                     shape = new int[0, 0];
+                    color = "BluePrimary";
                     break;
             }
         }

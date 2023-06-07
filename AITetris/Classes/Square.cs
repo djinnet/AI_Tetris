@@ -12,13 +12,13 @@ namespace AITetris.Classes
 {
     public class Square
     {
-        public Square(int coordinateX, int coordinateY)
+        public Square(int coordinateX, int coordinateY, string color)
         {
             this.coordinateX = coordinateX;
             this.coordinateY = coordinateY;
 
-            spritePath = "\\Assets\\Sprits\\BlueGreenPrimary.png";
-            fullpath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + spritePath;
+            spritePath = color;
+            fullpath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\Assets\\Sprits\\" + spritePath + ".png";
 
             image = new Image();
             image.Source = new BitmapImage(new Uri(fullpath, UriKind.Absolute));
