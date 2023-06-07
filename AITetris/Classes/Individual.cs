@@ -41,7 +41,7 @@ namespace AITetris.Classes
 
         private int RandomChromosome()
         {
-            return rng.Next(-1, 1);
+            return rng.Next(-1, 2);
         }
     }
 }
