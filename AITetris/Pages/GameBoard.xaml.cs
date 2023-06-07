@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Diagnostics;
+using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Media;
@@ -30,6 +31,10 @@ namespace AITetris.Pages
     /// </summary>
     public partial class GameBoard : Page
     {
+    
+        public Game game;
+        private PauseMenu pauseMenu;
+
         // Timer varibles for the scoreboard timer
         private DispatcherTimer scoreboardTimer;
         private DateTime startTime;
@@ -47,22 +52,24 @@ namespace AITetris.Pages
         private int minWidth = 0;
         private int maxWidth = 10;
 
-        // Character variables
+        // Figure variables
         private TetrisFigure figure;
         private TetrisFigure nextFigure;
         private TetrisFigure swappedFigure;
 
+        // Check variables
         private bool hasSwapped = false;
         private bool hasLost = false;
         private bool isPaused = false;
 
+        // Scores
         private int totalLinesCleared;
         private int points;
 
-        //Execution directory
+        // Execution directory
         private string exeDir;
 
-        //Audio variables
+        // Audio variables
         private MediaPlayer backgroundMusic = new MediaPlayer();
         private SoundPlayer gameOverMelody;
         private SoundPlayer SFXMove;
@@ -70,9 +77,9 @@ namespace AITetris.Pages
         private SoundPlayer SFXLineClear;
         private SoundPlayer SFXTetrisClear;
 
-        private PauseMenu pauseMenu;
-
-        public Game game;
+        // Machine learning variables
+        private int currentIndividual;
+        private int currentChromosome;
 
         public GameBoard(Character character)
         {
@@ -86,6 +93,13 @@ namespace AITetris.Pages
                 new Board(maxWidth + 2, maxHeight),
                 character,
                 JsonSerializer.Deserialize<Settings>(File.ReadAllText(exeDir + "/Assets/JSON/Settings.json")));
+
+            if (!game.isPlayer)
+            {
+                currentIndividual = 0;
+                currentChromosome = 0;
+            }
+
 
             GameBoardScorePlayerLbl.Content = character.name;
             ApplySettings();
@@ -132,8 +146,8 @@ namespace AITetris.Pages
         {
             for (int i = 0; i < maxHeight; i++)
             {
-                game.board.squares.Add(new Square(-1, i));
-                game.board.squares.Add(new Square(maxWidth, i));
+                game.board.squares.Add(new Square(-1, i, "BluePrimary"));
+                game.board.squares.Add(new Square(maxWidth, i, "BluePrimary"));
             }
         }
 
@@ -143,6 +157,7 @@ namespace AITetris.Pages
             {
                 Grid.SetColumn(square.image, square.coordinateX);
                 Grid.SetRow(square.image, square.coordinateY);
+                
                 grid.Children.Add(square.image);
             }
         }
@@ -482,6 +497,9 @@ namespace AITetris.Pages
 
         private void GameOver()
         {
+            StopTime(scoreboardTimer);
+            autoMoveTimer.Stop();
+
             gameOverMelody.Play();
             GameOverMenu menu = new GameOverMenu();
             GameBoardMainGrid.Children.Add(menu);
@@ -490,8 +508,6 @@ namespace AITetris.Pages
 
             Grid.SetColumnSpan(menu, 5);
             Grid.SetRowSpan(menu, 7);
-
-            StopTime(scoreboardTimer);
 
             ClearBoard();
         }
@@ -513,6 +529,114 @@ namespace AITetris.Pages
         private void SetBoard()
         {
 
+        }
+
+        private void AIMove()
+        {
+
+            double calcMove = CalculateOutput();
+            double calcDown = CalculateOutput();
+            double calcRotate = CalculateOutput();
+            double calcSwap = CalculateOutput();
+
+            Debug.WriteLine("Move: " + calcMove);
+            if (calcMove < 0)
+            {
+                MoveFigure("left");
+            }
+            else if (calcMove > 0)
+            {
+                MoveFigure("right");
+            }
+
+
+            if (calcDown < 0)
+            {
+                MoveFigure("down");
+            }
+            else if(calcDown > 0)
+            {
+                InstaDrop();
+            }
+
+            if (calcRotate > 0)
+            {
+                RotateFigure();
+            }
+
+            if (calcSwap > 0)
+            {
+                Swap();
+            }
+
+            Advance();
+        }
+
+        private double CalculateOutput()
+        {
+            Individual individual = (game.character as AI).population[currentIndividual];
+
+            int output = 0;
+
+            // output_n = (input_n * chromosone[n]) + (input_n+1 * chromosone[n+1]) + (input_n+2 * chromosone[n+2])
+
+
+            for (int i = 0; i < game.board.squares.Count(); i++)
+            {
+                output += game.board.squares[i].coordinateX * individual.chromosomes[currentChromosome];
+                output += game.board.squares[i].coordinateY * individual.chromosomes[currentChromosome];
+                currentChromosome++;
+            }
+
+            currentChromosome += game.board.gridSize - game.board.squares.Count();
+
+            for (int i = 0; i < figure.squares.Length; i++)
+            {
+                output += figure.squares[i].coordinateX * individual.chromosomes[currentChromosome];
+                output += figure.squares[i].coordinateY * individual.chromosomes[currentChromosome];
+                currentChromosome++;
+            }
+
+            for (int i = 0; i < nextFigure.squares.Length; i++)
+            {
+                output += nextFigure.squares[i].coordinateX * individual.chromosomes[currentChromosome];
+                output += nextFigure.squares[i].coordinateY * individual.chromosomes[currentChromosome];
+                currentChromosome++;
+            }
+
+            if (swappedFigure == null)
+            {
+                currentChromosome += 4;
+            }
+            else
+            {
+                for (int i = 0; i < swappedFigure.squares.Length; i++)
+                {
+                    output += swappedFigure.squares[i].coordinateX * individual.chromosomes[currentChromosome];
+                    output += swappedFigure.squares[i].coordinateY * individual.chromosomes[currentChromosome];
+                    currentChromosome++;
+                }
+            }
+
+            return output;
+        }
+
+        private void Advance()
+        {
+            AI aI = (AI)game.character;
+
+            if (currentChromosome == aI.population[currentIndividual].chromosomes.Count())
+            {
+                currentChromosome = 0;
+                //currentIndividual++;
+            }
+
+
+            if (currentIndividual == aI.population.Count())
+            {
+                currentIndividual = 0;
+                aI.generationNumber++;
+            }
         }
 
         private void StartAutoMove()
@@ -574,8 +698,15 @@ namespace AITetris.Pages
                     // Backup if timer fails the formatting
                     GameBoardScoreTimeLbl.Content = "00:00:00:000";
                 }
+
+
+                if (((int)elapsedTime.TotalMilliseconds) % 500 <= 10 && !game.isPlayer && !hasLost)
+                {
+                    AIMove();
+                }
             }
         }
+
 
         private void StopTime(DispatcherTimer timer)
         {
@@ -708,7 +839,7 @@ namespace AITetris.Pages
         
         private void GamePage_KeyDown(object sender, KeyEventArgs e)
         {
-            if (!hasLost)
+            if (!hasLost && game.isPlayer)
             {
                 if(e.Key == game.settings.KeyBinds.pause)
                 {
