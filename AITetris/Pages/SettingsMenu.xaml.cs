@@ -36,7 +36,6 @@ namespace AITetris.Pages
         {
             InitializeComponent();
 
-            // Todo! - Mads - Dokumentation
             // Set the execution directory path
             exeDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
 

@@ -709,6 +709,9 @@ namespace AITetris.Pages
             // Instantiate a new dispatchertimer to run the automovement
             autoMoveTimer = new DispatcherTimer();
 
+            //Sets the inital auto move timer interval
+            autoMoveTimerInterval = TimeSpan.FromMilliseconds(game.settings.startSpeed);
+
             // Set the interval of the timer in milliseconds
             autoMoveTimer.Interval = autoMoveTimerInterval;
 
@@ -817,15 +820,20 @@ namespace AITetris.Pages
             timer.Start();
         }
 
-        // Todo! - Mads - Dokumentation
+        //A function to load and start all music/sounds
         private void MusicStart()
         {
+            //Load in background music
             backgroundMusic.Open(new Uri(exeDir + "\\Assets\\Sound\\Tetris99MainTheme.mp3", UriKind.Absolute));
+            //add an event handler that triggers at the end of the song starting the song over
             backgroundMusic.MediaEnded += new EventHandler((sender, e) =>
             {
                 ((MediaPlayer)sender).Position = TimeSpan.Zero;
             });
+            //Start background music
             backgroundMusic.Play();
+
+            //Load all the sound effects
             gameOverMelody = new SoundPlayer(exeDir + "\\Assets\\Sound\\MusicGameOver.wav");
             SFXMove = new SoundPlayer(exeDir + "\\Assets\\Sound\\SFXMove.wav");
             SFXDrop = new SoundPlayer(exeDir + "\\Assets\\Sound\\SFXDrop.wav");
@@ -871,9 +879,10 @@ namespace AITetris.Pages
             
         }
 
-        // Todo! - Mads - Dokumentation
+        //A function that applies the current settings to the board
         private void ApplySettings()
         {
+            //If statment to check what setting enable next block is and then sets the visibility to the respective options
             if (game.settings.enableNextBlock)
             {
                 GameBoardNextBlockBorder.Visibility = Visibility.Visible;
@@ -883,6 +892,7 @@ namespace AITetris.Pages
                 GameBoardNextBlockBorder.Visibility = Visibility.Hidden;
             }
 
+            //If statment to check what setting enable swap block is and then sets the visibility to the respective options
             if (game.settings.enableSwapBlock)
             {
                 GameBoardSaveBlockBorder.Visibility = Visibility.Visible;
@@ -892,15 +902,16 @@ namespace AITetris.Pages
                 GameBoardSaveBlockBorder.Visibility = Visibility.Hidden;
             }
 
-            autoMoveTimerInterval = TimeSpan.FromMilliseconds(game.settings.startSpeed);
-
+            //sets the audio level of the background music
             backgroundMusic.Volume = Convert.ToDouble(game.settings.volume) / 100;
         }
 
-        // Todo! - Mads - Dokumentation
+        // A function that sets the incoming settings to the current settings and calls the private ApplySettings
         public void ApplySettings(Settings settings)
         {
+            //sets the current settings
             game.settings = settings;
+            //Applies the current settings to the board
             ApplySettings();
         }
 
@@ -929,40 +940,61 @@ namespace AITetris.Pages
 
         }
 
-        // Todo! - Mads - Dokumentation
+        //A key down event handler
         private void GamePage_KeyDown(object sender, KeyEventArgs e)
         {
+            //If statment checking if the player has lost and the player is a player
             if (!hasLost && game.isPlayer)
             {
+                //If statment checking if the inputed key is the pause keybind
                 if(e.Key == game.settings.KeyBinds.pause)
                 {
+                    // Trigger the pause menu
                     TogglePauseGame();
                 }
+                //If statment checking if the game is paused
                 if (!isPaused)
                 {
+                    //Switch case on the inputed key
                     switch (e.Key)
                     {
+                        //Case When the inputed key = kebind left
                         case Key k when k == game.settings.KeyBinds.left:
+                            //Play move sfx
                             SFXMove.Play();
+                            //Call the move figure function
                             MoveFigure("left");
                             break;
+                        //Case When the inputed key = kebind right
                         case Key k when k == game.settings.KeyBinds.right:
+                            //Play move sfx
                             SFXMove.Play();
+                            //Call the move figure function
                             MoveFigure("right");
                             break;
+                        //Case When the inputed key = kebind rotate
                         case Key k when k == game.settings.KeyBinds.rotate:
+                            //Call the Rotate Figure
                             RotateFigure();
                             break;
+                        //Case When the inputed key = kebind drop
                         case Key k when k == game.settings.KeyBinds.drop:
+                            //Call the move figure function
                             MoveFigure("down");
                             break;
+                        //Case When the inputed key = kebind insta
                         case Key k when k == game.settings.KeyBinds.insta:
+                            //Call the insta drop function
                             InstaDrop();
                             break;
+                        //Case When the inputed key = kebind swap
                         case Key k when k == game.settings.KeyBinds.swap:
+                            //If Statment that checks if swap is enabled and if the use has not already swaped
                             if (!hasSwapped && game.settings.enableSwapBlock)
                             {
+                                //Set has swap to true
                                 hasSwapped = true;
+                                //Activate the swap function
                                 Swap();
                             }
                             break;
@@ -972,7 +1004,7 @@ namespace AITetris.Pages
             }
         }
 
-        // Todo! - Mads - Dokumentation
+        //This function adds the above keydown event to the window keydown event on page load
         private void GamePage_Loaded(object sender, RoutedEventArgs e)
         {
             Window.GetWindow(this).KeyDown += GamePage_KeyDown;
