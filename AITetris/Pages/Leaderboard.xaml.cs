@@ -22,6 +22,8 @@ namespace AITetris.Pages
     /// </summary>
     public partial class Leaderboard : Page
     {
+        List<Game> scores = SQLCalls.GetLeaderboardTop10();
+        bool isSerching = false;
         public Leaderboard()
         {
             InitializeComponent();
@@ -180,25 +182,87 @@ namespace AITetris.Pages
         // Todo! - Add function that finds a specific player using his name
         private void LeaderboardControlsFindPlayerBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            scores = SQLCalls.SearchLeaderboardOnName(LeaderboardControlsFindPlayerTxtbox.Text);
+            LeaderboardGrid.Children.Clear();
+            isSerching = true;
+            FillLeaderboard();
         }
 
         // Todo! - Add function that finds the prievious ten in the leaderboard
         private void LeaderboardPrieviousTenBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            if(isSerching)
+            {
+                if (SQLCalls.GetPrevious10Leaderboard(scores[0].rank, LeaderboardControlsFindPlayerTxtbox.Text).Count != 0)
+                {
+                    scores = SQLCalls.GetPrevious10Leaderboard(scores[0].rank, LeaderboardControlsFindPlayerTxtbox.Text);
+                    LeaderboardGrid.Children.Clear();
+                    FillLeaderboard();
+                    LeaderboardNextTenBtn.IsEnabled = true;
+                }
+                else
+                {
+                    LeaderboardPrieviousTenBtn.IsEnabled = false;
+                }
+            }
+            else
+            {
+                if (SQLCalls.GetPrevious10Leaderboard(scores[0].rank).Count != 0 )
+                {
+                    scores = SQLCalls.GetPrevious10Leaderboard(scores[0].rank);
+                    LeaderboardGrid.Children.Clear();
+                    FillLeaderboard();
+                    LeaderboardNextTenBtn.IsEnabled = true;
+                }
+                else
+                {
+                    LeaderboardPrieviousTenBtn.IsEnabled = false;
+                }
+            }
         }
 
         // Todo! - Add function that finds the next ten in the leaderboard
         private void LeaderboardNextTenBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            if (isSerching)
+            {
+                if (SQLCalls.GetNext10Leaderboard(scores[scores.Count - 1].rank, LeaderboardControlsFindPlayerTxtbox.Text).Count != 0)
+                {
+                    scores = SQLCalls.GetNext10Leaderboard(scores[scores.Count - 1].rank, LeaderboardControlsFindPlayerTxtbox.Text);
+                    LeaderboardGrid.Children.Clear();
+                    FillLeaderboard();
+                    LeaderboardPrieviousTenBtn.IsEnabled = true;
+                }
+                else
+                {
+                    LeaderboardNextTenBtn.IsEnabled = false;
+                }
+            }
+            else
+            {
+                if(SQLCalls.GetNext10Leaderboard(scores[scores.Count - 1].rank).Count != 0)
+                {
+                    scores = SQLCalls.GetNext10Leaderboard(scores[scores.Count - 1].rank);
+                    LeaderboardGrid.Children.Clear();
+                    FillLeaderboard();
+                    LeaderboardPrieviousTenBtn.IsEnabled = true;
+                }
+                else
+                {
+                    LeaderboardNextTenBtn.IsEnabled = false;
+                }
+            }
         }
 
         // Todo! - Add function that refresh the leaderboard
         private void LeaderboardRefreshBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            scores = SQLCalls.GetLeaderboardTop10();
+            LeaderboardGrid.Children.Clear();
+            isSerching = false;
+            LeaderboardPrieviousTenBtn.IsEnabled = true;
+            LeaderboardNextTenBtn.IsEnabled = true;
+            FillLeaderboard();
         }
     }
 }

@@ -62,11 +62,7 @@ namespace AITetris.Pages
         private bool hasLost = false;
         private bool isPaused = false;
 
-        // Scores
-        private int totalLinesCleared;
-        private int points;
-
-        // Execution directory
+        //Execution directory
         private string exeDir;
 
         // Audio variables
@@ -509,7 +505,7 @@ namespace AITetris.Pages
                     EraseSquares(above.ToArray(), GameBoardGameGrid);
                     DrawSquares(above.ToArray(), GameBoardGameGrid);
 
-                    totalLinesCleared++;
+                    game.linesCleared++;
                     SpeedUp();
                     linesCleared++;
                 }
@@ -545,17 +541,23 @@ namespace AITetris.Pages
         // A function that trigger a gameover event
         private void GameOver()
         {
+        
             // Stop the current game timers
+            
+            game.time = Convert.ToInt32(elapsedTime.TotalMilliseconds);
+            SQLCalls.CreateLeaderboardEntry(game);
+            
             StopTime(scoreboardTimer);
             autoMoveTimer.Stop();
 
             // Start game over music
             gameOverMelody.Play();
-
-            // Create a game over menu
-            GameOverMenu menu = new GameOverMenu();
+            
 
             // Add the game over menu to the gameboardmaingrid
+            
+            GameOverMenu menu = new GameOverMenu(game);
+            
             GameBoardMainGrid.Children.Add(menu);
             
             // Position the game over menu on the gamegboardmain grid
@@ -834,8 +836,11 @@ namespace AITetris.Pages
         // A function that speeds up the automove timer
         private void SpeedUp()
         {
+        
             // Every ten lines cleared
-            if (totalLinesCleared % 10 == 0)
+            
+            if (game.linesCleared % 10 == 0)
+            
             {
                 // Recalculating the automovetimerinterval setting the value lower to increase the tick speed
                 autoMoveTimerInterval -= autoMoveTimerInterval * (game.settings.gameSpeed / 100);
@@ -856,13 +861,14 @@ namespace AITetris.Pages
                 // Play this SFX whenn 3 or less lines are cleared
                 SFXLineClear.Play();
             }
-            
+                        
             // Recalculate the points and doubling the points added accordingly to the amount of lines cleared
-            points += (int)Math.Pow(2, lines) * 100;
+            game.points += (int)Math.Pow(2, lines) * 100;
 
             // Update the scoreboard labels
-            GameBoardScorePointLbl.Content = "Point: " + points;
-            GameBoardScoreLineClearedLbl.Content = "Lines: " + totalLinesCleared;
+            GameBoardScorePointLbl.Content = "Point: " + game.points;
+            GameBoardScoreLineClearedLbl.Content = "Lines: " + game.linesCleared;
+            
         }
 
         // Todo! - Mads - Dokumentation
