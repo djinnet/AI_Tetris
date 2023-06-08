@@ -8,7 +8,10 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="GameBoard" Loaded="GamePage_Loaded">
 
-    <Grid x:Name="GameBoardMainGrid">
+    <!-- Gridsize is 7 cols by 9 rows -->
+    <Grid 
+        x:Name="GameBoardMainGrid">
+        
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="25" />
             <ColumnDefinition Width="*" />
@@ -31,7 +34,7 @@
             <RowDefinition Height="25" />
         </Grid.RowDefinitions>
 
-        <!-- Game Title -->
+        <!-- Page title -->
         <Label 
             x:Name="GameBoardTitleLbl"
             Grid.Column="1"
@@ -44,7 +47,7 @@
             FontSize="30"
             FontWeight="Bold"/>
         
-        <!-- Game Grid -->
+        <!-- The border containing the game grid -->
         <Border
             x:Name="GameBoardGameGridBorder"
             Grid.Column="2"
@@ -55,9 +58,12 @@
             Grid.RowSpan="6"
             BorderThickness="2"
             BorderBrush="Silver">
-
+            
+            <!-- Dynamic grid set from the CreateDynamicGameGrid function the codebehind -->
+            <!-- Gridsize is 10 cols by 20 rows default -->
             <Grid
                 x:Name="GameBoardGameGrid">
+                
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*" />
                     <ColumnDefinition Width="*" />
@@ -96,7 +102,7 @@
             </Grid>
         </Border>
 
-        <!-- Next Block -->
+        <!-- The border containing the next block -->
         <Border
             x:Name="GameBoardNextBlockBorder"
             Grid.Column="5"
@@ -105,9 +111,11 @@
             BorderThickness="2"
             BorderBrush="Silver">
 
+            <!-- The stackpanel holding the next block content -->
             <StackPanel
                 x:Name="GameBoardNextBlockSP">
 
+                <!-- Next block title -->
                 <Label
                     x:Name="GameBoardNextBlockTitle"
                     Content="Next Block"
@@ -117,8 +125,13 @@
                     FontWeight="Bold"
                     Margin="0, 10" />
 
+                <!-- Grid holding the next block -->
+                <!-- Gridsize 4 cols by 4 rows -->
                 <Grid
-                x:Name="GameBoardNextGrid" Height="50" Width="50">
+                    x:Name="GameBoardNextGrid"
+                    Height="50"
+                    Width="50">
+                    
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
@@ -137,7 +150,7 @@
             </StackPanel>
         </Border>
 
-        <!-- Save Block -->
+        <!-- The border containing the save block -->
         <Border
             x:Name="GameBoardSaveBlockBorder"
             Grid.Column="5"
@@ -146,9 +159,11 @@
             BorderThickness="2"
             BorderBrush="Silver">
 
+            <!-- The stackpanel holding the save block content -->
             <StackPanel
                 x:Name="GameBoardSaveBlockSP">
 
+                <!-- Save block title -->
                 <Label
                     x:Name="GameBoardSaveBlockTitle"
                     Content="Save Block"
@@ -158,8 +173,13 @@
                     FontWeight="Bold"
                     Margin="0, 10" />
 
+                <!-- Grid holding the save block -->
+                <!-- Gridsize 4 cols by 4 rows -->
                 <Grid
-                x:Name="GameBoardSwapGrid" Height="50" Width="50">
+                    x:Name="GameBoardSwapGrid"
+                    Height="50"
+                    Width="50">
+                    
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*" />
                         <ColumnDefinition Width="*" />
@@ -178,7 +198,7 @@
             </StackPanel>
         </Border>
 
-        <!-- Actions -->
+        <!-- The border containing the actions panel -->
         <Border
             x:Name="GameBoardActionsBorder"
             Grid.Column="5"
@@ -187,9 +207,11 @@
             BorderThickness="2"
             BorderBrush="Silver">
 
+            <!-- The stackpanel holding the actions panel content -->
             <StackPanel
                 x:Name="GameBoardActionsSP">
 
+                <!-- Actions panel title -->
                 <Label 
                     x:Name="GameBoardActionsTitleLbl"
                     Content="Actions"
@@ -199,6 +221,7 @@
                     FontSize="20"
                     FontWeight="Bold"/>
 
+                <!-- Button that triggers the pause menu -->
                 <Button
                     x:Name="GameBoardActionsPauseBtn"
                     Content="Pause Game"
@@ -212,56 +235,7 @@
 
                 </Button>
 
-                <!--<Button
-                    x:Name="GameBoardActionsStartTimeTestBtn"
-                    Content="Start time"
-                    HorizontalContentAlignment="Center"
-                    VerticalContentAlignment="Center"
-                    FontFamily="Tahoma"
-                    FontSize="10"
-                    FontWeight="Bold"
-                    Click="GameBoardActionsStartTimeTestBtn_Click">
-
-                </Button>
-
-
-                <Button
-                    x:Name="GameBoardActionsStopTimeTestBtn"
-                    Content="Stop time"
-                    HorizontalContentAlignment="Center"
-                    VerticalContentAlignment="Center"
-                    FontFamily="Tahoma"
-                    FontSize="10"
-                    FontWeight="Bold"
-                    Click="GameBoardActionsStopTimeTestBtn_Click">
-                    
-                </Button>
-
-                <Button
-                    x:Name="GameBoardActionsPauseTimeTestBtn"
-                    Content="Pause time"
-                    HorizontalContentAlignment="Center"
-                    VerticalContentAlignment="Center"
-                    FontFamily="Tahoma"
-                    FontSize="10"
-                    FontWeight="Bold"
-                    Click="GameBoardActionsPauseTimeTestBtn_Click">
-
-                </Button>
-
-                <Button
-                    x:Name="GameBoardActionsResumeTimeTestBtn"
-                    Content="Resume time"
-                    HorizontalContentAlignment="Center"
-                    VerticalContentAlignment="Center"
-                    FontFamily="Tahoma"
-                    FontSize="10"
-                    FontWeight="Bold"
-                    Margin="0, 10"
-                    Click="GameBoardActionsResumeTimeTestBtn_Click">
-
-                </Button>-->
-
+                <!-- Button that triggers the first consumeable -->
                 <Button
                     x:Name="GameBoardActionsConsumeOneBtn"
                     Content="Consume One"
@@ -274,6 +248,7 @@
 
                 </Button>
 
+                <!-- Button that triggers the second consumeable -->
                 <Button
                     x:Name="GameBoardActionsConsumeTwoBtn"
                     Content="Consume Two"
@@ -286,6 +261,7 @@
 
                 </Button>
 
+                <!-- Button that triggers the third consumeable -->
                 <Button
                     x:Name="GameBoardActionsConsumeThreeBtn"
                     Content="Consume Three"
@@ -300,7 +276,7 @@
             </StackPanel>
         </Border>
 
-        <!-- Score -->
+        <!-- The border containing the score panel -->
         <Border
             x:Name="GameBoardScoreBorder"
             Grid.Column="1"
@@ -309,9 +285,11 @@
             BorderThickness="2"
             BorderBrush="Silver">
 
+            <!-- The stackpanel holding the score panel content -->
             <StackPanel
                 x:Name="GameBoardScoreSP">
 
+                <!-- Score panel title -->
                 <Label 
                     x:Name="GameBoardScoreTitleLbl"
                     Content="Score"
@@ -321,6 +299,7 @@
                     FontSize="20"
                     FontWeight="Bold"/>
 
+                <!-- Playername label -->
                 <Label 
                     x:Name="GameBoardScorePlayerLbl"
                     Content="Player Name"
@@ -330,6 +309,7 @@
                     FontSize="15"
                     FontWeight="Bold"/>
 
+                <!-- Scoretimer label -->
                 <Label 
                     x:Name="GameBoardScoreTimeLbl"
                     Content="00:00:00:00"
@@ -339,6 +319,7 @@
                     FontSize="15"
                     FontWeight="Bold"/>
 
+                <!-- Lines cleared label -->
                 <Label 
                     x:Name="GameBoardScoreLineClearedLbl"
                     Content="Lines: 0"
@@ -348,6 +329,7 @@
                     FontSize="15"
                     FontWeight="Bold"/>
 
+                <!-- Points label -->
                 <Label 
                     x:Name="GameBoardScorePointLbl"
                     Content="Point: 0"
@@ -359,7 +341,7 @@
             </StackPanel>
         </Border>
 
-        <!-- Controls -->
+        <!-- The border containing the controls panel -->
         <Border
             x:Name="GameBoardControlsBorder"
             Grid.Column="1"
@@ -368,9 +350,11 @@
             BorderThickness="2"
             BorderBrush="Silver">
 
+            <!-- The stackpanel holding the controls panel content -->
             <StackPanel
                 x:Name="GameBoardControlsSP">
 
+                <!-- Controls panel title -->
                 <Label
                     x:Name="GameBoardControlsTitle"
                     Content="Controls"
@@ -380,6 +364,7 @@
                     FontWeight="Bold"
                     Margin="0, 5" />
 
+                <!-- Pause label -->
                 <Label
                     x:Name="GameBoardControlsPause"
                     Content="Pause (Esc)"
@@ -388,6 +373,7 @@
                     FontSize="15"
                     FontWeight="Bold"/>
 
+                <!-- Save label -->
                 <Label
                     x:Name="GameBoardControlsSave"
                     Content="Save (E)"
@@ -396,6 +382,7 @@
                     FontSize="15"
                     FontWeight="Bold"/>
 
+                <!-- Rotate label -->
                 <Label
                     x:Name="GameBoardControlsRotate"
                     Content="Rotate (W)"
@@ -404,6 +391,7 @@
                     FontSize="15"
                     FontWeight="Bold"/>
 
+                <!-- Left label -->
                 <Label
                     x:Name="GameBoardControlsLeft"
                     Content="Left (A)"
@@ -412,6 +400,7 @@
                     FontSize="15"
                     FontWeight="Bold"/>
 
+                <!-- Right label -->
                 <Label
                     x:Name="GameBoardControlsRight"
                     Content="Right (D)"
@@ -420,6 +409,7 @@
                     FontSize="15"
                     FontWeight="Bold"/>
 
+                <!-- Down label -->
                 <Label
                     x:Name="GameBoardControlsDown"
                     Content="Down (S)"
@@ -428,6 +418,7 @@
                     FontSize="15"
                     FontWeight="Bold"/>
 
+                <!-- Instant down label -->
                 <Label
                     x:Name="GameBoardControlsInstantDown"
                     Content="Instant Down (Space)"

@@ -152,6 +152,7 @@ namespace AITetris.Pages
                 else
                 {
                     // AI is on and continuing as an AI
+                    // Todo! - Sebastian - Dokumentation
 
                     int populationSize = 10;
                     // (((xBoard.length + border) * yBoard.length) + gameFigure.squares + nextFigure.squares + swapFigure.squares) * outputAmount
@@ -178,17 +179,22 @@ namespace AITetris.Pages
         // UI slider
         private void PlayerOrAISlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
+            // The value of the slider 0:Player - 1:AI
             int value = (int)PlayerOrAISlider.Value;
 
+            // Check sider value
             if (value == 0)
             {
+                // Player active
                 Debug.WriteLine("Player is active!");
             }
             else
             {
+                // AI active
                 Debug.WriteLine("AI is active!");
             }
 
+            // Set the AI toggle to the current value
             AIToggle = value;
         }
     }
