@@ -24,19 +24,24 @@ namespace AITetris.Controllers
         {
             InitializeComponent();
         }
-
+        
+        // UI buttons
+        // A button that triggers a revive when upgrade is created
         private void GameOverMenuControlRevive_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
+        // A button that triggers a save of the AI in training
         private void GameOverMenuControlSaveAI_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
+        // Navigation
         private void GameOverMenuControlQuitGame_Click(object sender, RoutedEventArgs e)
         {
+            // Navigating back to main menu
             ((NavigationWindow)Window.GetWindow(this)).NavigationService.Navigate(new Uri("Pages/MainPage.xaml", UriKind.Relative));
         }
     }
