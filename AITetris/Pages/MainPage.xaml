@@ -8,6 +8,7 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="MainPage">
 
+    <!-- Gridsize is 5 cols by 5 rows -->
     <Grid>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="25" />
@@ -25,6 +26,7 @@
             <RowDefinition Height="25" />
         </Grid.RowDefinitions>
 
+        <!-- Border used as a container for the stackpanel holding the controls -->
         <Border
             x:Name="MainMenuBorder"
             Grid.Column="2"
@@ -33,9 +35,11 @@
             BorderThickness="2"
             BorderBrush="Silver">
 
+            <!-- Stackpanel holding the controls of the mainpage -->
             <StackPanel
                 x:Name="MainMenuSP">
                 
+                <!-- Page title -->
                 <Label 
                     x:Name="MainMenuTitleLbl"
                     Content="AI Tetris"
@@ -44,7 +48,8 @@
                     FontSize="25"
                     FontWeight="Bold"
                     Margin="0, 15" />
-                
+
+                <!-- Wallet Label -->
                 <Label 
                     x:Name="MainMenuMetaCurrencyLbl"
                     Content="Wallet: 0"
@@ -54,6 +59,7 @@
                     FontWeight="Bold" 
                     Margin="0, 15" />
 
+                <!-- Navigation button -->
                 <Button
                     x:Name="MainMenuStartGameBtn"
                     Content="Start Game"
@@ -66,6 +72,7 @@
 
                 </Button>
 
+                <!-- Navigation button -->
                 <Button
                     x:Name="MainMenuLeaderboardBtn"
                     Content="Leaderboard"
@@ -78,6 +85,7 @@
 
                 </Button>
 
+                <!-- Navigation button -->
                 <Button
                     x:Name="MainMenuPointShopBtn"
                     Content="Shop"
@@ -90,6 +98,7 @@
 
                 </Button>
 
+                <!-- Navigation button -->
                 <Button
                     x:Name="MainMenuSettingsBtn"
                     Content="Settings"
@@ -102,6 +111,7 @@
 
                 </Button>
 
+                <!-- Quit game button -->
                 <Button
                     x:Name="MainMenuExitBtn"
                     Content="Exit"

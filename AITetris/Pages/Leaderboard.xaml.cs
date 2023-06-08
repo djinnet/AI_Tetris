@@ -28,13 +28,17 @@ namespace AITetris.Pages
         {
             InitializeComponent();
 
+            // Create and fill the leaderboard with contennt
             FillLeaderboard();
         }
 
+        // A function that fills and creates the leaderboard
         private void FillLeaderboard()
         {
-            
-            // Leaderbordgrid
+            // Create a list of games using the SQLCalls function GetLeaderboardTop10
+            List<Game> scores = SQLCalls.GetLeaderboardTop10();
+
+            // Get an instance of the leaderboard grid
             Grid leaderboardGrid = LeaderboardGrid;
 
             // Clear current leaderboard
@@ -44,21 +48,23 @@ namespace AITetris.Pages
             leaderboardGrid.RowDefinitions.Clear();
             leaderboardGrid.ColumnDefinitions.Clear();
 
-            // Amount of rows in the leaderboard
+            // Amount of rows in the leaderboard + 1 for headers
             int rowCount = scores.Count + 1;
 
             // Amount of columns in the leaderboard
             int columnCount = 6;
 
-            // Create new row definitions
+            // Create new row definitions based on the lenght of the scores list
             for (int i = 0; i < rowCount; i++)
             {
+                // Adding a new row definition
                 leaderboardGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
             }
 
-            // Create new row definitions
+            // Create new row definitions based on how many columns given
             for (int i = 0; i < columnCount; i++)
             {
+                // Adding a new column definition
                 leaderboardGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
             }
 
@@ -68,6 +74,7 @@ namespace AITetris.Pages
                 // Running for each column in the leaderboard
                 for (int j = 0; j < columnCount; j++)
                 {
+                    // Check if it is the first row then add the headers
                     if(i == 0)
                     {
                         // Border for each label
@@ -80,7 +87,7 @@ namespace AITetris.Pages
                         // Creating a new label
                         Label label = new Label();
 
-                        // Add content and styling to the label
+                        // Add content to the label
                         switch (j)
                         {
                             case 0:
@@ -106,6 +113,7 @@ namespace AITetris.Pages
                                 break;
                         }
 
+                        // Add styling to the label
                         label.HorizontalAlignment = HorizontalAlignment.Center;
                         label.VerticalAlignment = VerticalAlignment.Center;
                         label.FontFamily = new FontFamily("Tahomaa");
@@ -132,8 +140,8 @@ namespace AITetris.Pages
                         // Creating a new label
                         Label label = new Label();
 
-                        // Add content and styling to the label
-
+                        // Add content to the label
+                        // Using a shorthand switchcase we add the leaderboard content for each game we pass through in the loop
                         label.Content = j switch
                         {
                             0 => scores[i - 1].rank,
@@ -145,6 +153,7 @@ namespace AITetris.Pages
                             _ => ""
                         };
 
+                        // Add styling to the label
                         label.HorizontalAlignment = HorizontalAlignment.Center;
                         label.VerticalAlignment = VerticalAlignment.Center;
                         label.FontFamily = new FontFamily("Tahomaa");
@@ -163,11 +172,14 @@ namespace AITetris.Pages
             }
         }
 
+        // Navigation
         private void LeaderboardBackToMainBtn_Click(object sender, RoutedEventArgs e)
         {
+            // Navigation to the Main Menu
             NavigationService.Navigate(new Uri("Pages/MainPage.xaml", UriKind.Relative));
         }
 
+        // Todo! - Add function that finds a specific player using his name
         private void LeaderboardControlsFindPlayerBtn_Click(object sender, RoutedEventArgs e)
         {
             scores = SQLCalls.SearchLeaderboardOnName(LeaderboardControlsFindPlayerTxtbox.Text);
@@ -176,6 +188,7 @@ namespace AITetris.Pages
             FillLeaderboard();
         }
 
+        // Todo! - Add function that finds the prievious ten in the leaderboard
         private void LeaderboardPrieviousTenBtn_Click(object sender, RoutedEventArgs e)
         {
             if(isSerching)
@@ -208,6 +221,7 @@ namespace AITetris.Pages
             }
         }
 
+        // Todo! - Add function that finds the next ten in the leaderboard
         private void LeaderboardNextTenBtn_Click(object sender, RoutedEventArgs e)
         {
             if (isSerching)
@@ -240,6 +254,7 @@ namespace AITetris.Pages
             }
         }
 
+        // Todo! - Add function that refresh the leaderboard
         private void LeaderboardRefreshBtn_Click(object sender, RoutedEventArgs e)
         {
             scores = SQLCalls.GetLeaderboardTop10();
