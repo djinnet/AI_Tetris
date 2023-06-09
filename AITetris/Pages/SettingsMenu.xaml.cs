@@ -49,6 +49,9 @@ namespace AITetris.Pages
             SettingsSliderAITraining.Value = Convert.ToInt32(settings.enableTraining);
             SettingsSliderSaveBlock.Value = Convert.ToInt32(settings.enableSwapBlock);
             SettingsSliderNextBlock.Value = Convert.ToInt32(settings.enableNextBlock);
+
+            // Set the state to false since there is no new changes
+            SettingsControlsApplySettings.IsEnabled = false;
         }
 
         // UI slider controls
@@ -57,6 +60,9 @@ namespace AITetris.Pages
         {
             // Set the settings.volume to the slider value
             settings.volume = (int)((Slider)sender).Value;
+
+            // Set the state to true since there is new changes
+            SettingsControlsApplySettings.IsEnabled = true;
         }
 
         // Startspeed slider
@@ -64,6 +70,9 @@ namespace AITetris.Pages
         {
             // Set the settings.startspeed to the slider value
             settings.startSpeed = ((Slider)sender).Value;
+
+            // Set the state to true since there is new changes
+            SettingsControlsApplySettings.IsEnabled = true;
         }
 
         // Deltaspeed slider
@@ -71,6 +80,9 @@ namespace AITetris.Pages
         {
             // Set the settings.deltaspeed to the slider value
             settings.gameSpeed = ((Slider)sender).Value;
+
+            // Set the state to true since there is new changes
+            SettingsControlsApplySettings.IsEnabled = true;
         }
 
         // Toggle slider
@@ -90,6 +102,9 @@ namespace AITetris.Pages
                 settings.enableTraining = true;
                 SettingsSliderValueAITraining.Content = "On";
             }
+
+            // Set the state to true since there is new changes
+            SettingsControlsApplySettings.IsEnabled = true;
         }
 
         // Save block toggle
@@ -108,6 +123,9 @@ namespace AITetris.Pages
                 settings.enableSwapBlock = true;
                 SettingsSliderValueSaveBlock.Content = "On";
             }
+
+            // Set the state to true since there is new changes
+            SettingsControlsApplySettings.IsEnabled = true;
         }
 
         // Next block toggle
@@ -126,6 +144,9 @@ namespace AITetris.Pages
                 settings.enableNextBlock = true;
                 SettingsSliderValueNextBlock.Content = "On";
             }
+
+            // Set the state to true since there is new changes
+            SettingsControlsApplySettings.IsEnabled = true;
         }
 
         // UI buttons
@@ -143,6 +164,9 @@ namespace AITetris.Pages
             Grid.SetRow(menu, 1);
             Grid.SetColumnSpan(menu, 2);
             Grid.SetRowSpan(menu, 2);
+
+            // Set the state to true since there is new changes
+            SettingsControlsApplySettings.IsEnabled = true;
         }
 
         // Apply / Save settings to settings JSON
@@ -150,11 +174,27 @@ namespace AITetris.Pages
         {
             // Write new settings to the settings file
             File.WriteAllText(exeDir + "/Assets/JSON/Settings.json", JsonSerializer.Serialize(settings, new JsonSerializerOptions() { WriteIndented = true }));
+
+            // Set the state to false since was just applied
+            SettingsControlsApplySettings.IsEnabled = false;
         }
 
         // Navigation
         private void SettingsControlsMainMenu_Click(object sender, RoutedEventArgs e)
         {
+            // A popup is shown that allows you to take action
+            MessageBoxResult result = MessageBox.Show("There is unapplied changes to the settings, do you want to apply the changes", "Warning", MessageBoxButton.YesNo);
+
+            // Check if the response of the popup was OK
+            if (result == MessageBoxResult.Yes)
+            {
+                // Write new settings to the settings file
+                File.WriteAllText(exeDir + "/Assets/JSON/Settings.json", JsonSerializer.Serialize(settings, new JsonSerializerOptions() { WriteIndented = true }));
+
+                // Set the state to false since was just applied
+                SettingsControlsApplySettings.IsEnabled = false;
+            }
+
             // Navigate to the Main Menu
             NavigationService.Navigate(new Uri("Pages/MainPage.xaml", UriKind.Relative));
         }
