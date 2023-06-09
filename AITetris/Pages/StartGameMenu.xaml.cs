@@ -14,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using AITetris.Classes;
 
 namespace AITetris.Pages
 {
@@ -27,12 +28,31 @@ namespace AITetris.Pages
 
         // AI toggle is a variable controlling if the AI is active or not, it has a starting value of 0/off
         private int AIToggle = 0;
+
+        List<AI> generations;
+
         public StartGameMenu()
         {
             InitializeComponent();
 
             // Set the focus of the page to this textbox
             Nametxtbox.Focus();
+
+            PopulateAIDropdown();
+        }
+
+        private void PopulateAIDropdown()
+        {
+            ComboBox dropdown = StartGameMenuAIDropdown;
+
+            generations = SQLCalls.Load10AIGenerations();
+
+            foreach (AI ai in generations) 
+            {
+                dropdown.Items.Add(ai.name + " " + ai.generationNumber);
+            }
+
+            dropdown.SelectedItem = dropdown.Items[0];
         }
 
         // Change button state of button pressed
@@ -161,6 +181,12 @@ namespace AITetris.Pages
                     GameBoard gameBoard = new GameBoard(ai);
                     NavigationService.Navigate(gameBoard);
                 }
+            }
+            else if (Nametxtbox.Text.Length == 0 && AIToggle == 1)
+            {
+                AI ai = generations[StartGameMenuAIDropdown.Items.IndexOf(StartGameMenuAIDropdown.SelectedItem)];
+                GameBoard gameBoard = new GameBoard(ai);
+                NavigationService.Navigate(gameBoard);
             }
             else
             {
