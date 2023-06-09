@@ -480,39 +480,53 @@ namespace AITetris.Pages
             }
         }
 
-        // Todo! - Mads - Dokumentation
+        //Function to clear lines and call add points
         private void ClearLine()
         {
+            //Lineclear variable
             int linesCleared = 0;
 
-            // Check and clear the line
+            //For loop that runs through each row in the gamegrid
             for (int i = 0; i < maxHeight; i++)
             {
+                //Here we get the squares in the current row of the game grid
                 List<Square> line = game.board.squares.Where(s => s.coordinateY == i && s.coordinateX >= 0 && s.coordinateX < maxWidth).ToList();
+                //If statment to check if the amount of square equal the max width
                 if (line.Count() == maxWidth)
                 {
+                    //Foreach loop to go through each square in the row
                     foreach (Square square in line)
                     {
+                        //Remove the square from the board (functionaly)
                         game.board.squares.Remove(square);
+                        //Remove the square from the board (visualy)
                         GameBoardGameGrid.Children.Remove(square.image);
                     }
-
+                    //Here we get the squares above the current row of the game grid
                     List<Square> above = game.board.squares.Where(s => s.coordinateY < i && s.coordinateX >= 0 && s.coordinateX < maxWidth).ToList();
+                    //Foreach loop to go through each sqaure in the above rows
                     foreach (Square square in above)
                     {
+                        //Moves each square down one Y coordinate
                         square.coordinateY++;
                     }
+                    //Visualy erase all squares above
                     EraseSquares(above.ToArray(), GameBoardGameGrid);
+                    //Visualy draw all squares above
                     DrawSquares(above.ToArray(), GameBoardGameGrid);
 
+                    //Add line clear to total line clear
                     game.linesCleared++;
+                    //Call speed up function
                     SpeedUp();
+                    //local line clear variable plus 1
                     linesCleared++;
                 }
             }
-
+            //If statment checking if local line clear variable is more then 0
             if (linesCleared > 0)
             {
+                //Call add point function
                 AddPoint(linesCleared);
             }
         }
