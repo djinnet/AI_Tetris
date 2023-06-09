@@ -25,8 +25,10 @@ namespace AITetris.Pages
             InitializeComponent();
         }
 
+        // UI buttons
         private void NavigateMainPage_Click(object sender, RoutedEventArgs e)
         {
+            // Navigate to the first page of the program (Main menu)
             NavigationService.Navigate(new Uri("Pages/MainPage.xaml", UriKind.Relative));
         }
     }

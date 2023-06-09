@@ -31,7 +31,7 @@ namespace AITetris.Pages
     /// </summary>
     public partial class GameBoard : Page
     {
-    
+        // Menu variables
         public Game game;
         private PauseMenu pauseMenu;
 
@@ -62,11 +62,7 @@ namespace AITetris.Pages
         private bool hasLost = false;
         private bool isPaused = false;
 
-        // Scores
-        private int totalLinesCleared;
-        private int points;
-
-        // Execution directory
+        //Execution directory
         private string exeDir;
 
         // Audio variables
@@ -85,63 +81,91 @@ namespace AITetris.Pages
         {
             InitializeComponent();
 
-            // Initialize variables
+            // Set scoreboard timer state to false to ensure it runs
             isScoreboardTimerPaused = false;
+
+            // Set the path to the execution directory
             exeDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
 
+            // Create a new instannce of game where gameboard is created, character is set and the settings is applied
             game = new Game(
                 new Board(maxWidth + 2, maxHeight),
                 character,
                 JsonSerializer.Deserialize<Settings>(File.ReadAllText(exeDir + "/Assets/JSON/Settings.json")));
 
+            // Todo! - Sebastian - Dokumentation
             if (!game.isPlayer)
             {
                 currentIndividual = 0;
                 currentChromosome = 0;
             }
 
-
+            // Set the playername in the scoreboard
             GameBoardScorePlayerLbl.Content = character.name;
+
+            // Apply the settings set in the JSON settings file
             ApplySettings();
             
-            // Scoreboard timer
+            // Set and start the scoreboard timer
             scoreboardTimer = new DispatcherTimer();
             StartTime(scoreboardTimer);
+
+            // Todo! - Sebastian - Dokumentation
             FillBoard();
+
+            // Create a new gamegrid in the foreground
             CreateDynamicGameGrid(maxWidth, maxHeight);
 
+            // Generate a random figure on the gameboard
             GenerateRandomFigure();
+
+            // Generate and set the next block in the next block board
             NextToGame();
 
             //Music start
             MusicStart();
 
+            // Initialize a pause menu in this game
             pauseMenu = new PauseMenu(this);
         }
 
+        // A function that pauses the game and opens the pause menu
         public void TogglePauseGame()
         {
+            // Checking if the game is paused or not
             if (!isPaused)
             {
+                // Game timers is stopped
                 autoMoveTimer.Stop();
                 PauseTime(scoreboardTimer);
+
+                // The bool that holds the pause state is set to true to indicate a pause is triggered
                 isPaused = true;
+
+                // Add the pausemenu to the gameboardmaingrid
                 GameBoardMainGrid.Children.Add(pauseMenu);
+
+                // Position the pause menu on the gameboardmaingrid
                 Grid.SetColumn(pauseMenu, 1);
                 Grid.SetRow(pauseMenu, 1);
-
                 Grid.SetColumnSpan(pauseMenu, 5);
                 Grid.SetRowSpan(pauseMenu, 7);
             }
             else
             {
+                // The bool that holds the pause state is set to false to indicate a pause is stopped
                 isPaused = false;
+
+                // Resume and start the timers
                 autoMoveTimer.Start();
                 ResumeTime(scoreboardTimer);
+
+                // Remove the pausemenu from the gameboardmaingrid
                 GameBoardMainGrid.Children.Remove(pauseMenu);
             }
         }
 
+        // Todo! - Sebastian - Dokumentation
         private void FillBoard()
         {
             for (int i = 0; i < maxHeight; i++)
@@ -151,6 +175,7 @@ namespace AITetris.Pages
             }
         }
 
+        // Todo! - Sebastian - Dokumentation
         private void DrawSquares(Square[] squares, Grid grid)
         {
             foreach (Square square in squares)
@@ -162,6 +187,7 @@ namespace AITetris.Pages
             }
         }
 
+        // Todo! - Sebastian - Dokumentation
         private void EraseSquares(Square[] squares, Grid grid)
         {
             foreach (Square square in squares)
@@ -170,6 +196,7 @@ namespace AITetris.Pages
             }
         }
 
+        // Todo! - Sebastian - Dokumentation
         private void RotateFigure()
         {
             
@@ -188,6 +215,7 @@ namespace AITetris.Pages
             }
         }
 
+        // Todo! - Sebastian - Dokumentation
         private void MoveFigure(string destination)
         {
             if (Collision(destination))
@@ -205,6 +233,7 @@ namespace AITetris.Pages
             DrawSquares(figure.squares, GameBoardGameGrid);
         }
 
+        // Todo! - Sebastian - Dokumentation
         private void InstaDrop()
         {
             while (!Collision("down"))
@@ -216,6 +245,7 @@ namespace AITetris.Pages
             MoveFigure("down");
         }
 
+        // Todo! - Sebastian - Dokumentation
         private void GenerateRandomFigure()
         {
             Random rand = new Random();
@@ -225,6 +255,7 @@ namespace AITetris.Pages
             DrawSquares(nextFigure.squares, GameBoardNextGrid);
         }
 
+        // Todo! - Sebastian - Dokumentation
         private void NextToGame()
         {
             EraseSquares(nextFigure.squares, GameBoardNextGrid);
@@ -236,6 +267,7 @@ namespace AITetris.Pages
             GenerateRandomFigure();
         }
 
+        // Todo! - Sebastian - Dokumentation
         private void Swap()
         {
             TetrisFigure reserve;
@@ -268,6 +300,7 @@ namespace AITetris.Pages
             DrawSquares(swappedFigure.squares, GameBoardSwapGrid);
         }
 
+        // Todo! - Sebastian - Dokumentation
         private void FigureToBoard()
         {
             game.board.squares.AddRange(figure.squares);
@@ -281,6 +314,7 @@ namespace AITetris.Pages
             }
         }
 
+        // Todo! - Sebastian - Dokumentation
         private bool Collision(string move)
         {
             bool result = false;
@@ -320,6 +354,7 @@ namespace AITetris.Pages
             return result;
         }
 
+        // Todo! - Sebastian - Dokumentation
         private bool BlockCollision(Square square, string direction)
         {
             bool result = false;
@@ -354,6 +389,7 @@ namespace AITetris.Pages
             return result;
         }
 
+        // Todo! - Sebastian - Dokumentation
         private bool CanRotate()
         {
             foreach (Square square in figure.squares)
@@ -368,6 +404,7 @@ namespace AITetris.Pages
             return true;
         }
 
+        // Todo! - Sebastian - Dokumentation
         private void Kickback()
         {
             foreach (Square square in figure.squares)
@@ -391,9 +428,10 @@ namespace AITetris.Pages
             }
         }
 
+        // A function that creates a new gamegrid in the foreground with a specific grid size given
         private void CreateDynamicGameGrid(int cols, int rows)
         {
-            // Gamegrid
+            // An instance of the gameboardgamegrid to add content to
             Grid gamegrid = GameBoardGameGrid;
 
             // Clear current gamegrid
@@ -403,15 +441,17 @@ namespace AITetris.Pages
             gamegrid.RowDefinitions.Clear();
             gamegrid.ColumnDefinitions.Clear();
 
-            // Create new row definitions
+            // Create new row definitions based on the rows given
             for (int i = 0; i < rows; i++)
             {
+                // Add a new row definition
                 gamegrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
             }
 
-            // Create new row definitions
+            // Create new row definitions based on the columns given
             for (int i = 0; i < cols; i++)
             {
+                // Add a new column definition
                 gamegrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
             }
 
@@ -440,6 +480,7 @@ namespace AITetris.Pages
             }
         }
 
+        // Todo! - Mads - Dokumentation
         private void ClearLine()
         {
             int linesCleared = 0;
@@ -464,7 +505,7 @@ namespace AITetris.Pages
                     EraseSquares(above.ToArray(), GameBoardGameGrid);
                     DrawSquares(above.ToArray(), GameBoardGameGrid);
 
-                    totalLinesCleared++;
+                    game.linesCleared++;
                     SpeedUp();
                     linesCleared++;
                 }
@@ -476,6 +517,7 @@ namespace AITetris.Pages
             }
         }
 
+        // Todo! - Sebastian - Dokumentation
         private void LoseGame()
         {
             if (game.board.squares.Where(s => s.coordinateY == 0).Count() > 2)
@@ -486,6 +528,7 @@ namespace AITetris.Pages
             }
         }
 
+        // Todo! - Sebastian - Dokumentation
         public void LoseGame(bool lose)
         {
             if (lose)
@@ -495,29 +538,47 @@ namespace AITetris.Pages
             }
         }
 
+        // A function that trigger a gameover event
         private void GameOver()
         {
+        
+            // Stop the current game timers
+            
+            game.time = Convert.ToInt32(elapsedTime.TotalMilliseconds);
+            SQLCalls.CreateLeaderboardEntry(game);
+            
             StopTime(scoreboardTimer);
             autoMoveTimer.Stop();
 
+            // Start game over music
             gameOverMelody.Play();
-            GameOverMenu menu = new GameOverMenu();
+            
+
+            // Add the game over menu to the gameboardmaingrid
+            
+            GameOverMenu menu = new GameOverMenu(game);
+            
             GameBoardMainGrid.Children.Add(menu);
+            
+            // Position the game over menu on the gamegboardmain grid
             Grid.SetColumn(menu, 1);
             Grid.SetRow(menu, 1);
-
             Grid.SetColumnSpan(menu, 5);
             Grid.SetRowSpan(menu, 7);
 
+            // Resource cleanup
             ClearBoard();
         }
 
+        // A function that cleans up the grids and sounds
         private void ClearBoard()
         {
+            // Clear the gamboard of content
             GameBoardGameGrid.Children.Clear();
             GameBoardNextGrid.Children.Clear();
             GameBoardSwapGrid.Children.Clear();
 
+            // Clear the gameboard of sounds
             backgroundMusic.Close();
             gameOverMelody.Dispose();
             SFXMove.Dispose();
@@ -526,11 +587,13 @@ namespace AITetris.Pages
             SFXTetrisClear.Dispose();
         }
 
+        // Todo! - Sebastian - Dokumentation
         private void SetBoard()
         {
 
         }
 
+        // Todo! - Sebastian - Dokumentation
         private void AIMove()
         {
 
@@ -572,6 +635,7 @@ namespace AITetris.Pages
             Advance();
         }
 
+        // Todo! - Sebastian - Dokumentation
         private double CalculateOutput()
         {
             Individual individual = (game.character as AI).population[currentIndividual];
@@ -639,8 +703,10 @@ namespace AITetris.Pages
             }
         }
 
+        // A function that starts the automove timer
         private void StartAutoMove()
         {
+            // Instantiate a new dispatchertimer to run the automovement
             autoMoveTimer = new DispatcherTimer();
 
             // Set the interval of the timer in milliseconds
@@ -653,11 +719,14 @@ namespace AITetris.Pages
             autoMoveTimer.Start();
         }
 
+        // The automove event
         private void AutoMove_Tick(object sender, EventArgs e)
         {
+            // Move the figure down
             MoveFigure("down");
         }
 
+        // A function that starts the score timer
         private void StartTime(DispatcherTimer timer)
         {
             // Set the interval of the timer in milliseconds
@@ -673,6 +742,7 @@ namespace AITetris.Pages
             timer.Start();
         }
 
+        // The score timer event
         private void Timer_Tick(object sender, EventArgs e)
         {
             // Check if the scoreboardtimer is paused
@@ -699,7 +769,7 @@ namespace AITetris.Pages
                     GameBoardScoreTimeLbl.Content = "00:00:00:000";
                 }
 
-
+                // Todo! - Sebastian - Dokumentation
                 if (((int)elapsedTime.TotalMilliseconds) % 500 <= 10 && !game.isPlayer && !hasLost)
                 {
                     AIMove();
@@ -707,7 +777,7 @@ namespace AITetris.Pages
             }
         }
 
-
+        // A function that stop and reset the score timer
         private void StopTime(DispatcherTimer timer)
         {
             // Stop the timer
@@ -721,6 +791,7 @@ namespace AITetris.Pages
             GameBoardScoreTimeLbl.Content = "00:00:00:000";
         }
 
+        // A function that pauses the scoretimer and preserves the timer
         private void PauseTime(DispatcherTimer timer)
         {
             // Change the scoreboardtimer status
@@ -733,6 +804,7 @@ namespace AITetris.Pages
             pausedTime += DateTime.Now - startTime;
         }
 
+        // A function that resumes the scoretimer from where it was paused
         private void ResumeTime(DispatcherTimer timer)
         {
             // Change the scoreboardtimer status
@@ -743,8 +815,9 @@ namespace AITetris.Pages
 
             // Start the timer
             timer.Start();
-        }    
-        
+        }
+
+        // Todo! - Mads - Dokumentation
         private void MusicStart()
         {
             backgroundMusic.Open(new Uri(exeDir + "\\Assets\\Sound\\Tetris99MainTheme.mp3", UriKind.Absolute));
@@ -760,31 +833,45 @@ namespace AITetris.Pages
             SFXTetrisClear = new SoundPlayer(exeDir + "\\Assets\\Sound\\SFXTetrisClear.wav");
         }
 
+        // A function that speeds up the automove timer
         private void SpeedUp()
         {
-            if (totalLinesCleared % 10 == 0)
+        
+            // Every ten lines cleared
+            
+            if (game.linesCleared % 10 == 0)
+            
             {
+                // Recalculating the automovetimerinterval setting the value lower to increase the tick speed
                 autoMoveTimerInterval -= autoMoveTimerInterval * (game.settings.gameSpeed / 100);
             }
         }
 
+        // A function that adds points to the score
         private void AddPoint(int lines)
         {
+            // Sounds played on point gain
             if(lines == 4)
             {
+                // Play this tetris clear sound when 4 lines is cleared
                 SFXTetrisClear.Play();
             }
             else
             {
+                // Play this SFX whenn 3 or less lines are cleared
                 SFXLineClear.Play();
             }
-            
-            points += (int)Math.Pow(2, lines) * 100;
+                        
+            // Recalculate the points and doubling the points added accordingly to the amount of lines cleared
+            game.points += (int)Math.Pow(2, lines) * 100;
 
-            GameBoardScorePointLbl.Content = "Point: " + points;
-            GameBoardScoreLineClearedLbl.Content = "Lines: " + totalLinesCleared;
+            // Update the scoreboard labels
+            GameBoardScorePointLbl.Content = "Point: " + game.points;
+            GameBoardScoreLineClearedLbl.Content = "Lines: " + game.linesCleared;
+            
         }
 
+        // Todo! - Mads - Dokumentation
         private void ApplySettings()
         {
             if (game.settings.enableNextBlock)
@@ -810,33 +897,39 @@ namespace AITetris.Pages
             backgroundMusic.Volume = Convert.ToDouble(game.settings.volume) / 100;
         }
 
+        // Todo! - Mads - Dokumentation
         public void ApplySettings(Settings settings)
         {
             game.settings = settings;
             ApplySettings();
         }
 
-
+        // A UI button that triggers the pause menu
         private void GameBoardActionsPauseBtn_Click(object sender, RoutedEventArgs e)
         {
+            // Trigger the pause menu
             TogglePauseGame();
         }
 
+        // UI button for using the not yet planned consumeable within the game
         private void GameBoardActionsConsumeOneBtn_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
+        // UI button for using the not yet planned consumeable within the game
         private void GameBoardActionsConsumeTwoBtn_Click(object sender, RoutedEventArgs e)
         {
 
         }
 
+        // UI button for using the not yet planned consumeable within the game
         private void GameBoardActionsConsumeThreeBtn_Click(object sender, RoutedEventArgs e)
         {
 
         }
-        
+
+        // Todo! - Mads - Dokumentation
         private void GamePage_KeyDown(object sender, KeyEventArgs e)
         {
             if (!hasLost && game.isPlayer)
@@ -879,31 +972,10 @@ namespace AITetris.Pages
             }
         }
 
+        // Todo! - Mads - Dokumentation
         private void GamePage_Loaded(object sender, RoutedEventArgs e)
         {
             Window.GetWindow(this).KeyDown += GamePage_KeyDown;
         }
-
-        // Test buttons to control the timer
-
-        //private void GameBoardActionsStartTimeTestBtn_Click(object sender, RoutedEventArgs e)
-        //{
-        //    StartTime(scoreboardTimer);
-        //}
-
-        //private void GameBoardActionsStopTimeTestBtn_Click(object sender, RoutedEventArgs e)
-        //{
-        //    StopTime(scoreboardTimer);
-        //}
-
-        //private void GameBoardActionsPauseTimeTestBtn_Click(object sender, RoutedEventArgs e)
-        //{
-        //    PauseTime(scoreboardTimer);
-        //}
-
-        //private void GameBoardActionsResumeTimeTestBtn_Click(object sender, RoutedEventArgs e)
-        //{
-        //    ResumeTime(scoreboardTimer);
-        //}
     }
 }

@@ -42,80 +42,19 @@
 
         <!-- Border used as a container for the leaderboard stackpanel -->
         <Border
-            x:Name="GameOverMenuLeaderboardBoarder"
+            x:Name="LeaderboardGridBorder"
             Grid.Column="1"
-            Grid.Row="2">
+            Grid.Row="2"
+            BorderBrush="Silver"
+            BorderThickness="2"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
 
-            <!-- Stackpanel holding the leaderboard -->
-            <StackPanel
-                x:Name="GameOverMenuLeaderboardSP">
+            <Grid
+                x:Name="LeaderboardGrid">
 
-                <!-- Leaderboard title -->
-                <Label
-                    x:Name="GameOverLBTitle"
-                    Content="Leaderboard"
-                    HorizontalContentAlignment="Center"
-                    VerticalContentAlignment="Center"
-                    FontFamily="Tahoma"
-                    FontSize="20"
-                    FontWeight="Bold"
-                    Margin="0, 10" />
 
-                <!-- Leaderboard 4 closest above and you -->
-                <Label
-                    x:Name="GameOverLBOne"
-                    Content="Name / Score"
-                    HorizontalContentAlignment="Center"
-                    VerticalContentAlignment="Center"
-                    FontFamily="Tahoma"
-                    FontSize="15"
-                    FontWeight="Bold"
-                    Margin="0, 10" />
-
-                <!-- Leaderboard 4 closest above and you -->
-                <Label
-                    x:Name="GameOverLBTwo"
-                    Content="Name / Score"
-                    HorizontalContentAlignment="Center"
-                    VerticalContentAlignment="Center"
-                    FontFamily="Tahoma"
-                    FontSize="15"
-                    FontWeight="Bold"
-                    Margin="0, 10" />
-
-                <!-- Leaderboard 4 closest above and you -->
-                <Label
-                    x:Name="GameOverLBThree"
-                    Content="Name / Score"
-                    HorizontalContentAlignment="Center"
-                    VerticalContentAlignment="Center"
-                    FontFamily="Tahoma"
-                    FontSize="15"
-                    FontWeight="Bold"
-                    Margin="0, 10" />
-
-                <!-- Leaderboard 4 closest above and you -->
-                <Label
-                    x:Name="GameOverLBFour"
-                    Content="Name / Score"
-                    HorizontalContentAlignment="Center"
-                    VerticalContentAlignment="Center"
-                    FontFamily="Tahoma"
-                    FontSize="15"
-                    FontWeight="Bold" 
-                    Margin="0, 10" />
-
-                <!-- Leaderboard 4 closest above and you -->
-                <Label
-                    x:Name="GameOverLBFive"
-                    Content="Name / Score"
-                    HorizontalContentAlignment="Center"
-                    VerticalContentAlignment="Center"
-                    FontFamily="Tahoma"
-                    FontSize="15"
-                    FontWeight="Bold"
-                    Margin="0, 10" />
-            </StackPanel>
+            </Grid>
         </Border>
 
         <!-- Border used as a container for the gameover controls stackpanel -->
