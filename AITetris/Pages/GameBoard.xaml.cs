@@ -77,6 +77,8 @@ namespace AITetris.Pages
         private int currentIndividual;
         private int currentChromosome;
 
+        private Random rand;
+
         public GameBoard(Character character)
         {
             InitializeComponent();
@@ -98,7 +100,13 @@ namespace AITetris.Pages
             {
                 currentIndividual = 0;
                 currentChromosome = 0;
+                rand = new Random((game.character as AI).seed);
             }
+            else
+            {
+                rand = new Random();
+            }
+
 
             // Set the playername in the scoreboard
             GameBoardScorePlayerLbl.Content = character.name;
@@ -184,6 +192,7 @@ namespace AITetris.Pages
         // Todo! - Sebastian - Dokumentation
         private void FillBoard()
         {
+            game.board.squares.Clear();
             for (int i = 0; i < maxHeight; i++)
             {
                 game.board.squares.Add(new Square(-1, i, "BluePrimary"));
@@ -264,7 +273,6 @@ namespace AITetris.Pages
         // Todo! - Sebastian - Dokumentation
         private void GenerateRandomFigure()
         {
-            Random rand = new Random();
             var i = rand.Next(0, Enum.GetNames(typeof(FigureType)).Length);
             nextFigure = new TetrisFigure(new int[]{ 1,0},(FigureType)i);
 
@@ -288,32 +296,37 @@ namespace AITetris.Pages
         {
             TetrisFigure reserve;
 
-            EraseSquares(figure.squares, GameBoardGameGrid);
-
-            if (swappedFigure == null)
+            if (!hasSwapped && game.settings.enableSwapBlock)
             {
-                
-                swappedFigure = figure;
-                swappedFigure.MoveTo(new int[] { 1, 0 });
+                hasSwapped = true;
 
-                NextToGame();
+                EraseSquares(figure.squares, GameBoardGameGrid);
+
+                if (swappedFigure == null)
+                {
+
+                    swappedFigure = figure;
+                    swappedFigure.MoveTo(new int[] { 1, 0 });
+
+                    NextToGame();
+                }
+                else
+                {
+                    EraseSquares(swappedFigure.squares, GameBoardSwapGrid);
+
+                    reserve = swappedFigure;
+
+                    swappedFigure = figure;
+                    swappedFigure.MoveTo(new int[] { 1, 0 });
+
+                    figure = reserve;
+                    figure.MoveTo(new int[] { 4, 0 });
+
+                    DrawSquares(figure.squares, GameBoardGameGrid);
+                }
+
+                DrawSquares(swappedFigure.squares, GameBoardSwapGrid);
             }
-            else
-            {
-                EraseSquares(swappedFigure.squares, GameBoardSwapGrid);
-
-                reserve = swappedFigure;
-
-                swappedFigure = figure;
-                swappedFigure.MoveTo(new int[] { 1, 0 });
-
-                figure = reserve;
-                figure.MoveTo(new int[] { 4, 0 });
-
-                DrawSquares(figure.squares, GameBoardGameGrid);
-            }
-
-            DrawSquares(swappedFigure.squares, GameBoardSwapGrid);
         }
 
         // Todo! - Sebastian - Dokumentation
@@ -552,9 +565,40 @@ namespace AITetris.Pages
         {
             if (game.board.squares.Where(s => s.coordinateY == 0).Count() > 2)
             {
-                GameOver();
-                Debug.WriteLine("You lose!");
-                hasLost = true;
+                if (game.settings.enableTraining)
+                {
+                    if (!game.isPlayer)
+                    {
+                        (game.character as AI).population[currentIndividual].fitness = EvaluateFitness();
+                        Debug.WriteLine("Disengaging individual: " + currentIndividual);
+                        Debug.WriteLine("Total Fitness: " + (game.character as AI).population[currentIndividual].fitness);
+                        currentIndividual++;
+
+                        if (currentIndividual == (game.character as AI).population.Count())
+                        {
+                            NextGeneration();
+                            currentIndividual = 0;
+                            (game.character as AI).generationNumber++;
+                            Debug.WriteLine("Engaging generation: " + (game.character as AI).generationNumber);
+                            Debug.WriteLine("Engaging individual: " + currentIndividual);
+                        }
+                        else
+                        {
+                            Debug.WriteLine("Engaging individual: " + currentIndividual);
+                        }
+                    }
+
+                    ClearBoard();
+                    game.linesCleared = 0;
+                    game.points = 0;
+                    rand = new Random((game.character as AI).seed);
+                    SetBoard();
+                }
+                else
+                {
+                    GameOver();
+                    hasLost = true;
+                }
             }
         }
 
@@ -605,22 +649,23 @@ namespace AITetris.Pages
         {
             // Clear the gamboard of content
             GameBoardGameGrid.Children.Clear();
+            figure = null;
             GameBoardNextGrid.Children.Clear();
+            nextFigure = null;
             GameBoardSwapGrid.Children.Clear();
-
-            // Clear the gameboard of sounds
-            backgroundMusic.Close();
-            gameOverMelody.Dispose();
-            SFXMove.Dispose();
-            SFXDrop.Dispose();
-            SFXLineClear.Dispose();
-            SFXTetrisClear.Dispose();
+            swappedFigure = null;
         }
 
         // Todo! - Sebastian - Dokumentation
         private void SetBoard()
         {
+            scoreboardTimer = new DispatcherTimer();
+            StartTime(scoreboardTimer);
 
+            FillBoard();
+            CreateDynamicGameGrid(maxWidth,maxHeight);
+
+            GenerateRandomFigure();
         }
 
         // Todo! - Sebastian - Dokumentation
@@ -632,7 +677,7 @@ namespace AITetris.Pages
             double calcRotate = CalculateOutput();
             double calcSwap = CalculateOutput();
 
-            Debug.WriteLine("Move: " + calcMove);
+            //Debug.WriteLine("Move: " + calcMove);
             if (calcMove < 0)
             {
                 MoveFigure("left");
@@ -662,7 +707,7 @@ namespace AITetris.Pages
                 Swap();
             }
 
-            Advance();
+            currentChromosome = 0;
         }
 
         // Todo! - Sebastian - Dokumentation
@@ -722,15 +767,66 @@ namespace AITetris.Pages
             if (currentChromosome == aI.population[currentIndividual].chromosomes.Count())
             {
                 currentChromosome = 0;
-                //currentIndividual++;
             }
+        }
 
+        private void NextGeneration()
+        {
+            List<Individual> newPopulation = new List<Individual>();
+            Individual[] population = (game.character as AI).population;
+            Random random = new Random();
+            Individual mate = population[random.Next(population.Length)];
 
-            if (currentIndividual == aI.population.Count())
+            //Debug.WriteLine("New population: ");
+
+            // 0. Best
+            newPopulation.Add(population.MaxBy(i => i.fitness));
+            //Debug.WriteLine("Fitness: " + newPopulation.Last());
+
+            // 1. Child of best & random + mutation
+            // 2. Child of best & random + mutation
+            // 3. Child of best & random + mutation
+            // 4. Child of best & random + mutation
+            for (int i = 0; i < 4; i++)
             {
-                currentIndividual = 0;
-                aI.generationNumber++;
+                newPopulation.Add(Reproduce(newPopulation[0], mate, random));
+                //Debug.WriteLine("Fitness: " + newPopulation.Last());
             }
+
+            // 5. New random
+            // 6. New random
+            // 7. New random
+            // 8. New random
+            // 9. New random
+
+            for (int i = newPopulation.Count(); i < population.Length; i++)
+            {
+                newPopulation.Add(new Individual(newPopulation[0].chromosomes.Length));
+                //Debug.WriteLine("Fitness: " + newPopulation.Last());
+            }
+
+            population = newPopulation.ToArray();
+        }
+
+        private Individual Reproduce(Individual best, Individual mate, Random random)
+        {
+            Individual result = new Individual(best.chromosomes, 0.0);
+
+            for (int i = 0; i < (best.chromosomes.Length / 2); i++)
+            {
+                int rng = random.Next(best.chromosomes.Length);
+
+                result.chromosomes[rng] = mate.chromosomes[rng];
+            }
+
+            result.chromosomes[random.Next(best.chromosomes.Length)] = result.RandomChromosome();
+
+            return result;
+        }
+
+        private double EvaluateFitness()
+        {
+            return game.points + elapsedTime.TotalSeconds;
         }
 
         // A function that starts the automove timer
@@ -1019,14 +1115,8 @@ namespace AITetris.Pages
                             break;
                         //Case When the inputed key = kebind swap
                         case Key k when k == game.settings.KeyBinds.swap:
-                            //If Statment that checks if swap is enabled and if the use has not already swaped
-                            if (!hasSwapped && game.settings.enableSwapBlock)
-                            {
-                                //Set has swap to true
-                                hasSwapped = true;
-                                //Activate the swap function
-                                Swap();
-                            }
+                            //Call the swap figure function
+                            Swap();
                             break;
                         default: break;
                     }

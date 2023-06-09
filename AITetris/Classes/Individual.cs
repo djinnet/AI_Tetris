@@ -39,7 +39,7 @@ namespace AITetris.Classes
             }
         }
 
-        private int RandomChromosome()
+        public int RandomChromosome()
         {
             return rng.Next(-1, 2);
         }
