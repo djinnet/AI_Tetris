@@ -4,6 +4,7 @@ using System.Data;
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Xml.Linq;
 
@@ -217,33 +218,69 @@ namespace AITetris.Classes
 
             return foundGame;
         }
+        public static int GetLastGenerationID()
+        {
+            int genID = 0;
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = "SELECT TOP 1 Id FROM Generation ORDER BY Id DESC";
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    genID = reader.GetInt32(0);
+                }
+
+                reader.Close();
+            }
+            return genID;
+        }
 
         // A function that inserts the AI Individual in the database
         public static void Create10IndividualsEntry(List<Individual> individuals, int genID)
         {
+            // A list of AI weights
+            List<string> weights = new List<string>();
+
+            // Add weights as JSON for every individual
+            foreach (Individual individual in individuals) 
+            {
+                weights.Add(JsonSerializer.Serialize(individual.chromosomes, new JsonSerializerOptions() { WriteIndented = true }));
+            }
+
             // Creating a new database connection
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 // SQL query string that inserts an individual to the individual table
                 string query = "INSERT INTO Individual (GenerationID, Weights, Rank)" +
                                "VALUES" +
-                               "(@genID, @weights, @rank0)," +
-                               "(@genID, @weights, @rank1)," +
-                               "(@genID, @weights, @rank2)," +
-                               "(@genID, @weights, @rank3)," +
-                               "(@genID, @weights, @rank4)," +
-                               "(@genID, @weights, @rank5)," +
-                               "(@genID, @weights, @rank6)," +
-                               "(@genID, @weights, @rank7)," +
-                               "(@genID, @weights, @rank8)," +
-                               "(@genID, @weights, @rank9)";
+                               "(@genID, @weights0, @rank0)," +
+                               "(@genID, @weights1, @rank1)," +
+                               "(@genID, @weights2, @rank2)," +
+                               "(@genID, @weights3, @rank3)," +
+                               "(@genID, @weights4, @rank4)," +
+                               "(@genID, @weights5, @rank5)," +
+                               "(@genID, @weights6, @rank6)," +
+                               "(@genID, @weights7, @rank7)," +
+                               "(@genID, @weights8, @rank8)," +
+                               "(@genID, @weights9, @rank9)";
 
                 // Create a new SQL command
                 SqlCommand cmd = new SqlCommand(query, conn);
 
                 // Prepare parameters
                 cmd.Parameters.AddWithValue("@genID", genID);
-                cmd.Parameters.AddWithValue("@weights", "Weights");
+
+                // Add individual weights parameters
+                for (int i = 0; i < 10; i++)
+                {
+                    cmd.Parameters.AddWithValue($"@weights{i}", weights[i]);
+                }
 
                 // Add individual rank parameters
                 for (int i = 0; i < 10; i++)
@@ -261,13 +298,13 @@ namespace AITetris.Classes
 
 
         // A function that inserts the AI Generation in the database
-        public static void CreateGenerationEntry(string genName, int genNumber)
+        public static void CreateGenerationEntry(string genName, int genNumber, int seed)
         {
             // Creating a new database connection
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 // SQL query string that inserts a generation to the generation table
-                string query = "INSERT INTO Generation (Name, GenerationNumber) VALUES (@genName, @genNumber)";
+                string query = "INSERT INTO Generation (Name, GenerationNumber, Seed) VALUES (@genName, @genNumber, @seed)";
 
                 // Create a new SQL command
                 SqlCommand cmd = new SqlCommand(query, conn);
@@ -275,6 +312,7 @@ namespace AITetris.Classes
                 // Prepare parameters
                 cmd.Parameters.AddWithValue("@genName", genName);
                 cmd.Parameters.AddWithValue("@genNumber", genNumber);
+                cmd.Parameters.AddWithValue("@seed", seed);
 
                 // Open the connection
                 conn.Open();
@@ -282,6 +320,79 @@ namespace AITetris.Classes
                 // Execute the query
                 cmd.ExecuteNonQuery();
             }
+        }
+
+        // Select top 10 generations
+        public static List<AI> Load10AIGenerations()
+        {
+            // A list of string to hold generation data
+            List<AI> generations = new List<AI>();
+
+            // Creating a new database connection
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                // SQL query string that selects the top 10 generations baased on generation number in the generations table
+                string query = "SELECT TOP 10 Id, Name, GenerationNumber, Seed FROM Generation ORDER BY GenerationNumber DESC";
+
+                // Create a new SQL command
+                SqlCommand cmd = new SqlCommand(query, conn);
+
+                // Open the connection
+                conn.Open();
+
+                // Create a new SQL reader
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                // Read as long as there is data
+                while (reader.Read())
+                {
+                    // Add generation to list of generations
+                    generations.Add(new AI(reader.GetInt32(0), reader.GetString(1), reader.GetInt32(3), LoadPopulation(reader.GetInt32(0)), reader.GetInt32(2)));
+                }
+
+                // Close the reader
+                reader.Close();
+            }
+
+            return generations;
+        }
+
+        // 
+        public static Individual[] LoadPopulation(int generationID)
+        {
+            // 
+            List<Individual> individuals = new List<Individual>();
+
+            // Creating a new database connection
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                // 
+                string query = "SELECT Weights FROM Individual WHERE GenerationID = @generationid";
+
+                // Create a new SQL command
+                SqlCommand cmd = new SqlCommand(query, conn);
+
+                //
+                cmd.Parameters.AddWithValue("@generationid", generationID);
+
+                // Open the connection
+                conn.Open();
+
+                // Create a new SQL reader
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                // Read as long as there is data
+                while (reader.Read())
+                {
+                    // 
+                    individuals.Add(new Individual(JsonSerializer.Deserialize<int[]>(reader.GetString(0)), 0.0));
+                }
+
+                // Close the reader
+                reader.Close();
+            }
+
+            return individuals.ToArray();
         }
     }
 }

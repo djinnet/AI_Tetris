@@ -4,17 +4,17 @@
 winexe
 C#
 .cs
-D:\Repos\AI_Tetris\AITetris\obj\Debug\net6.0-windows\
+C:\Users\Christoffer Petersen\Desktop\Svendeprøve\AI_Tetris\AITetris\obj\Debug\net6.0-windows\
 AITetris
 none
 false
 TRACE;DEBUG;NET;NET6_0;NETCOREAPP
-D:\Repos\AI_Tetris\AITetris\App.xaml
-11407045341
+C:\Users\Christoffer Petersen\Desktop\Svendeprøve\AI_Tetris\AITetris\App.xaml
+13-252171998
 
-51146986760
+282060367234
 1941709816142
-MainWindow.xaml;
+Controls\GameOverMenu.xaml;Controls\KeybindsMenu.xaml;Controls\LeaderboardUserController.xaml;Controls\PauseMenu.xaml;Controls\SettingsMenuUserController.xaml;MainWindow.xaml;Pages\GameBoard.xaml;Pages\Leaderboard.xaml;Pages\MainPage.xaml;Pages\PointShop.xaml;Pages\SettingsMenu.xaml;Pages\StartGameMenu.xaml;Pages\TestPage.xaml;
 
-False
+True
 

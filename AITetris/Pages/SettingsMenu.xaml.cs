@@ -182,17 +182,20 @@ namespace AITetris.Pages
         // Navigation
         private void SettingsControlsMainMenu_Click(object sender, RoutedEventArgs e)
         {
-            // A popup is shown that allows you to take action
-            MessageBoxResult result = MessageBox.Show("There is unapplied changes to the settings, do you want to apply the changes", "Warning", MessageBoxButton.YesNo);
-
-            // Check if the response of the popup was OK
-            if (result == MessageBoxResult.Yes)
+            if (SettingsControlsApplySettings.IsEnabled == true)
             {
-                // Write new settings to the settings file
-                File.WriteAllText(exeDir + "/Assets/JSON/Settings.json", JsonSerializer.Serialize(settings, new JsonSerializerOptions() { WriteIndented = true }));
+                // A popup is shown that allows you to take action
+                MessageBoxResult result = MessageBox.Show("There is unapplied changes to the settings, do you want to apply the changes", "Warning", MessageBoxButton.YesNo);
 
-                // Set the state to false since was just applied
-                SettingsControlsApplySettings.IsEnabled = false;
+                // Check if the response of the popup was OK
+                if (result == MessageBoxResult.Yes)
+                {
+                    // Write new settings to the settings file
+                    File.WriteAllText(exeDir + "/Assets/JSON/Settings.json", JsonSerializer.Serialize(settings, new JsonSerializerOptions() { WriteIndented = true }));
+
+                    // Set the state to false since was just applied
+                    SettingsControlsApplySettings.IsEnabled = false;
+                }
             }
 
             // Navigate to the Main Menu

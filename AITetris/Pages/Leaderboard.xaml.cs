@@ -38,8 +38,6 @@ namespace AITetris.Pages
         // A function that fills and creates the leaderboard
         private void FillLeaderboard()
         {
-
-
             // Get an instance of the leaderboard grid
             Grid leaderboardGrid = LeaderboardGrid;
 

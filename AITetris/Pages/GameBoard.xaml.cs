@@ -113,10 +113,12 @@ namespace AITetris.Pages
             GameBoardScorePlayerLbl.Content = character.name;
 
             // Set the AI panel labels
-            GameBoardAINameLbl.Content = "";
-            GameBoardGenerationLbl.Content = "";
-            GameBoardIndividualLbl.Content = "";
-            GameBoardLastFitnessLbl.Content = "";
+            GameBoardAINameLbl.Content = "AI Name: ";
+            GameBoardGenerationLbl.Content = "Generation: ";
+            GameBoardIndividualLbl.Content = "Individual: ";
+            GameBoardCurrentFitnessLbl.Content = "Current Fitness: ";
+            GameBoardBestFitnessLbl.Content = "Best Fitness: ";
+            GameBoardLastFitnessLbl.Content = "Last Fitness: ";
 
             // Check if AI is enabled
             if (!game.isPlayer)
@@ -125,6 +127,8 @@ namespace AITetris.Pages
                 GameBoardAINameLbl.Content = character.name;
                 GameBoardGenerationLbl.Content = "Generation: " + (game.character as AI).generationNumber.ToString();
                 GameBoardIndividualLbl.Content = "Individual: " + currentIndividual.ToString();
+                GameBoardCurrentFitnessLbl.Content = "Current Fitness: " + "";// Todo! - Sebastian - Dokumentation
+                GameBoardBestFitnessLbl.Content = "Best Fitness: " + "";// Todo! - Sebastian - Dokumentation
                 GameBoardLastFitnessLbl.Content = "Last Fitness: " + (game.character as AI).population[currentIndividual].fitness.ToString();
             }
 
@@ -1055,6 +1059,28 @@ namespace AITetris.Pages
 
             //sets the audio level of the background music
             backgroundMusic.Volume = Convert.ToDouble(game.settings.volume) / 100;
+
+            // Setting the controls from the keybinds in the controls panel
+            GameBoardControlsPause.Content = "Pause: " + game.settings.KeyBinds.pause.ToString();
+            GameBoardControlsSave.Content = "Swap: " + game.settings.KeyBinds.swap.ToString();
+            GameBoardControlsRotate.Content = "Rotate: " + game.settings.KeyBinds.rotate.ToString();
+            GameBoardControlsLeft.Content = "Left: " + game.settings.KeyBinds.left.ToString();
+            GameBoardControlsRight.Content = "Right: " + game.settings.KeyBinds.right.ToString();
+            GameBoardControlsDown.Content = "Down: " + game.settings.KeyBinds.drop.ToString();
+            GameBoardControlsInstantDown.Content = "Instant Down: " + game.settings.KeyBinds.insta.ToString();
+
+            // Check if AI is enabled
+            if (!game.isPlayer)
+            {
+                // Removing the controls from the keybinds in the controls panel if the AI is active
+                GameBoardControlsPause.Content = "Pause: ";
+                GameBoardControlsSave.Content = "Swap: ";
+                GameBoardControlsRotate.Content = "Rotate: ";
+                GameBoardControlsLeft.Content = "Left: ";
+                GameBoardControlsRight.Content = "Right: ";
+                GameBoardControlsDown.Content = "Down: ";
+                GameBoardControlsInstantDown.Content = "Instant Down: ";
+            }
         }
 
         // A function that sets the incoming settings to the current settings and calls the private ApplySettings
