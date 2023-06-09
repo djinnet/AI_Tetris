@@ -38,13 +38,13 @@ namespace AITetris.Controllers
             List<Game> leaderboard = SQLCalls.Get4AboveCurrentRank(SQLCalls.GetExactLeaderboardEntry(gameBoard.game).rank);
 
             // Check to see if character is AI
-            if(!game.isPlayer)
+            if(!gameBoard.game.isPlayer)
             {
                 // Set the generation variables
-                generationName = game.character.name;
-                generationNumber = (game.character as AI).generationNumber;
-                individuals = (game.character as AI).population.ToList();
-                seed = (game.character as AI).seed;
+                generationName = gameBoard.game.character.name;
+                generationNumber = (gameBoard.game.character as AI).generationNumber;
+                individuals = (gameBoard.game.character as AI).population.ToList();
+                seed = (gameBoard.game.character as AI).seed;
             }
 
             // Default set buttons to true, then disable later

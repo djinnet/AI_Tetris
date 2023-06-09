@@ -258,7 +258,7 @@ namespace AITetris.Pages
             else if (Nametxtbox.Text.Length == 0 && AIToggle == 1)
             {
                 AI ai = generations[StartGameMenuAIDropdown.Items.IndexOf(StartGameMenuAIDropdown.SelectedItem)];
-                GameBoard gameBoard = new GameBoard(ai);
+                GameBoard gameBoard = new GameBoard(ai, activatedUpgrades);
                 NavigationService.Navigate(gameBoard);
             }
             else
