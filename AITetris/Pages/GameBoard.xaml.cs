@@ -598,7 +598,10 @@ namespace AITetris.Pages
                     ClearBoard();
                     game.linesCleared = 0;
                     game.points = 0;
-                    rand = new Random((game.character as AI).seed);
+                    if (game.isPlayer)
+                    {
+                        rand = new Random((game.character as AI).seed);
+                    }
                     SetBoard();
                 }
                 else
