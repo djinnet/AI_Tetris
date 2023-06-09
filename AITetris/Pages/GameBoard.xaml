@@ -394,6 +394,26 @@
                     FontSize="15"
                     FontWeight="Bold"/>
 
+                <!-- CurrentFitness label -->
+                <Label 
+                    x:Name="GameBoardCurrentFitnessLbl"
+                    Content="Current Fitness: 0"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="15"
+                    FontWeight="Bold"/>
+
+                <!-- BestFitness label -->
+                <Label 
+                    x:Name="GameBoardBestFitnessLbl"
+                    Content="Best Fitness: 0"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="15"
+                    FontWeight="Bold"/>
+
                 <!-- LastFitness label -->
                 <Label 
                     x:Name="GameBoardLastFitnessLbl"
