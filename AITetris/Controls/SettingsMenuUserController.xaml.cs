@@ -51,12 +51,28 @@ namespace AITetris.Controls
 
             // Set the game to the current game
             this.game = game;
+
+            // Set the state to false since there is no new changes
+            SettingsControlsApplySettings.IsEnabled = false;
         }
 
         //UI buttons
         // Close the settings menu return to pause menu
         private void SettingsControlsPauseMenu_Click(object sender, RoutedEventArgs e)
         {
+            // A popup is shown that allows you to take action
+            MessageBoxResult result = MessageBox.Show("There is unapplied changes to the settings, do you want to apply the changes", "Warning", MessageBoxButton.YesNo);
+
+            // Check if the response of the popup was OK
+            if (result == MessageBoxResult.Yes)
+            {
+                // Write new settings to the settings file
+                File.WriteAllText(exeDir + "/Assets/JSON/Settings.json", JsonSerializer.Serialize(settings, new JsonSerializerOptions() { WriteIndented = true }));
+
+                // Set the state to false since was just applied
+                SettingsControlsApplySettings.IsEnabled = false;
+            }
+
             // Removing the settings menu from the gameboardmaingrid to close it
             game.GameBoardMainGrid.Children.Remove(this);
         }
@@ -69,6 +85,9 @@ namespace AITetris.Controls
 
             // Apply the new settings to the game settings
             game.ApplySettings(settings);
+
+            // Set the state to false since was just applied
+            SettingsControlsApplySettings.IsEnabled = false;
         }
 
         // Open the keybinds menu from the Settings menu
@@ -85,6 +104,9 @@ namespace AITetris.Controls
             Grid.SetRow(menu, 1);
             Grid.SetColumnSpan(menu, 5);
             Grid.SetRowSpan(menu, 7);
+
+            // Set the state to true since there is new changes
+            SettingsControlsApplySettings.IsEnabled = true;
         }
 
         // UI Slider controls
@@ -104,6 +126,9 @@ namespace AITetris.Controls
                 settings.enableNextBlock = true;
                 SettingsSliderValueNextBlock.Content = "On";
             }
+
+            // Set the state to true since there is new changes
+            SettingsControlsApplySettings.IsEnabled = true;
         }
 
         // Save block
@@ -122,6 +147,9 @@ namespace AITetris.Controls
                 settings.enableSwapBlock = true;
                 SettingsSliderValueSaveBlock.Content = "On";
             }
+
+            // Set the state to true since there is new changes
+            SettingsControlsApplySettings.IsEnabled = true;
         }
 
         // AI training
@@ -140,6 +168,9 @@ namespace AITetris.Controls
                 settings.enableTraining = true;
                 SettingsSliderValueAITraining.Content = "On";
             }
+
+            // Set the state to true since there is new changes
+            SettingsControlsApplySettings.IsEnabled = true;
         }
 
         // Deltaspeed
@@ -147,6 +178,9 @@ namespace AITetris.Controls
         {
             // Set the gamespeed/deltaspeed to the current slider value
             settings.gameSpeed = ((Slider)sender).Value;
+
+            // Set the state to true since there is new changes
+            SettingsControlsApplySettings.IsEnabled = true;
         }
 
         // Default speed
@@ -154,6 +188,9 @@ namespace AITetris.Controls
         {
             // Set the Startspeed/Defaultspeed to the current slider value
             settings.startSpeed = ((Slider)sender).Value;
+
+            // Set the state to true since there is new changes
+            SettingsControlsApplySettings.IsEnabled = true;
         }
 
         // Volume
@@ -161,6 +198,9 @@ namespace AITetris.Controls
         {
             // Set the volume to the current slider value
             settings.volume = (int)((Slider)sender).Value;
+
+            // Set the state to true since there is new changes
+            SettingsControlsApplySettings.IsEnabled = true;
         }
     }
 }
