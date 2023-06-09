@@ -21,9 +21,23 @@ namespace AITetris.Controllers
     /// </summary>
     public partial class GameOverMenu : UserControl
     {
+        // Generation variables
+        string generationName;
+        int generationNumber;
+        List<Individual> individuals;
+
         public GameOverMenu(Game game)
         {
             InitializeComponent();
+
+            // Check to see if character is AI
+            if(!game.isPlayer)
+            {
+                // Set the generation variables
+                generationName = game.character.name;
+                generationNumber = (game.character as AI).generationNumber;
+                individuals = (game.character as AI).population.ToList();
+            }
 
             // Default set buttons to true, then disable later
             GameOverMenuControlSaveAI.IsEnabled = true;
@@ -189,11 +203,14 @@ namespace AITetris.Controllers
         // A button that triggers a save of the AI in training
         private void GameOverMenuControlSaveAI_Click(object sender, RoutedEventArgs e)
         {
-            //// Saving the generation
-            //SQLCalls.CreateGenerationEntry();
+            // Saving the generation
+            SQLCalls.CreateGenerationEntry(generationName, generationNumber);
 
-            //// Saving the individuals
-            //SQLCalls.Create10IndividualsEntry();
+            // Saving the individuals
+            SQLCalls.Create10IndividualsEntry(individuals, SQLCalls.GetLastGenerationID());
+
+            // Navigating back to main menu
+            ((NavigationWindow)Window.GetWindow(this)).NavigationService.Navigate(new Uri("Pages/MainPage.xaml", UriKind.Relative));
         }
 
         // Navigation

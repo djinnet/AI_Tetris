@@ -217,6 +217,28 @@ namespace AITetris.Classes
 
             return foundGame;
         }
+        public static int GetLastGenerationID()
+        {
+            int genID = 0;
+
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = "SELECT TOP 1 Id FROM Generation ORDER BY Id DESC";
+
+                SqlCommand cmd = new SqlCommand(query, conn);
+
+                conn.Open();
+                SqlDataReader reader = cmd.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    genID = reader.GetInt32(0);
+                }
+
+                reader.Close();
+            }
+            return genID;
+        }
 
         // A function that inserts the AI Individual in the database
         public static void Create10IndividualsEntry(List<Individual> individuals, int genID)
