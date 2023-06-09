@@ -6,6 +6,8 @@
              xmlns:local="clr-namespace:AITetris.Controllers"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    
+    <!-- Gridsize is 4 cols by 4 rows -->
     <Grid
         Background="SlateGray"
         Opacity="0.9">
@@ -24,6 +26,7 @@
             <RowDefinition Height="25" />
         </Grid.RowDefinitions>
 
+        <!-- User control title -->
         <Label
             x:Name="GameOverMenuTitle"
             Grid.Column="1"
@@ -37,6 +40,7 @@
             FontWeight="Bold"
             Margin="0, 10"/>
 
+        <!-- Border used as a container for the leaderboard stackpanel -->
         <Border
             x:Name="LeaderboardGridBorder"
             Grid.Column="1"
@@ -49,40 +53,21 @@
             <Grid
                 x:Name="LeaderboardGrid">
 
-                <!--<Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>-->
-
 
             </Grid>
         </Border>
 
+        <!-- Border used as a container for the gameover controls stackpanel -->
         <Border
             x:Name="GameOverMenuControlsBoarder"
             Grid.Column="2"
             Grid.Row="2">
 
+            <!-- Stackpanel holding the gameover controls -->
             <StackPanel
                 x:Name="GameOverMenuControlsSP">
-                
+
+                <!-- Button that trigger a revive -->
                 <Button
                     x:Name="GameOverMenuControlRevive"
                     Content="Revive"
@@ -96,6 +81,7 @@
 
                 </Button>
 
+                <!-- Button that trigger an AI save -->
                 <Button
                     x:Name="GameOverMenuControlSaveAI"
                     Content="Save AI"
@@ -109,6 +95,7 @@
 
                 </Button>
 
+                <!-- Navigation button -->
                 <Button
                     x:Name="GameOverMenuControlQuitGame"
                     Content="Quit Game"
