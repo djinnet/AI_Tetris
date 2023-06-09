@@ -1040,6 +1040,28 @@ namespace AITetris.Pages
 
             //sets the audio level of the background music
             backgroundMusic.Volume = Convert.ToDouble(game.settings.volume) / 100;
+
+            // Setting the controls from the keybinds in the controls panel
+            GameBoardControlsPause.Content = game.settings.KeyBinds.pause.ToString();
+            GameBoardControlsSave.Content = game.settings.KeyBinds.swap.ToString();
+            GameBoardControlsRotate.Content = game.settings.KeyBinds.rotate.ToString();
+            GameBoardControlsLeft.Content = game.settings.KeyBinds.left.ToString();
+            GameBoardControlsRight.Content = game.settings.KeyBinds.right.ToString();
+            GameBoardControlsDown.Content = game.settings.KeyBinds.drop.ToString();
+            GameBoardControlsInstantDown.Content = game.settings.KeyBinds.insta.ToString();
+
+            // Check if AI is enabled
+            if (!game.isPlayer)
+            {
+                // Removing the controls from the keybinds in the controls panel if the AI is active
+                GameBoardControlsPause.Content = "";
+                GameBoardControlsSave.Content = "";
+                GameBoardControlsRotate.Content = "";
+                GameBoardControlsLeft.Content = "";
+                GameBoardControlsRight.Content = "";
+                GameBoardControlsDown.Content = "";
+                GameBoardControlsInstantDown.Content = "";
+            }
         }
 
         // A function that sets the incoming settings to the current settings and calls the private ApplySettings
