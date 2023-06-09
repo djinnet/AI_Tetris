@@ -2,8 +2,10 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -25,6 +27,9 @@ namespace AITetris.Pages
         // Toggle state of the upgrade buttons
         private bool[] buttonStates = { false, false, false, false, false, false, false, false, false, false, false, false };
 
+        private Upgrades upgrades;
+        private Upgrades activatedUpgrades;
+
         // AI toggle is a variable controlling if the AI is active or not, it has a starting value of 0/off
         private int AIToggle = 0;
         public StartGameMenu()
@@ -33,10 +38,19 @@ namespace AITetris.Pages
 
             // Set the focus of the page to this textbox
             Nametxtbox.Focus();
+            upgrades = JsonSerializer.Deserialize<Upgrades>(File.ReadAllText(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "/Assets/JSON/Upgrades.json"));
+            activatedUpgrades = new Upgrades();
+            for (int i = 0; i < StartGameMenuUpgradesGrid.Children.Count; i++)
+            {
+                if(StartGameMenuUpgradesGrid.Children[i] is Button button)
+                {
+                    button.IsEnabled = upgrades.purchasedUpgrades[i];
+                }
+            }
         }
 
         // Change button state of button pressed
-        private void ChangeButtonState(int buttonStateIndex)
+        private void ChangeButtonState(int buttonStateIndex, Button clickedButton)
         {
             // Check the state of the button
             if (buttonStates[buttonStateIndex] == false)
@@ -44,14 +58,73 @@ namespace AITetris.Pages
                 // Changing state to on
                 buttonStates[buttonStateIndex] = true;
 
+                clickedButton.Background = Brushes.LightGreen;
+
                 Debug.WriteLine("Upgrade " + buttonStateIndex.ToString() + " toggled on!");
+                
+                switch(buttonStateIndex)
+                {
+                    case 0:
+                    case 1:
+                    case 2:
+                        activatedUpgrades.revive++;
+                        break;
+                    case 3:
+                    case 4:
+                        activatedUpgrades.scoreMultiplier += 0.25;
+                        break;
+                    case 5:
+                        activatedUpgrades.scoreMultiplier += 0.5;
+                        break;
+                    case 6:
+                    case 7:
+                    case 8:
+                        activatedUpgrades.emergancyLineClear++;
+                        break;
+                    case 9:
+                        activatedUpgrades.removeSwap = true;
+                        break;
+                    case 10:
+                    case 11:
+                        activatedUpgrades.slowTime += 30;
+                        break;
+                }
             }
             else
             {
                 // Changing state to off
                 buttonStates[buttonStateIndex] = false;
 
+                clickedButton.Background = Brushes.LightGray;
+
                 Debug.WriteLine("Upgrade " + buttonStateIndex.ToString() + " toggled off!");
+                switch (buttonStateIndex)
+                {
+                    case 0:
+                    case 1:
+                    case 2:
+                        activatedUpgrades.revive--;
+                        break;
+                    case 3:
+                    case 4:
+                        activatedUpgrades.scoreMultiplier -= 0.25;
+                        break;
+                    case 5:
+                        activatedUpgrades.scoreMultiplier -= 0.5;
+                        break;
+                    case 6:
+                    case 7:
+                    case 8:
+                        activatedUpgrades.emergancyLineClear--;
+                        break;
+                    case 9:
+                        activatedUpgrades.removeSwap = false;
+                        break;
+                    case 10:
+                    case 11:
+                        activatedUpgrades.slowTime -= 30;
+                        break;
+                }
             }
         }
 
@@ -60,73 +133,73 @@ namespace AITetris.Pages
         private void Upgrade1_Click(object sender, RoutedEventArgs e)
         {
             // Toggle current buttonstate
-            ChangeButtonState(0);
+            ChangeButtonState(0,(Button)sender);
         }
 
         private void Upgrade2_Click(object sender, RoutedEventArgs e)
         {
             // Toggle current buttonstate
-            ChangeButtonState(1);
+            ChangeButtonState(1, (Button)sender);
         }
 
         private void Upgrade3_Click(object sender, RoutedEventArgs e)
         {
             // Toggle current buttonstate
-            ChangeButtonState(2);
+            ChangeButtonState(2, (Button)sender);
         }
 
         private void Upgrade4_Click(object sender, RoutedEventArgs e)
         {
             // Toggle current buttonstate
-            ChangeButtonState(3);
+            ChangeButtonState(3, (Button)sender);
         }
 
         private void Upgrade5_Click(object sender, RoutedEventArgs e)
         {
             // Toggle current buttonstate
-            ChangeButtonState(4);
+            ChangeButtonState(4, (Button)sender);
         }
 
         private void Upgrade6_Click(object sender, RoutedEventArgs e)
         {
             // Toggle current buttonstate
-            ChangeButtonState(5);
+            ChangeButtonState(5, (Button)sender);
         }
 
         private void Upgrade7_Click(object sender, RoutedEventArgs e)
         {
             // Toggle current buttonstate
-            ChangeButtonState(6);
+            ChangeButtonState(6, (Button)sender);
         }
 
         private void Upgrade8_Click(object sender, RoutedEventArgs e)
         {
             // Toggle current buttonstate
-            ChangeButtonState(7);
+            ChangeButtonState(7, (Button)sender);
         }
 
         private void Upgrade9_Click(object sender, RoutedEventArgs e)
         {
             // Toggle current buttonstate
-            ChangeButtonState(8);
+            ChangeButtonState(8, (Button)sender);
         }
 
         private void Upgrade10_Click(object sender, RoutedEventArgs e)
         {
             // Toggle current buttonstate
-            ChangeButtonState(9);
+            ChangeButtonState(9, (Button)sender);
         }
 
         private void Upgrade11_Click(object sender, RoutedEventArgs e)
         {
             // Toggle current buttonstate
-            ChangeButtonState(10);
+            ChangeButtonState(10, (Button)sender);
         }
 
         private void Upgrade12_Click(object sender, RoutedEventArgs e)
         {
             // Toggle current buttonstate
-            ChangeButtonState(11);
+            ChangeButtonState(11, (Button)sender);
         }
 
         // Start game
@@ -144,7 +217,7 @@ namespace AITetris.Pages
                     Player player = new Player(Nametxtbox.Text);
 
                     // Creating a gameboard and sending the player with it
-                    GameBoard gameBoard = new GameBoard(player);
+                    GameBoard gameBoard = new GameBoard(player, activatedUpgrades);
 
                     // Navigate to the gameboard
                     NavigationService.Navigate(gameBoard);
@@ -158,7 +231,7 @@ namespace AITetris.Pages
                     // (((xBoard.length + border) * yBoard.length) + gameFigure.squares + nextFigure.squares + swapFigure.squares) * outputAmount
                     int inputSize = (((10 + 2) * 20) + 4 + 4 + 4) * 4;
                     AI ai = new AI(Nametxtbox.Text, populationSize, inputSize);
-                    GameBoard gameBoard = new GameBoard(ai);
+                    GameBoard gameBoard = new GameBoard(ai, activatedUpgrades);
                     NavigationService.Navigate(gameBoard);
                 }
             }

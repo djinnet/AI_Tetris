@@ -73,7 +73,7 @@
                     <!-- Upgrade title -->
                     <Label
                         x:Name="Upgrade1_NameLbl"
-                        Content="Upgrade 1"
+                        Content="+1 revive"
                         HorizontalContentAlignment="Center"
                         VerticalContentAlignment="Center"
                         FontFamily="Tahoma"
@@ -113,7 +113,7 @@
                     <!-- Upgrade title -->
                     <Label
                         x:Name="Upgrade2_NameLbl"
-                        Content="Upgrade 2"
+                        Content="+1 revive"
                         HorizontalContentAlignment="Center"
                         VerticalContentAlignment="Center"
                         FontFamily="Tahoma"
@@ -153,7 +153,7 @@
                     <!-- Upgrade title -->
                     <Label
                         x:Name="Upgrade3_NameLbl"
-                        Content="Upgrade 3"
+                        Content="+1 revive"
                         HorizontalContentAlignment="Center"
                         VerticalContentAlignment="Center"
                         FontFamily="Tahoma"
@@ -193,7 +193,7 @@
                     <!-- Upgrade title -->
                     <Label
                         x:Name="Upgrade4_NameLbl"
-                        Content="Upgrade 4"
+                        Content="score +25%"
                         HorizontalContentAlignment="Center"
                         VerticalContentAlignment="Center"
                         FontFamily="Tahoma"
@@ -233,7 +233,7 @@
                     <!-- Upgrade title -->
                     <Label
                         x:Name="Upgrade5_NameLbl"
-                        Content="Upgrade 5"
+                        Content="score +25%"
                         HorizontalContentAlignment="Center"
                         VerticalContentAlignment="Center"
                         FontFamily="Tahoma"
@@ -273,7 +273,7 @@
                     <!-- Upgrade title -->
                     <Label
                         x:Name="Upgrade6_NameLbl"
-                        Content="Upgrade 6"
+                        Content="score +50%"
                         HorizontalContentAlignment="Center"
                         VerticalContentAlignment="Center"
                         FontFamily="Tahoma"
@@ -313,7 +313,7 @@
                     <!-- Upgrade title -->
                     <Label
                         x:Name="Upgrade7_NameLbl"
-                        Content="Upgrade 7"
+                        Content="E LineClear"
                         HorizontalContentAlignment="Center"
                         VerticalContentAlignment="Center"
                         FontFamily="Tahoma"
@@ -353,7 +353,7 @@
                     <!-- Upgrade title -->
                     <Label
                         x:Name="Upgrade8_NameLbl"
-                        Content="Upgrade 8"
+                        Content="E LineClear"
                         HorizontalContentAlignment="Center"
                         VerticalContentAlignment="Center"
                         FontFamily="Tahoma"
@@ -393,7 +393,7 @@
                     <!-- Upgrade title -->
                     <Label
                         x:Name="Upgrade9_NameLbl"
-                        Content="Upgrade 9"
+                        Content="E LineClear"
                         HorizontalContentAlignment="Center"
                         VerticalContentAlignment="Center"
                         FontFamily="Tahoma"
@@ -433,7 +433,7 @@
                     <!-- Upgrade title -->
                     <Label
                         x:Name="Upgrade10_NameLbl"
-                        Content="Upgrade 10"
+                        Content="remove swap"
                         HorizontalContentAlignment="Center"
                         VerticalContentAlignment="Center"
                         FontFamily="Tahoma"
@@ -473,7 +473,7 @@
                     <!-- Upgrade title -->
                     <Label
                         x:Name="Upgrade11_NameLbl"
-                        Content="Upgrade 11"
+                        Content="slow 30s"
                         HorizontalContentAlignment="Center"
                         VerticalContentAlignment="Center"
                         FontFamily="Tahoma"
@@ -513,7 +513,7 @@
                     <!-- Upgrade title -->
                     <Label
                         x:Name="Upgrade12_NameLbl"
-                        Content="Upgrade 12"
+                        Content="slow 30s"
                         HorizontalContentAlignment="Center"
                         VerticalContentAlignment="Center"
                         FontFamily="Tahoma"

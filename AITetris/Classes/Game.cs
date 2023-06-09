@@ -8,7 +8,7 @@ namespace AITetris.Classes
 {
     public class Game
     {
-        public Game(Board board, Character character, Settings settings)
+        public Game(Board board, Character character, Settings settings, Upgrades upgrades)
         {
             this.board = board;
             this.character = character;
@@ -16,6 +16,7 @@ namespace AITetris.Classes
             this.time = 0;
             this.isPlayer = character.GetType() == typeof(Player);
             this.settings = settings;
+            this.upgrades = upgrades;
         }
 
         public Game(Character character, int points, int linesCleared, int time, bool isPlayer, int rank)
@@ -37,5 +38,6 @@ namespace AITetris.Classes
         public bool isPlayer;
         public int rank;
         public Settings settings;
+        public Upgrades upgrades;
     }
 }

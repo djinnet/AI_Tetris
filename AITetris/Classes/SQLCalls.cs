@@ -173,9 +173,9 @@ namespace AITetris.Classes
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                string query = "SELECT Name, Points, LinesCleared, GameTimeInMs, IsPlayer, Rank FROM (SELECT TOP (@Amount) Name, Points, LinesCleared, GameTimeInMs, IsPlayer, Rank FROM Leaderboard WHERE Rank < @CurrentRank ORDER BY Rank DESC) AS subquery ORDER BY Rank ASC";
+                string query = "SELECT Name, Points, LinesCleared, GameTimeInMs, IsPlayer, Rank FROM (SELECT TOP (@Amount) Name, Points, LinesCleared, GameTimeInMs, IsPlayer, Rank FROM Leaderboard WHERE Rank <= @CurrentRank ORDER BY Rank DESC) AS subquery ORDER BY Rank ASC";
                 SqlCommand cmd = new SqlCommand(query, conn);
-                cmd.Parameters.AddWithValue("@Amount", 4 - Math.Max(0, 5 - yourRank));
+                cmd.Parameters.AddWithValue("@Amount", 5 - Math.Max(0, 6 - yourRank));
                 cmd.Parameters.AddWithValue("@CurrentRank", yourRank);
 
                 conn.Open();

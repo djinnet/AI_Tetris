@@ -1,8 +1,12 @@
-﻿using System;
+﻿using AITetris.Classes;
+using System;
 using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -24,23 +28,31 @@ namespace AITetris.Pages
         // Variable used to store the accumulated metacurrency, this should be loaded in from a JSON 
         private int metaCurrency;
 
+        Upgrades upgrades;
+
+        private string exeDir = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+
         // Bool array holding the upgrade status, this should be loaded in from a JSON 
         // Not owned = false, owned = true
-        private bool[] upgradeStates = { false, false, false, false, false, false, false, false, false, false, false, false };
+        private bool[] upgradeStates;
 
         public PointShop()
         {
             InitializeComponent();
 
-            // Flip the upgradestates to toggle is enabled on the upgrade buttons
-            ChangeButtonEnabledState();
+            Debug.WriteLine(exeDir);
 
-            // Todo - Set this to current meta currency
-            // This should be loaded in from a JSON 
-            metaCurrency = 1000;
+            metaCurrency = Convert.ToInt32(File.ReadAllText(exeDir + "/Assets/JSON/MetaCurrency.txt"));
 
+            upgrades = JsonSerializer.Deserialize<Upgrades>(File.ReadAllText(exeDir + "/Assets/JSON/Upgrades.json"));
+            
             // Update the UI label for metacurrency
             PointShopShopControlsMetaCurrency.Content = metaCurrency;
+
+            upgradeStates = upgrades.purchasedUpgrades;
+
+            // Flip the upgradestates to toggle is enabled on the upgrade buttons
+            ChangeButtonEnabledState();
         }
 
         // A function that flips the state of the buttons, to enable those who has to be enabled from the JSON
@@ -80,6 +92,8 @@ namespace AITetris.Pages
                 // Recalculating the metacurrency by subtracting the price
                 metaCurrency -= price;
 
+                File.WriteAllText(exeDir + "/Assets/JSON/MetaCurrency.txt", metaCurrency.ToString());
+
                 // Updating the UI Label that shows the meta currency
                 PointShopShopControlsMetaCurrency.Content = metaCurrency;
 
@@ -89,6 +103,7 @@ namespace AITetris.Pages
                 // Disable the button and the the content of the button to Purchased
                 button.IsEnabled = false;
                 button.Content = "Purchased";
+                upgrades.purchasedUpgrades[index] = true;
             }
         }
 
@@ -216,6 +231,7 @@ namespace AITetris.Pages
         // Navigation
         private void PointShopShopControlsBackToMainMenu_Click(object sender, RoutedEventArgs e)
         {
+            File.WriteAllText(exeDir + "/Assets/JSON/Upgrades.json", JsonSerializer.Serialize(upgrades, new JsonSerializerOptions {WriteIndented = true }));
             // Navigate back to the Main Menu
             NavigationService.Navigate(new Uri("Pages/MainPage.xaml", UriKind.Relative));
         }
