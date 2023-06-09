@@ -6,6 +6,8 @@
              xmlns:local="clr-namespace:AITetris.Controllers"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    
+    <!-- Gridsize is 4 cols by 4 rows -->
     <Grid
         Background="SlateGray"
         Opacity="0.9">
@@ -24,6 +26,7 @@
             <RowDefinition Height="25" />
         </Grid.RowDefinitions>
 
+        <!-- User control title -->
         <Label
             x:Name="GameOverMenuTitle"
             Grid.Column="1"
@@ -37,84 +40,34 @@
             FontWeight="Bold"
             Margin="0, 10"/>
 
+        <!-- Border used as a container for the leaderboard stackpanel -->
         <Border
-            x:Name="GameOverMenuLeaderboardBoarder"
+            x:Name="LeaderboardGridBorder"
             Grid.Column="1"
-            Grid.Row="2">
+            Grid.Row="2"
+            BorderBrush="Silver"
+            BorderThickness="2"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
 
-            <StackPanel
-                x:Name="GameOverMenuLeaderboardSP">
+            <Grid
+                x:Name="LeaderboardGrid">
 
-                <Label
-                    x:Name="GameOverLBTitle"
-                    Content="Leaderboard"
-                    HorizontalContentAlignment="Center"
-                    VerticalContentAlignment="Center"
-                    FontFamily="Tahoma"
-                    FontSize="20"
-                    FontWeight="Bold"
-                    Margin="0, 10" />
 
-                <Label
-                    x:Name="GameOverLBOne"
-                    Content="Name / Score"
-                    HorizontalContentAlignment="Center"
-                    VerticalContentAlignment="Center"
-                    FontFamily="Tahoma"
-                    FontSize="15"
-                    FontWeight="Bold"
-                    Margin="0, 10" />
-
-                <Label
-                    x:Name="GameOverLBTwo"
-                    Content="Name / Score"
-                    HorizontalContentAlignment="Center"
-                    VerticalContentAlignment="Center"
-                    FontFamily="Tahoma"
-                    FontSize="15"
-                    FontWeight="Bold"
-                    Margin="0, 10" />
-
-                <Label
-                    x:Name="GameOverLBThree"
-                    Content="Name / Score"
-                    HorizontalContentAlignment="Center"
-                    VerticalContentAlignment="Center"
-                    FontFamily="Tahoma"
-                    FontSize="15"
-                    FontWeight="Bold"
-                    Margin="0, 10" />
-
-                <Label
-                    x:Name="GameOverLBFour"
-                    Content="Name / Score"
-                    HorizontalContentAlignment="Center"
-                    VerticalContentAlignment="Center"
-                    FontFamily="Tahoma"
-                    FontSize="15"
-                    FontWeight="Bold" 
-                    Margin="0, 10" />
-
-                <Label
-                    x:Name="GameOverLBFive"
-                    Content="Name / Score"
-                    HorizontalContentAlignment="Center"
-                    VerticalContentAlignment="Center"
-                    FontFamily="Tahoma"
-                    FontSize="15"
-                    FontWeight="Bold"
-                    Margin="0, 10" />
-            </StackPanel>
+            </Grid>
         </Border>
 
+        <!-- Border used as a container for the gameover controls stackpanel -->
         <Border
             x:Name="GameOverMenuControlsBoarder"
             Grid.Column="2"
             Grid.Row="2">
 
+            <!-- Stackpanel holding the gameover controls -->
             <StackPanel
                 x:Name="GameOverMenuControlsSP">
-                
+
+                <!-- Button that trigger a revive -->
                 <Button
                     x:Name="GameOverMenuControlRevive"
                     Content="Revive"
@@ -128,6 +81,7 @@
 
                 </Button>
 
+                <!-- Button that trigger an AI save -->
                 <Button
                     x:Name="GameOverMenuControlSaveAI"
                     Content="Save AI"
@@ -141,6 +95,7 @@
 
                 </Button>
 
+                <!-- Navigation button -->
                 <Button
                     x:Name="GameOverMenuControlQuitGame"
                     Content="Quit Game"

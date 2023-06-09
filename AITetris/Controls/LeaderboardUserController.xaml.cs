@@ -22,20 +22,27 @@ namespace AITetris.Controls
     /// </summary>
     public partial class LeaderboardUserController : UserControl
     {
+        // Game variables
         GameBoard game;
+        // A list of games played collected from the SQLCalls function GetLeaderboardTop10
+        List<Game> scores = SQLCalls.GetLeaderboardTop10();
+        bool isSerching = false;
         public LeaderboardUserController(GameBoard game)
         {
             InitializeComponent();
+
+            // Set game to an instance to the current game
             this.game = game;
 
+            // Fill leaderboard with a top 10 games played
             FillLeaderboard();
         }
 
+        // A function that creates a leaderboard with a top 10 games played
         private void FillLeaderboard()
         {
-            List<Game> scores = SQLCalls.GetLeaderboardTop10();
 
-            // Leaderbordgrid
+            // Set leaderboardGrid to an instance of the leaderboardgrid UI element
             Grid leaderboardGrid = LeaderboardGrid;
 
             // Clear current leaderboard
@@ -51,15 +58,17 @@ namespace AITetris.Controls
             // Amount of columns in the leaderboard
             int columnCount = 6;
 
-            // Create new row definitions
+            // Create new row definitions based on the lenght of the scores list
             for (int i = 0; i < rowCount; i++)
             {
+                // Adding a new row definition
                 leaderboardGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
             }
 
-            // Create new row definitions
+            // Create new row definitions based on how many columns given
             for (int i = 0; i < columnCount; i++)
             {
+                // Adding a new column definition
                 leaderboardGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
             }
 
@@ -81,7 +90,7 @@ namespace AITetris.Controls
                         // Creating a new label
                         Label label = new Label();
 
-                        // Add content and styling to the label
+                        // Add content to the label
                         switch (j)
                         {
                             case 0:
@@ -107,6 +116,7 @@ namespace AITetris.Controls
                                 break;
                         }
 
+                        // Add styling to the label
                         label.HorizontalAlignment = HorizontalAlignment.Center;
                         label.VerticalAlignment = VerticalAlignment.Center;
                         label.FontFamily = new FontFamily("Tahomaa");
@@ -133,8 +143,8 @@ namespace AITetris.Controls
                         // Creating a new label
                         Label label = new Label();
 
-                        // Add content and styling to the label
-
+                        // Add content to the label
+                        // Using a shorthand switchcase we add the leaderboard content for each game we pass through in the loop
                         label.Content = j switch
                         {
                             0 => scores[i - 1].rank,
@@ -146,6 +156,7 @@ namespace AITetris.Controls
                             _ => ""
                         };
 
+                        // Add styling to the label
                         label.HorizontalAlignment = HorizontalAlignment.Center;
                         label.VerticalAlignment = VerticalAlignment.Center;
                         label.FontFamily = new FontFamily("Tahomaa");
@@ -164,29 +175,93 @@ namespace AITetris.Controls
             }
         }
 
+        // Navigation
         private void LeaderboardBackToPauseBtn_Click(object sender, RoutedEventArgs e)
         {
+            // Navigation to the Main Menu
             game.GameBoardMainGrid.Children.Remove(this);
         }
 
         private void LeaderboardControlsFindPlayerBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            scores = SQLCalls.SearchLeaderboardOnName(LeaderboardControlsFindPlayerTxtbox.Text);
+            LeaderboardGrid.Children.Clear();
+            isSerching = true;
+            FillLeaderboard();
         }
 
         private void LeaderboardPrieviousTenBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            if (isSerching)
+            {
+                if (SQLCalls.GetPrevious10Leaderboard(scores[0].rank, LeaderboardControlsFindPlayerTxtbox.Text).Count != 0)
+                {
+                    scores = SQLCalls.GetPrevious10Leaderboard(scores[0].rank, LeaderboardControlsFindPlayerTxtbox.Text);
+                    LeaderboardGrid.Children.Clear();
+                    FillLeaderboard();
+                    LeaderboardNextTenBtn.IsEnabled = true;
+                }
+                else
+                {
+                    LeaderboardPrieviousTenBtn.IsEnabled = false;
+                }
+            }
+            else
+            {
+                if (SQLCalls.GetPrevious10Leaderboard(scores[0].rank).Count != 0)
+                {
+                    scores = SQLCalls.GetPrevious10Leaderboard(scores[0].rank);
+                    LeaderboardGrid.Children.Clear();
+                    FillLeaderboard();
+                    LeaderboardNextTenBtn.IsEnabled = true;
+                }
+                else
+                {
+                    LeaderboardPrieviousTenBtn.IsEnabled = false;
+                }
+            }
         }
 
         private void LeaderboardNextTenBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            if (isSerching)
+            {
+                if (SQLCalls.GetNext10Leaderboard(scores[scores.Count - 1].rank, LeaderboardControlsFindPlayerTxtbox.Text).Count != 0)
+                {
+                    scores = SQLCalls.GetNext10Leaderboard(scores[scores.Count - 1].rank, LeaderboardControlsFindPlayerTxtbox.Text);
+                    LeaderboardGrid.Children.Clear();
+                    FillLeaderboard();
+                    LeaderboardPrieviousTenBtn.IsEnabled = true;
+                }
+                else
+                {
+                    LeaderboardNextTenBtn.IsEnabled = false;
+                }
+            }
+            else
+            {
+                if (SQLCalls.GetNext10Leaderboard(scores[scores.Count - 1].rank).Count != 0)
+                {
+                    scores = SQLCalls.GetNext10Leaderboard(scores[scores.Count - 1].rank);
+                    LeaderboardGrid.Children.Clear();
+                    FillLeaderboard();
+                    LeaderboardPrieviousTenBtn.IsEnabled = true;
+                }
+                else
+                {
+                    LeaderboardNextTenBtn.IsEnabled = false;
+                }
+            }
         }
 
         private void LeaderboardRefreshBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            scores = SQLCalls.GetLeaderboardTop10();
+            LeaderboardGrid.Children.Clear();
+            isSerching = false;
+            LeaderboardPrieviousTenBtn.IsEnabled = true;
+            LeaderboardNextTenBtn.IsEnabled = true;
+            FillLeaderboard();
         }
     }
 }

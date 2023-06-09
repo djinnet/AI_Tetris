@@ -6,6 +6,8 @@
              xmlns:local="clr-namespace:AITetris.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    
+    <!-- Gridsize is 4 cols by 4 rows -->
     <Grid
         x:Name="SettingsMenuGrid"
         Background="SlateGray"
@@ -25,6 +27,7 @@
             <RowDefinition Height="25" />
         </Grid.RowDefinitions>
 
+        <!-- User control title -->
         <Label
             x:Name="SettingsTitleLbl"
             Grid.Column="1"
@@ -37,6 +40,7 @@
             FontSize="25"
             FontWeight="Bold" />
 
+        <!-- Border used as a container for holding the grid with sliders -->
         <Border
             x:Name="SettingsSliderControlsBorder"
             Grid.Column="1"
@@ -45,6 +49,8 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Center">
 
+            <!-- Grid holding all the sliders -->
+            <!-- Gridsize is 5 cols by 8 rows -->
             <Grid
                 x:Name="SettingsSliderGrid">
 
@@ -67,7 +73,7 @@
                     <RowDefinition Height="*" />
                 </Grid.RowDefinitions>
 
-                <!-- Volume -->
+                <!-- Volume title -->
                 <Label
                     x:Name="SettingsSliderTitleVolume"
                     Grid.Column="1"
@@ -78,6 +84,7 @@
                     FontWeight="Bold"
                     ToolTip="Game volume range (0% - 100%)"/>
 
+                <!-- Volume slider -->
                 <Slider 
                     x:Name="SettingsSliderVolume"
                     Grid.Column="2"
@@ -88,6 +95,7 @@
                     IsSnapToTickEnabled="True"
                     ValueChanged="SettingsSliderVolume_ValueChanged"/>
 
+                <!-- Volume textbox -->
                 <TextBox
                     x:Name="SettingsSliderValueVolume"
                     Grid.Column="3"
@@ -99,7 +107,7 @@
 
                 </TextBox>
 
-                <!-- Speed -->
+                <!-- Speed title -->
                 <Label
                     x:Name="SettingsSliderTitleSpeed"
                     Grid.Column="1"
@@ -110,6 +118,7 @@
                     FontWeight="Bold"
                     ToolTip="Game starting speed range (0 - 10000), the lower the value the faster it goes."/>
 
+                <!-- Speed slider -->
                 <Slider 
                     x:Name="SettingsSliderSpeed"
                     Grid.Column="2"
@@ -120,6 +129,7 @@
                     IsSnapToTickEnabled="True"
                     ValueChanged="SettingsSliderSpeed_ValueChanged"/>
 
+                <!-- Speed textbox -->
                 <TextBox
                     x:Name="SettingsSliderValueSpeed"
                     Grid.Column="3"
@@ -131,7 +141,7 @@
 
                 </TextBox>
 
-                <!-- DeltaSpeed -->
+                <!-- DeltaSpeed title -->
                 <Label
                     x:Name="SettingsSliderTitleDeltaSpeed"
                     Grid.Column="1"
@@ -142,6 +152,7 @@
                     FontWeight="Bold"
                     ToolTip="Game delta speed range (0% - 100%), the higher the value the faster it goes."/>
 
+                <!-- DeltaSpeed slider -->
                 <Slider 
                     x:Name="SettingsSliderDeltaSpeed"
                     Grid.Column="2"
@@ -152,6 +163,7 @@
                     IsSnapToTickEnabled="True"
                     ValueChanged="SettingsSliderDeltaSpeed_ValueChanged"/>
 
+                <!-- DeltaSpeed textbox -->
                 <TextBox
                     x:Name="SettingsSliderValueDeltaSpeed"
                     Grid.Column="3"
@@ -163,7 +175,7 @@
 
                 </TextBox>
 
-                <!-- AI Training -->
+                <!-- AI Training title -->
                 <Label
                     x:Name="SettingsSliderTitleAITraining"
                     Grid.Column="1"
@@ -174,6 +186,7 @@
                     FontWeight="Bold"
                     ToolTip="Toggle Ai training on and off"/>
 
+                <!-- AI Training slider -->
                 <Slider 
                     x:Name="SettingsSliderAITraining"
                     Grid.Column="2"
@@ -184,6 +197,7 @@
                     IsSnapToTickEnabled="True"
                     ValueChanged="SettingsSliderAITraining_ValueChanged"/>
 
+                <!-- AI Training state -->
                 <Label
                     x:Name="SettingsSliderValueAITraining"
                     Grid.Column="3"
@@ -193,7 +207,7 @@
                     FontSize="15"
                     FontWeight="Bold"/>
 
-                <!-- Save Block -->
+                <!-- Save Block title -->
                 <Label
                     x:Name="SettingsSliderTitleSaveBlock"
                     Grid.Column="1"
@@ -204,6 +218,7 @@
                     FontWeight="Bold"
                     ToolTip="Toggle Save block on and off"/>
 
+                <!-- Save Block slider -->
                 <Slider 
                     x:Name="SettingsSliderSaveBlock"
                     Grid.Column="2"
@@ -214,6 +229,7 @@
                     IsSnapToTickEnabled="True"
                     ValueChanged="SettingsSliderSaveBlock_ValueChanged"/>
 
+                <!-- Save Block state -->
                 <Label
                     x:Name="SettingsSliderValueSaveBlock"
                     Grid.Column="3"
@@ -223,7 +239,7 @@
                     FontSize="15"
                     FontWeight="Bold"/>
 
-                <!-- Next Block -->
+                <!-- Next Block title -->
                 <Label
                     x:Name="SettingsSliderTitleNextBlock"
                     Grid.Column="1"
@@ -234,6 +250,7 @@
                     FontWeight="Bold"
                     ToolTip="Toggle Next block on and off"/>
 
+                <!-- Next Block slider -->
                 <Slider 
                     x:Name="SettingsSliderNextBlock"
                     Grid.Column="2"
@@ -244,6 +261,7 @@
                     IsSnapToTickEnabled="True"
                     ValueChanged="SettingsSliderNextBlock_ValueChanged"/>
 
+                <!-- Next Block state -->
                 <Label
                     x:Name="SettingsSliderValueNextBlock"
                     Grid.Column="3"
@@ -256,6 +274,7 @@
             </Grid>
         </Border>
 
+        <!-- Border used as a container for holding the button controls stackpanel -->
         <Border
             x:Name="SettingsControlsBorder"
             Grid.Column="2"
@@ -264,9 +283,11 @@
             HorizontalAlignment="Center"
             VerticalAlignment="Center">
 
+            <!-- Stackpanel that holds all the button controls -->
             <StackPanel
                 x:Name="SettingsControlsSP">
 
+                <!-- Button that opens the keybind menu -->
                 <Button
                     x:Name="SettingsControlsKeybinds"
                     Content="Keybinds"
@@ -279,6 +300,7 @@
                     Click="SettingsControlsKeybinds_Click">
                 </Button>
 
+                <!-- Button that apply the set settings -->
                 <Button
                     x:Name="SettingsControlsApplySettings"
                     Content="Apply Settings"
@@ -291,6 +313,7 @@
                     Click="SettingsControlsApplySettings_Click">
                 </Button>
 
+                <!-- Button that returns to pause menu -->
                 <Button
                     x:Name="SettingsControlsPauseMenu"
                     Content="Pause Menu"

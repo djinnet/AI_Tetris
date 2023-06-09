@@ -6,6 +6,8 @@
              xmlns:local="clr-namespace:AITetris.Controls"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    
+    <!-- Gridsize is 4 cols by 5 rows -->
     <Grid
         Background="SlateGray"
         Opacity="0.9">
@@ -25,6 +27,7 @@
             <RowDefinition Height="25" />
         </Grid.RowDefinitions>
 
+        <!-- User control title -->
         <Label
             x:Name="PauseMenuTitle"
             Grid.Column="1"
@@ -38,14 +41,17 @@
             FontWeight="Bold"
             Margin="0, 10"/>
 
+        <!-- Border used as a container for the scoreboard stackpanel -->
         <Border
             x:Name="PauseMenuScoreBorder"
             Grid.Column="1"
             Grid.Row="2">
 
+            <!-- Stackpanel holding the scoreboard -->
             <StackPanel
                 x:Name="PauseMenuScoreSP">
 
+                <!-- Playername -->
                 <Label
                     x:Name="PauseMenuScoreName"
                     Content="PlayerName"
@@ -56,6 +62,7 @@
                     FontWeight="Bold"
                     Margin="0, 5"/>
 
+                <!-- Scoreboard timer -->
                 <Label
                     x:Name="PauseMenuScoreTime"
                     Content="TimePlayed: 0"
@@ -66,6 +73,7 @@
                     FontWeight="Bold"
                     Margin="0, 5"/>
 
+                <!-- Lines cleared -->
                 <Label
                     x:Name="PauseMenuScoreLinesCleared"
                     Content="LinesCleared: 0"
@@ -76,6 +84,7 @@
                     FontWeight="Bold"
                     Margin="0, 5"/>
 
+                <!-- Points accumulated -->
                 <Label
                     x:Name="PauseMenuScorePoints"
                     Content="Points: 0"
@@ -88,14 +97,17 @@
             </StackPanel>
         </Border>
 
+        <!-- Border used as a container for the pause controls stackpanel -->
         <Border
             x:Name="PauseMenuControlsBorder"
             Grid.Column="2"
             Grid.Row="2">
 
+            <!-- Stackpanel holding the pause controls -->
             <StackPanel
                 x:Name="PauseMenuControlsSP">
 
+                <!-- Button for resuming the game -->
                 <Button
                     x:Name="PauseMenuResumeBtn"
                     Content="Resume Game"
@@ -108,6 +120,7 @@
                     Click="PauseMenuResumeBtn_Click">
                 </Button>
 
+                <!-- Button for opening the settings menu -->
                 <Button
                     x:Name="PauseMenuSettingsBtn"
                     Content="Settings"
@@ -120,6 +133,7 @@
                     Click="PauseMenuSettingsBtn_Click">
                 </Button>
 
+                <!-- Button for opening the leaderboard menu -->
                 <Button
                     x:Name="PauseMenuLeaderboard"
                     Content="Leaderboard"
@@ -132,6 +146,7 @@
                     Click="PauseMenuLeaderboard_Click">
                 </Button>
 
+                <!-- Button that triggers the game over event -->
                 <Button
                     x:Name="PauseMenuForfeitGame"
                     Content="Forfeit Game"
@@ -147,6 +162,7 @@
             </StackPanel>
         </Border>
 
+        <!-- Border used as a container for the pause upgrades stackpanel -->
         <Border
             x:Name="PauseMenuUpgradesBorder"
             Grid.Column="1"
@@ -154,8 +170,10 @@
             Grid.Row="3"
             VerticalAlignment="Bottom">
 
+            <!-- Stackpanel that holds all active upgrades -->
             <StackPanel
-                x:Name="PauseMenuUpgradesSP">
+                x:Name="PauseMenuUpgradesSP"
+                Orientation="Horizontal">
                 
             </StackPanel>
         </Border>
