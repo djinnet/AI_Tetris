@@ -18,6 +18,16 @@ namespace AITetris.Classes
             GeneratePopulation(inputSize);
         }
 
+        public AI(int id, string name, int seed, Individual[] population, int generationNumber) : base(name)
+        {
+            this.generationID = id;
+            this.seed = seed;
+            this.population = population;
+            this.generationNumber = generationNumber;
+        }
+
+        public int generationID = 0;
+
         public int generationNumber;
         public Individual[] population;
         public int seed;

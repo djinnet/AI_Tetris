@@ -372,40 +372,40 @@
             <ComboBox
                 x:Name="StartGameMenuAIDropdown">
 
-                <!-- Placeholder item in the combobox set as focus -->
+                <!-- Placeholder item in the combobox set as focus --><!--
                 <ComboBoxItem 
                     IsSelected="True"
                     Content="Placeholder AI #1">
 
                 </ComboBoxItem>
 
-                <!-- Placeholder item in the combobox -->
+                --><!-- Placeholder item in the combobox --><!--
                 <ComboBoxItem 
                     IsSelected="False"
                     Content="Placeholder AI #2">
 
                 </ComboBoxItem>
 
-                <!-- Placeholder item in the combobox -->
+                --><!-- Placeholder item in the combobox --><!--
                 <ComboBoxItem 
                     IsSelected="False"
                     Content="Placeholder AI #3">
 
                 </ComboBoxItem>
 
-                <!-- Placeholder item in the combobox -->
+                --><!-- Placeholder item in the combobox --><!--
                 <ComboBoxItem 
                     IsSelected="False"
                     Content="Placeholder AI #4">
 
                 </ComboBoxItem>
 
-                <!-- Placeholder item in the combobox -->
+                --><!-- Placeholder item in the combobox --><!--
                 <ComboBoxItem 
                     IsSelected="False"
                     Content="Placeholder AI #5">
 
-                </ComboBoxItem>
+                </ComboBoxItem>-->
             </ComboBox>
         </StackPanel>
     </Grid>

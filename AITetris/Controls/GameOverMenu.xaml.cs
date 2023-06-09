@@ -25,6 +25,7 @@ namespace AITetris.Controllers
         string generationName;
         int generationNumber;
         List<Individual> individuals;
+        int seed = 0;
 
         public GameOverMenu(Game game)
         {
@@ -37,6 +38,7 @@ namespace AITetris.Controllers
                 generationName = game.character.name;
                 generationNumber = (game.character as AI).generationNumber;
                 individuals = (game.character as AI).population.ToList();
+                seed = (game.character as AI).seed;
             }
 
             // Default set buttons to true, then disable later
@@ -204,7 +206,7 @@ namespace AITetris.Controllers
         private void GameOverMenuControlSaveAI_Click(object sender, RoutedEventArgs e)
         {
             // Saving the generation
-            SQLCalls.CreateGenerationEntry(generationName, generationNumber);
+            SQLCalls.CreateGenerationEntry(generationName, generationNumber, seed);
 
             // Saving the individuals
             SQLCalls.Create10IndividualsEntry(individuals, SQLCalls.GetLastGenerationID());
