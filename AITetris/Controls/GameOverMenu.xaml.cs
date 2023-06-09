@@ -1,8 +1,11 @@
 ﻿using AITetris.Classes;
+using AITetris.Pages;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
@@ -21,15 +24,18 @@ namespace AITetris.Controllers
     /// </summary>
     public partial class GameOverMenu : UserControl
     {
+        private GameBoard gameBoard;
         // Generation variables
         string generationName;
         int generationNumber;
         List<Individual> individuals;
         int seed = 0;
 
-        public GameOverMenu(Game game)
+        public GameOverMenu(GameBoard gameBoard)
         {
             InitializeComponent();
+            this.gameBoard = gameBoard;
+            List<Game> leaderboard = SQLCalls.Get4AboveCurrentRank(SQLCalls.GetExactLeaderboardEntry(gameBoard.game).rank);
 
             // Check to see if character is AI
             if(!game.isPlayer)
@@ -44,19 +50,20 @@ namespace AITetris.Controllers
             // Default set buttons to true, then disable later
             GameOverMenuControlSaveAI.IsEnabled = true;
             GameOverMenuControlRevive.IsEnabled = true;
-
-            game = SQLCalls.GetExactLeaderboardEntry(game);
-            List<Game> leaderboard = SQLCalls.Get4AboveCurrentRank(game.rank);
-            leaderboard.Add(game);
             FillLeaderboard(leaderboard);
 
             // Check if the game contains a player or AI
-            if(game.isPlayer == true)
+            if(gameBoard.game.isPlayer == true)
             {
                 // Disable save AI button for player
                 GameOverMenuControlSaveAI.IsEnabled = false;
 
                 // Enable or disable the upgrades bought
+                if (gameBoard.game.upgrades.revive == 0)
+                {
+                    // Disable Revive button for Player if you have no revives
+                    GameOverMenuControlRevive.IsEnabled = false;
+                }
             }
             else
             {
@@ -199,7 +206,8 @@ namespace AITetris.Controllers
         // A button that triggers a revive when upgrade is created
         private void GameOverMenuControlRevive_Click(object sender, RoutedEventArgs e)
         {
-
+            gameBoard.Revive();
+            gameBoard.GameBoardMainGrid.Children.Remove(this);
         }
 
         // A button that triggers a save of the AI in training
@@ -218,6 +226,9 @@ namespace AITetris.Controllers
         // Navigation
         private void GameOverMenuControlQuitGame_Click(object sender, RoutedEventArgs e)
         {
+            string exeDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            int metaCurrency = Convert.ToInt32(File.ReadAllText(exeDir + "/Assets/JSON/MetaCurrency.txt"));
+            File.WriteAllText(exeDir + "/Assets/JSON/MetaCurrency.txt", ((gameBoard.game.points / 100) + metaCurrency).ToString());
             // Navigating back to main menu
             ((NavigationWindow)Window.GetWindow(this)).NavigationService.Navigate(new Uri("Pages/MainPage.xaml", UriKind.Relative));
         }

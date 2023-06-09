@@ -1,0 +1,8 @@
+﻿{
+  "revive": 0,
+  "scoreMultiplier": 1.0,
+  "removeSwap": false,
+  "emergancyLineClear": 0,
+  "slowTime": 0,
+  "purchasedUpgrades": [ false, false, false, false, false, false, false, false, false, false, false, false ]
+}

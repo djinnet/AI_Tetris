@@ -231,20 +231,22 @@
                     FontSize="15"
                     FontWeight="Bold"
                     Margin="0, 10"
-                    Click="GameBoardActionsPauseBtn_Click">
+                    Click="GameBoardActionsPauseBtn_Click"
+                    Focusable="False">
 
                 </Button>
 
                 <!-- Button that triggers the first consumeable -->
                 <Button
                     x:Name="GameBoardActionsConsumeOneBtn"
-                    Content="Consume One"
+                    Content="Emergancy Line Clear"
                     HorizontalContentAlignment="Center"
                     VerticalContentAlignment="Center"
                     FontFamily="Tahoma"
                     FontSize="15"
                     FontWeight="Bold"
-                    Click="GameBoardActionsConsumeOneBtn_Click">
+                    Click="GameBoardActionsConsumeOneBtn_Click"
+                    Focusable="False">
 
                 </Button>
 
@@ -257,7 +259,8 @@
                     FontFamily="Tahoma"
                     FontSize="15"
                     FontWeight="Bold"
-                    Click="GameBoardActionsConsumeTwoBtn_Click">
+                    Click="GameBoardActionsConsumeTwoBtn_Click"
+                    Focusable="False">
 
                 </Button>
 
@@ -270,7 +273,8 @@
                     FontFamily="Tahoma"
                     FontSize="15"
                     FontWeight="Bold"
-                    Click="GameBoardActionsConsumeThreeBtn_Click">
+                    Click="GameBoardActionsConsumeThreeBtn_Click"
+                    Focusable="False">
 
                 </Button>
             </StackPanel>

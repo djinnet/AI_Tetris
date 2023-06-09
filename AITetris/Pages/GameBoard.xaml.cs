@@ -79,7 +79,7 @@ namespace AITetris.Pages
 
         private Random rand;
 
-        public GameBoard(Character character)
+        public GameBoard(Character character, Upgrades upgrades)
         {
             InitializeComponent();
 
@@ -93,7 +93,8 @@ namespace AITetris.Pages
             game = new Game(
                 new Board(maxWidth + 2, maxHeight),
                 character,
-                JsonSerializer.Deserialize<Settings>(File.ReadAllText(exeDir + "/Assets/JSON/Settings.json")));
+                JsonSerializer.Deserialize<Settings>(File.ReadAllText(exeDir + "/Assets/JSON/Settings.json")),
+                upgrades);
 
             // Todo! - Sebastian - Dokumentation
             if (!game.isPlayer)
@@ -155,6 +156,19 @@ namespace AITetris.Pages
 
             // Initialize a pause menu in this game
             pauseMenu = new PauseMenu(this);
+
+            if (game.upgrades.emergancyLineClear == 0)
+            {
+                GameBoardActionsConsumeOneBtn.IsEnabled = false;
+            }
+            if (game.upgrades.slowTime == 0)
+            {
+                GameBoardActionsConsumeTwoBtn.IsEnabled = false;
+            }
+            if (!game.upgrades.removeSwap)
+            {
+                GameBoardActionsConsumeThreeBtn.IsEnabled = false;
+            }
         }
 
         // A function that pauses the game and opens the pause menu
@@ -525,7 +539,7 @@ namespace AITetris.Pages
                 //Here we get the squares in the current row of the game grid
                 List<Square> line = game.board.squares.Where(s => s.coordinateY == i && s.coordinateX >= 0 && s.coordinateX < maxWidth).ToList();
                 //If statment to check if the amount of square equal the max width
-                if (line.Count() == maxWidth)
+                if (line.Count() >= maxWidth)
                 {
                     //Foreach loop to go through each square in the row
                     foreach (Square square in line)
@@ -560,7 +574,7 @@ namespace AITetris.Pages
             if (linesCleared > 0)
             {
                 //Call add point function
-                AddPoint(linesCleared);
+                AddPoint(linesCleared, game.upgrades.scoreMultiplier);
             }
         }
 
@@ -602,10 +616,11 @@ namespace AITetris.Pages
                     ClearBoard();
                     game.linesCleared = 0;
                     game.points = 0;
-                    if (game.isPlayer)
+                    if (!game.isPlayer)
                     {
                         rand = new Random((game.character as AI).seed);
                     }
+                    scoreboardTimer = new DispatcherTimer();
                     SetBoard();
                 }
                 else
@@ -635,16 +650,17 @@ namespace AITetris.Pages
             game.time = Convert.ToInt32(elapsedTime.TotalMilliseconds);
             SQLCalls.CreateLeaderboardEntry(game);
             
-            StopTime(scoreboardTimer);
+            PauseTime(scoreboardTimer);
             autoMoveTimer.Stop();
 
             // Start game over music
             gameOverMelody.Play();
+            backgroundMusic.Stop();
             
 
             // Add the game over menu to the gameboardmaingrid
             
-            GameOverMenu menu = new GameOverMenu(game);
+            GameOverMenu menu = new GameOverMenu(this);
             
             GameBoardMainGrid.Children.Add(menu);
             
@@ -673,7 +689,6 @@ namespace AITetris.Pages
         // Todo! - Sebastian - Dokumentation
         private void SetBoard()
         {
-            scoreboardTimer = new DispatcherTimer();
             StartTime(scoreboardTimer);
 
             FillBoard();
@@ -996,7 +1011,7 @@ namespace AITetris.Pages
         }
 
         // A function that adds points to the score
-        private void AddPoint(int lines)
+        private void AddPoint(int lines, double mulitplier)
         {
             // Sounds played on point gain
             if(lines == 4)
@@ -1011,7 +1026,7 @@ namespace AITetris.Pages
             }
                         
             // Recalculate the points and doubling the points added accordingly to the amount of lines cleared
-            game.points += (int)Math.Pow(2, lines) * 100;
+            game.points += Convert.ToInt32(((int)Math.Pow(2, lines) * 100) * mulitplier);
 
             // Update the scoreboard labels
             GameBoardScorePointLbl.Content = "Point: " + game.points;
@@ -1077,6 +1092,17 @@ namespace AITetris.Pages
             ApplySettings();
         }
 
+        public void Revive()
+        {
+            hasLost = false;
+            ClearBoard();
+            game.upgrades.revive--;
+            backgroundMusic.Play();
+            SetBoard();
+            ResumeTime(scoreboardTimer);
+            NextToGame();
+        }
+
         // A UI button that triggers the pause menu
         private void GameBoardActionsPauseBtn_Click(object sender, RoutedEventArgs e)
         {
@@ -1087,19 +1113,52 @@ namespace AITetris.Pages
         // UI button for using the not yet planned consumeable within the game
         private void GameBoardActionsConsumeOneBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            for (int y = maxHeight - 2; y < maxHeight; y++)
+            {
+                for (int x = 0; x < maxWidth; x++)
+                {
+                    game.board.squares.Add(new Square(x, y, "GreenPrimary"));
+                }
+            }
+            double originalMultiplier = game.upgrades.scoreMultiplier;
+            game.upgrades.scoreMultiplier = 0.5;
+            ClearLine();
+            game.upgrades.scoreMultiplier = originalMultiplier;
+            game.upgrades.emergancyLineClear--;
+            if(game.upgrades.emergancyLineClear == 0)
+            {
+                GameBoardActionsConsumeOneBtn.IsEnabled = false;
+            }
         }
 
         // UI button for using the not yet planned consumeable within the game
         private void GameBoardActionsConsumeTwoBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            autoMoveTimer.Interval *= 2;
+            game.settings.startSpeed *= 2;
+            DispatcherTimer slowTime = new DispatcherTimer();
+            slowTime.Interval = TimeSpan.FromSeconds(game.upgrades.slowTime);
+            slowTime.Tick += (object sender, EventArgs e) =>
+            {
+                autoMoveTimer.Interval /=  2;
+                game.settings.startSpeed /= 2;
+                GameBoardActionsConsumeTwoBtn.IsEnabled = false;
+                slowTime.Stop();
+            };
+            slowTime.Start();
         }
 
         // UI button for using the not yet planned consumeable within the game
         private void GameBoardActionsConsumeThreeBtn_Click(object sender, RoutedEventArgs e)
         {
-
+            if (swappedFigure != null)
+            {
+                EraseSquares(swappedFigure.squares, GameBoardSwapGrid);
+                swappedFigure = null;
+                hasSwapped = false;
+                game.upgrades.removeSwap = false;
+                GameBoardActionsConsumeThreeBtn.IsEnabled = false;
+            }
         }
 
         //A key down event handler
