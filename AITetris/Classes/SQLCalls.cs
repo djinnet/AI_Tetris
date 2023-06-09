@@ -217,5 +217,71 @@ namespace AITetris.Classes
 
             return foundGame;
         }
+
+        // A function that inserts the AI Individual in the database
+        public static void Create10IndividualsEntry(List<Individual> individuals, int genID)
+        {
+            // Creating a new database connection
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                // SQL query string that inserts an individual to the individual table
+                string query = "INSERT INTO Individual (GenerationID, Weights, Rank)" +
+                               "VALUES" +
+                               "(@genID, @weights, @rank0)," +
+                               "(@genID, @weights, @rank1)," +
+                               "(@genID, @weights, @rank2)," +
+                               "(@genID, @weights, @rank3)," +
+                               "(@genID, @weights, @rank4)," +
+                               "(@genID, @weights, @rank5)," +
+                               "(@genID, @weights, @rank6)," +
+                               "(@genID, @weights, @rank7)," +
+                               "(@genID, @weights, @rank8)," +
+                               "(@genID, @weights, @rank9)";
+
+                // Create a new SQL command
+                SqlCommand cmd = new SqlCommand(query, conn);
+
+                // Prepare parameters
+                cmd.Parameters.AddWithValue("@genID", genID);
+                cmd.Parameters.AddWithValue("@weights", "Weights");
+
+                // Add individual rank parameters
+                for (int i = 0; i < 10; i++)
+                {
+                    cmd.Parameters.AddWithValue($"@rank{i}", i);
+                }
+
+                // Open the connection
+                conn.Open();
+
+                // Execute the query
+                cmd.ExecuteNonQuery();
+            }
+        }
+
+
+        // A function that inserts the AI Generation in the database
+        public static void CreateGenerationEntry(string genName, int genNumber)
+        {
+            // Creating a new database connection
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                // SQL query string that inserts a generation to the generation table
+                string query = "INSERT INTO Generation (Name, GenerationNumber) VALUES (@genName, @genNumber)";
+
+                // Create a new SQL command
+                SqlCommand cmd = new SqlCommand(query, conn);
+
+                // Prepare parameters
+                cmd.Parameters.AddWithValue("@genName", genName);
+                cmd.Parameters.AddWithValue("@genNumber", genNumber);
+
+                // Open the connection
+                conn.Open();
+
+                // Execute the query
+                cmd.ExecuteNonQuery();
+            }
+        }
     }
 }

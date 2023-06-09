@@ -31,7 +31,6 @@ namespace AITetris.Controllers
         }
         private void FillLeaderboard(List<Game> scores)
         {
-
             // Leaderbordgrid
             Grid leaderboardGrid = LeaderboardGrid;
 
@@ -171,7 +170,11 @@ namespace AITetris.Controllers
         // A button that triggers a save of the AI in training
         private void GameOverMenuControlSaveAI_Click(object sender, RoutedEventArgs e)
         {
+            //// Saving the generation
+            //SQLCalls.CreateGenerationEntry();
 
+            //// Saving the individuals
+            //SQLCalls.Create10IndividualsEntry();
         }
 
         // Navigation
