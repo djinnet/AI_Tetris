@@ -24,10 +24,29 @@ namespace AITetris.Controllers
         public GameOverMenu(Game game)
         {
             InitializeComponent();
+
+            // Default set buttons to true, then disable later
+            GameOverMenuControlSaveAI.IsEnabled = true;
+            GameOverMenuControlRevive.IsEnabled = true;
+
             game = SQLCalls.GetExactLeaderboardEntry(game);
             List<Game> leaderboard = SQLCalls.Get4AboveCurrentRank(game.rank);
             leaderboard.Add(game);
             FillLeaderboard(leaderboard);
+
+            // Check if the game contains a player or AI
+            if(game.isPlayer == true)
+            {
+                // Disable save AI button for player
+                GameOverMenuControlSaveAI.IsEnabled = false;
+
+                // Enable or disable the upgrades bought
+            }
+            else
+            {
+                // Disable Revive button for AI
+                GameOverMenuControlRevive.IsEnabled = false;
+            }
         }
         private void FillLeaderboard(List<Game> scores)
         {
