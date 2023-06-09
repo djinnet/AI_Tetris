@@ -103,6 +103,22 @@ namespace AITetris.Pages
             // Set the playername in the scoreboard
             GameBoardScorePlayerLbl.Content = character.name;
 
+            // Set the AI panel labels
+            GameBoardAINameLbl.Content = "";
+            GameBoardGenerationLbl.Content = "";
+            GameBoardIndividualLbl.Content = "";
+            GameBoardLastFitnessLbl.Content = "";
+
+            // Check if AI is enabled
+            if (!game.isPlayer)
+            {
+                // Set the AI panel labels
+                GameBoardAINameLbl.Content = character.name;
+                GameBoardGenerationLbl.Content = "TO DO SEBASTIAN :)";
+                GameBoardIndividualLbl.Content = currentIndividual.ToString();
+                GameBoardLastFitnessLbl.Content = "TO DO SEBASTIAN :)";
+            }
+
             // Apply the settings set in the JSON settings file
             ApplySettings();
             

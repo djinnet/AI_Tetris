@@ -341,12 +341,77 @@
             </StackPanel>
         </Border>
 
+        <!-- The border containing the AI panel -->
+        <Border
+            x:Name="GameBoardAIBorder"
+            Grid.Column="1"
+            Grid.Row="4"
+            Grid.RowSpan="2"
+            BorderThickness="2"
+            BorderBrush="Silver">
+
+            <!-- The stackpanel holding the AI panel content -->
+            <StackPanel
+                x:Name="GameBoardAISP">
+
+                <!-- AI panel title -->
+                <Label 
+                    x:Name="GameBoardAITitleLbl"
+                    Content="AI info"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="20"
+                    FontWeight="Bold"/>
+
+                <!-- AI name label -->
+                <Label 
+                    x:Name="GameBoardAINameLbl"
+                    Content="AI Name"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="15"
+                    FontWeight="Bold"/>
+
+                <!-- Generation label -->
+                <Label 
+                    x:Name="GameBoardGenerationLbl"
+                    Content="Generation: 0"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="15"
+                    FontWeight="Bold"/>
+
+                <!-- Individual label -->
+                <Label 
+                    x:Name="GameBoardIndividualLbl"
+                    Content="Individual: 0"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="15"
+                    FontWeight="Bold"/>
+
+                <!-- LastFitness label -->
+                <Label 
+                    x:Name="GameBoardLastFitnessLbl"
+                    Content="Last Fitness: 0"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="15"
+                    FontWeight="Bold"/>
+            </StackPanel>
+        </Border>
+
         <!-- The border containing the controls panel -->
         <Border
             x:Name="GameBoardControlsBorder"
             Grid.Column="1"
-            Grid.Row="4"
-            Grid.RowSpan="4"
+            Grid.Row="6"
+            Grid.RowSpan="2"
             BorderThickness="2"
             BorderBrush="Silver">
 
