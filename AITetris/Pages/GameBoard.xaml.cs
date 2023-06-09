@@ -111,6 +111,22 @@ namespace AITetris.Pages
             // Set the playername in the scoreboard
             GameBoardScorePlayerLbl.Content = character.name;
 
+            // Set the AI panel labels
+            GameBoardAINameLbl.Content = "";
+            GameBoardGenerationLbl.Content = "";
+            GameBoardIndividualLbl.Content = "";
+            GameBoardLastFitnessLbl.Content = "";
+
+            // Check if AI is enabled
+            if (!game.isPlayer)
+            {
+                // Set the AI panel labels
+                GameBoardAINameLbl.Content = character.name;
+                GameBoardGenerationLbl.Content = "Generation: " + (game.character as AI).generationNumber.ToString();
+                GameBoardIndividualLbl.Content = "Individual: " + currentIndividual.ToString();
+                GameBoardLastFitnessLbl.Content = "Last Fitness: " + (game.character as AI).population[currentIndividual].fitness.ToString();
+            }
+
             // Apply the settings set in the JSON settings file
             ApplySettings();
             
@@ -554,6 +570,13 @@ namespace AITetris.Pages
                     if (!game.isPlayer)
                     {
                         (game.character as AI).population[currentIndividual].fitness = EvaluateFitness();
+
+                        // Set the AI panel labels
+                        GameBoardAINameLbl.Content = game.character.name;
+                        GameBoardGenerationLbl.Content = "Generation: " + (game.character as AI).generationNumber.ToString();
+                        GameBoardIndividualLbl.Content = "Individual: " + currentIndividual.ToString();
+                        GameBoardLastFitnessLbl.Content = "Last Fitness: " + (game.character as AI).population[currentIndividual].fitness.ToString();
+
                         Debug.WriteLine("Disengaging individual: " + currentIndividual);
                         Debug.WriteLine("Total Fitness: " + (game.character as AI).population[currentIndividual].fitness);
                         currentIndividual++;
