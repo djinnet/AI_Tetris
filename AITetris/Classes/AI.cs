@@ -12,12 +12,15 @@ namespace AITetris.Classes
         public AI(string name, int populationSize, int inputSize) : base(name)
         {
             this.populationSize = populationSize;
+            Random rng = new Random();
+            seed = rng.Next();
 
             GeneratePopulation(inputSize);
         }
 
         public int generationNumber;
         public Individual[] population;
+        public int seed;
 
         private int populationSize;
 
