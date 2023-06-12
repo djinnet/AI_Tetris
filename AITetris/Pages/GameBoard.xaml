@@ -253,7 +253,7 @@
                 <!-- Button that triggers the second consumeable -->
                 <Button
                     x:Name="GameBoardActionsConsumeTwoBtn"
-                    Content="Consume Two"
+                    Content="Slow time"
                     HorizontalContentAlignment="Center"
                     VerticalContentAlignment="Center"
                     FontFamily="Tahoma"
@@ -267,7 +267,7 @@
                 <!-- Button that triggers the third consumeable -->
                 <Button
                     x:Name="GameBoardActionsConsumeThreeBtn"
-                    Content="Consume Three"
+                    Content="Erase swap block"
                     HorizontalContentAlignment="Center"
                     VerticalContentAlignment="Center"
                     FontFamily="Tahoma"
