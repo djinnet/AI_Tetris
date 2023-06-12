@@ -49,16 +49,6 @@
                     FontWeight="Bold"
                     Margin="0, 15" />
 
-                <!-- Wallet Label -->
-                <Label 
-                    x:Name="MainMenuMetaCurrencyLbl"
-                    Content="Wallet: 0"
-                    HorizontalContentAlignment="Center"
-                    FontFamily="Tahoma"
-                    FontSize="20"
-                    FontWeight="Bold" 
-                    Margin="0, 15" />
-
                 <!-- Navigation button -->
                 <Button
                     x:Name="MainMenuStartGameBtn"
