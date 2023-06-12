@@ -28,7 +28,6 @@ namespace AITetris.Pages
         // Toggle state of the upgrade buttons
         private bool[] buttonStates = { false, false, false, false, false, false, false, false, false, false, false, false };
 
-        private Upgrades upgrades;
         private Upgrades activatedUpgrades;
 
         // AI toggle is a variable controlling if the AI is active or not, it has a starting value of 0/off
@@ -42,13 +41,12 @@ namespace AITetris.Pages
 
             // Set the focus of the page to this textbox
             Nametxtbox.Focus();
-            upgrades = JsonSerializer.Deserialize<Upgrades>(File.ReadAllText(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "/Assets/JSON/Upgrades.json"));
-            activatedUpgrades = new Upgrades();
+            activatedUpgrades = JsonSerializer.Deserialize<Upgrades>(File.ReadAllText(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "/Assets/JSON/Upgrades.json"));
             for (int i = 0; i < StartGameMenuUpgradesGrid.Children.Count; i++)
             {
                 if(StartGameMenuUpgradesGrid.Children[i] is Button button)
                 {
-                    button.IsEnabled = upgrades.purchasedUpgrades[i];
+                    button.IsEnabled = activatedUpgrades.purchasedUpgrades[i];
                 }
             }
 
