@@ -1061,13 +1061,13 @@ namespace AITetris.Pages
             backgroundMusic.Volume = Convert.ToDouble(game.settings.volume) / 100;
 
             // Setting the controls from the keybinds in the controls panel
-            GameBoardControlsPause.Content = "Pause: " + game.settings.KeyBinds.pause.ToString();
-            GameBoardControlsSave.Content = "Swap: " + game.settings.KeyBinds.swap.ToString();
-            GameBoardControlsRotate.Content = "Rotate: " + game.settings.KeyBinds.rotate.ToString();
-            GameBoardControlsLeft.Content = "Left: " + game.settings.KeyBinds.left.ToString();
-            GameBoardControlsRight.Content = "Right: " + game.settings.KeyBinds.right.ToString();
-            GameBoardControlsDown.Content = "Down: " + game.settings.KeyBinds.drop.ToString();
-            GameBoardControlsInstantDown.Content = "Instant Down: " + game.settings.KeyBinds.insta.ToString();
+            GameBoardControlsPause.Content = "Pause: " + game.settings.keyBinds.pause.ToString();
+            GameBoardControlsSave.Content = "Swap: " + game.settings.keyBinds.swap.ToString();
+            GameBoardControlsRotate.Content = "Rotate: " + game.settings.keyBinds.rotate.ToString();
+            GameBoardControlsLeft.Content = "Left: " + game.settings.keyBinds.left.ToString();
+            GameBoardControlsRight.Content = "Right: " + game.settings.keyBinds.right.ToString();
+            GameBoardControlsDown.Content = "Down: " + game.settings.keyBinds.drop.ToString();
+            GameBoardControlsInstantDown.Content = "Instant Down: " + game.settings.keyBinds.insta.ToString();
 
             // Check if AI is enabled
             if (!game.isPlayer)
@@ -1168,7 +1168,7 @@ namespace AITetris.Pages
             if (!hasLost && game.isPlayer)
             {
                 //If statment checking if the inputed key is the pause keybind
-                if(e.Key == game.settings.KeyBinds.pause)
+                if(e.Key == game.settings.keyBinds.pause)
                 {
                     // Trigger the pause menu
                     TogglePauseGame();
@@ -1180,36 +1180,36 @@ namespace AITetris.Pages
                     switch (e.Key)
                     {
                         //Case When the inputed key = kebind left
-                        case Key k when k == game.settings.KeyBinds.left:
+                        case Key k when k == game.settings.keyBinds.left:
                             //Play move sfx
                             SFXMove.Play();
                             //Call the move figure function
                             MoveFigure("left");
                             break;
                         //Case When the inputed key = kebind right
-                        case Key k when k == game.settings.KeyBinds.right:
+                        case Key k when k == game.settings.keyBinds.right:
                             //Play move sfx
                             SFXMove.Play();
                             //Call the move figure function
                             MoveFigure("right");
                             break;
                         //Case When the inputed key = kebind rotate
-                        case Key k when k == game.settings.KeyBinds.rotate:
+                        case Key k when k == game.settings.keyBinds.rotate:
                             //Call the Rotate Figure
                             RotateFigure();
                             break;
                         //Case When the inputed key = kebind drop
-                        case Key k when k == game.settings.KeyBinds.drop:
+                        case Key k when k == game.settings.keyBinds.drop:
                             //Call the move figure function
                             MoveFigure("down");
                             break;
                         //Case When the inputed key = kebind insta
-                        case Key k when k == game.settings.KeyBinds.insta:
+                        case Key k when k == game.settings.keyBinds.insta:
                             //Call the insta drop function
                             InstaDrop();
                             break;
                         //Case When the inputed key = kebind swap
-                        case Key k when k == game.settings.KeyBinds.swap:
+                        case Key k when k == game.settings.keyBinds.swap:
                             //Call the swap figure function
                             Swap();
                             break;

@@ -17,7 +17,7 @@ namespace AITetris.Classes
             enableNextBlock = true;
             volume = 50;
             enableTraining = false;
-            KeyBinds = new KeyBinds();
+            keyBinds = new KeyBinds();
         }
 
         public double gameSpeed { get; set; }
@@ -26,6 +26,6 @@ namespace AITetris.Classes
         public bool enableNextBlock { get; set; }
         public int volume { get; set; }
         public bool enableTraining { get; set; }
-        public KeyBinds KeyBinds { get; set; }
+        public KeyBinds keyBinds { get; set; }
     }
 }
