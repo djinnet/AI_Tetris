@@ -127,7 +127,7 @@ namespace AITetris.Classes
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                string query = "SELECT TOP 10 Name, Points, LinesCleared, GameTimeInMs, IsPlayer, Rank FROM Leaderboard WHERE Rank < @Rank ORDER BY Rank ASC";
+                string query = "SELECT Name, Points, LinesCleared, GameTimeInMs, IsPlayer, Rank FROM (SELECT TOP 10 Name, Points, LinesCleared, GameTimeInMs, IsPlayer, Rank FROM Leaderboard WHERE Rank < @Rank ORDER BY Rank DESC) AS subquery ORDER BY Rank ASC";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@Rank", firstRank);
 
@@ -150,7 +150,7 @@ namespace AITetris.Classes
 
             using (SqlConnection conn = new SqlConnection(connectionString))
             {
-                string query = "SELECT TOP 10 Name, Points, LinesCleared, GameTimeInMs, IsPlayer, Rank FROM Leaderboard WHERE Rank < @Rank AND Name LIKE @Name ORDER BY Rank ASC";
+                string query = "SELECT Name, Points, LinesCleared, GameTimeInMs, IsPlayer, Rank FROM (SELECT TOP 10 Name, Points, LinesCleared, GameTimeInMs, IsPlayer, Rank FROM Leaderboard WHERE Rank < @Rank AND Name LIKE @Name ORDER BY Rank DESC) AS subquery ORDER BY Rank ASC";
                 SqlCommand cmd = new SqlCommand(query, conn);
                 cmd.Parameters.AddWithValue("@Rank", firstRank);
                 cmd.Parameters.AddWithValue("@Name", "%" + name + "%");
