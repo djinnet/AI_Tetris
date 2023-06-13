@@ -789,6 +789,7 @@ namespace AITetris.Pages
             return output;
         }
 
+        //Todo delete
         private void Advance()
         {
             AI aI = (AI)game.character;
@@ -863,9 +864,6 @@ namespace AITetris.Pages
         {
             // Instantiate a new dispatchertimer to run the automovement
             autoMoveTimer = new DispatcherTimer();
-
-            //Sets the inital auto move timer interval
-            autoMoveTimerInterval = TimeSpan.FromMilliseconds(game.settings.startSpeed);
 
             // Set the interval of the timer in milliseconds
             autoMoveTimer.Interval = autoMoveTimerInterval;
@@ -1056,6 +1054,9 @@ namespace AITetris.Pages
             {
                 GameBoardSaveBlockBorder.Visibility = Visibility.Hidden;
             }
+
+            //Sets the inital auto move timer interval
+            autoMoveTimerInterval = TimeSpan.FromMilliseconds(game.settings.startSpeed);
 
             //sets the audio level of the background music
             backgroundMusic.Volume = Convert.ToDouble(game.settings.volume) / 100;
