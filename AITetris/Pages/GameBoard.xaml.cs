@@ -933,20 +933,6 @@ namespace AITetris.Pages
             }
         }
 
-        // A function that stop and reset the score timer
-        private void StopTime(DispatcherTimer timer)
-        {
-            // Stop the timer
-            timer.Stop();
-
-            // Resetting the elapsed time and the paused time
-            elapsedTime = TimeSpan.Zero;
-            pausedTime = TimeSpan.Zero;
-
-            // Resetting the UI label
-            GameBoardScoreTimeLbl.Content = "00:00:00:000";
-        }
-
         // A function that pauses the scoretimer and preserves the timer
         private void PauseTime(DispatcherTimer timer)
         {
