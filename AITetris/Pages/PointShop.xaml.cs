@@ -40,8 +40,6 @@ namespace AITetris.Pages
         {
             InitializeComponent();
 
-            Debug.WriteLine(exeDir);
-
             metaCurrency = Convert.ToInt32(File.ReadAllText(exeDir + "/Assets/JSON/MetaCurrency.txt"));
 
             upgrades = JsonSerializer.Deserialize<Upgrades>(File.ReadAllText(exeDir + "/Assets/JSON/Upgrades.json"));

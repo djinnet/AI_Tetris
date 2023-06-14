@@ -28,14 +28,12 @@ namespace AITetris.Classes
 
         public void GenerateIndividual()
         {
-            Debug.WriteLine("New Individual");
             fitness = 0;
             chromosomes = new int[chromosomeLength];
 
             for (int i = 0; i < chromosomes.Length; i++)
             {
                 chromosomes[i] = RandomChromosome();
-                //Debug.WriteLine(" - Chromosome: " + chromosomes[i]);
             }
         }
 

@@ -77,8 +77,6 @@ namespace AITetris.Pages
                 buttonStates[buttonStateIndex] = true;
 
                 clickedButton.Background = Brushes.LightGreen;
-
-                Debug.WriteLine("Upgrade " + buttonStateIndex.ToString() + " toggled on!");
                 
                 switch(buttonStateIndex)
                 {
@@ -115,7 +113,6 @@ namespace AITetris.Pages
 
                 clickedButton.Background = Brushes.LightGray;
 
-                Debug.WriteLine("Upgrade " + buttonStateIndex.ToString() + " toggled off!");
                 switch (buttonStateIndex)
                 {
                     case 0:
@@ -278,18 +275,6 @@ namespace AITetris.Pages
         {
             // The value of the slider 0:Player - 1:AI
             int value = (int)PlayerOrAISlider.Value;
-
-            // Check sider value
-            if (value == 0)
-            {
-                // Player active
-                Debug.WriteLine("Player is active!");
-            }
-            else
-            {
-                // AI active
-                Debug.WriteLine("AI is active!");
-            }
 
             // Set the AI toggle to the current value
             AIToggle = value;
