@@ -13,7 +13,7 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="25" />
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="200" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="25" />
         </Grid.ColumnDefinitions>
@@ -31,13 +31,12 @@
             x:Name="MainMenuBorder"
             Grid.Column="2"
             Grid.Row="1"
-            Grid.RowSpan="3"
-            BorderThickness="2"
-            BorderBrush="Silver">
+            Grid.RowSpan="3">
 
             <!-- Stackpanel holding the controls of the mainpage -->
             <StackPanel
-                x:Name="MainMenuSP">
+                x:Name="MainMenuSP"
+                VerticalAlignment="Center">
                 
                 <!-- Page title -->
                 <Label 
