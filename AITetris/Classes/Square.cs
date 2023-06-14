@@ -18,7 +18,7 @@ namespace AITetris.Classes
             this.coordinateY = coordinateY;
 
             spritePath = color;
-            fullpath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\Assets\\Sprits\\" + spritePath + ".png";
+            fullpath = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "\\Assets\\Sprites\\" + spritePath + ".png";
 
             image = new Image();
             image.Source = new BitmapImage(new Uri(fullpath, UriKind.Absolute));
