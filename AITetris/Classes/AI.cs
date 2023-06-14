@@ -36,7 +36,6 @@ namespace AITetris.Classes
 
         public void GeneratePopulation(int inputSize)
         {
-            Debug.WriteLine("New Population");
             population = new Individual[populationSize];
             generationNumber = 0;
 

@@ -592,8 +592,6 @@ namespace AITetris.Pages
                         GameBoardIndividualLbl.Content = "Individual: " + currentIndividual.ToString();
                         GameBoardLastFitnessLbl.Content = "Last Fitness: " + (game.character as AI).population[currentIndividual].fitness.ToString();
 
-                        Debug.WriteLine("Disengaging individual: " + currentIndividual);
-                        Debug.WriteLine("Total Fitness: " + (game.character as AI).population[currentIndividual].fitness);
                         currentIndividual++;
 
                         if (currentIndividual == (game.character as AI).population.Count())
@@ -601,12 +599,10 @@ namespace AITetris.Pages
                             NextGeneration();
                             currentIndividual = 0;
                             (game.character as AI).generationNumber++;
-                            Debug.WriteLine("Engaging generation: " + (game.character as AI).generationNumber);
-                            Debug.WriteLine("Engaging individual: " + currentIndividual);
                         }
                         else
                         {
-                            Debug.WriteLine("Engaging individual: " + currentIndividual);
+
                         }
                     }
 
@@ -710,7 +706,6 @@ namespace AITetris.Pages
             double calcRotate = CalculateOutput();
             double calcSwap = CalculateOutput();
 
-            //Debug.WriteLine("Move: " + calcMove);
             if (calcMove < 0)
             {
                 MoveFigure("left");
@@ -800,11 +795,9 @@ namespace AITetris.Pages
             Random random = new Random();
             Individual mate = population[random.Next(population.Length)];
 
-            //Debug.WriteLine("New population: ");
 
             // 0. Best
             newPopulation.Add(population.MaxBy(i => i.fitness));
-            //Debug.WriteLine("Fitness: " + newPopulation.Last());
 
             // 1. Child of best & random + mutation
             // 2. Child of best & random + mutation
@@ -813,7 +806,6 @@ namespace AITetris.Pages
             for (int i = 0; i < 4; i++)
             {
                 newPopulation.Add(Reproduce(newPopulation[0], mate, random));
-                //Debug.WriteLine("Fitness: " + newPopulation.Last());
             }
 
             // 5. New random
@@ -825,7 +817,6 @@ namespace AITetris.Pages
             for (int i = newPopulation.Count(); i < population.Length; i++)
             {
                 newPopulation.Add(new Individual(newPopulation[0].chromosomes.Length));
-                //Debug.WriteLine("Fitness: " + newPopulation.Last());
             }
 
             population = newPopulation.ToArray();
