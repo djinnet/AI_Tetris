@@ -61,6 +61,7 @@ namespace AITetris.Pages
         private bool hasSwapped = false;
         private bool hasLost = false;
         private bool isPaused = false;
+        private bool revived = false;
 
         //Execution directory
         private string exeDir;
@@ -644,7 +645,14 @@ namespace AITetris.Pages
             // Stop the current game timers
             
             game.time = Convert.ToInt32(elapsedTime.TotalMilliseconds);
-            SQLCalls.CreateLeaderboardEntry(game);
+            if (!revived)
+            {
+                SQLCalls.CreateLeaderboardEntry(game);
+            }
+            else
+            {
+                SQLCalls.UpdateLeaderboardEntry(game);
+            }
             
             PauseTime(scoreboardTimer);
             autoMoveTimer.Stop();
@@ -1067,6 +1075,7 @@ namespace AITetris.Pages
         public void Revive()
         {
             hasLost = false;
+            revived = true;
             ClearBoard();
             game.upgrades.revive--;
             backgroundMusic.Play();

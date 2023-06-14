@@ -30,12 +30,14 @@ namespace AITetris.Controllers
         int generationNumber;
         List<Individual> individuals;
         int seed = 0;
+        private Game gameFromDB;
 
         public GameOverMenu(GameBoard gameBoard)
         {
             InitializeComponent();
             this.gameBoard = gameBoard;
-            List<Game> leaderboard = SQLCalls.Get4AboveCurrentRank(SQLCalls.GetExactLeaderboardEntry(gameBoard.game).rank);
+            gameFromDB = SQLCalls.GetExactLeaderboardEntry(gameBoard.game);
+            List<Game> leaderboard = SQLCalls.Get4AboveCurrentRank(gameFromDB.rank);
 
             // Check to see if character is AI
             if(!gameBoard.game.isPlayer)
@@ -206,6 +208,7 @@ namespace AITetris.Controllers
         // A button that triggers a revive when upgrade is created
         private void GameOverMenuControlRevive_Click(object sender, RoutedEventArgs e)
         {
+            gameBoard.game.rank = gameFromDB.rank;
             gameBoard.Revive();
             gameBoard.GameBoardMainGrid.Children.Remove(this);
         }

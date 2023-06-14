@@ -28,9 +28,6 @@ namespace AITetris.Pages
         {
             InitializeComponent();
 
-            // Create a list of games using the SQLCalls function GetLeaderboardTop10
-            scores = SQLCalls.GetLeaderboardTop10();
-
             // Create and fill the leaderboard with contennt
             FillLeaderboard();
         }
