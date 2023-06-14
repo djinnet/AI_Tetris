@@ -15,13 +15,15 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="25" />
             <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="750" />
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="25" />
         </Grid.ColumnDefinitions>
 
         <Grid.RowDefinitions>
             <RowDefinition Height="25" />
-            <RowDefinition Height="100" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="*" />
             <RowDefinition Height="*" />
             <RowDefinition Height="25" />
         </Grid.RowDefinitions>
@@ -29,12 +31,11 @@
         <!-- User control title -->
         <Label
             x:Name="GameOverMenuTitle"
-            Grid.Column="1"
-            Grid.ColumnSpan="2"
+            Grid.Column="2"
             Grid.Row="1"
             Content="Game over"
             HorizontalContentAlignment="Center"
-            VerticalContentAlignment="Center"
+            VerticalContentAlignment="Bottom"
             FontFamily="Tahoma"
             FontSize="25"
             FontWeight="Bold"
@@ -43,7 +44,7 @@
         <!-- Border used as a container for the leaderboard stackpanel -->
         <Border
             x:Name="LeaderboardGridBorder"
-            Grid.Column="1"
+            Grid.Column="2"
             Grid.Row="2"
             BorderBrush="Silver"
             BorderThickness="2"
@@ -61,11 +62,12 @@
         <Border
             x:Name="GameOverMenuControlsBoarder"
             Grid.Column="2"
-            Grid.Row="2">
+            Grid.Row="3">
 
             <!-- Stackpanel holding the gameover controls -->
             <StackPanel
-                x:Name="GameOverMenuControlsSP">
+                x:Name="GameOverMenuControlsSP"
+                Width="300">
 
                 <!-- Button that trigger a revive -->
                 <Button
