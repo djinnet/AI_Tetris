@@ -242,20 +242,16 @@ namespace AITetris.Pages
         // Todo! - Sebastian - Dokumentation
         private void RotateFigure()
         {
-            
-            if (CanRotate())
+            EraseSquares(figure.squares, GameBoardGameGrid);
+            figure.Rotate();
+            if (!CanRotate())
             {
-                EraseSquares(figure.squares, GameBoardGameGrid);
                 figure.Rotate();
-                if (!CanRotate())
-                {
-                    figure.Rotate();
-                    figure.Rotate();
-                    figure.Rotate();
-                }
-                Kickback();
-                DrawSquares(figure.squares, GameBoardGameGrid);
+                figure.Rotate();
+                figure.Rotate();
             }
+            Kickback();
+            DrawSquares(figure.squares, GameBoardGameGrid);
         }
 
         // Todo! - Sebastian - Dokumentation
@@ -787,17 +783,6 @@ namespace AITetris.Pages
             }
 
             return output;
-        }
-
-        //Todo delete
-        private void Advance()
-        {
-            AI aI = (AI)game.character;
-
-            if (currentChromosome == aI.population[currentIndividual].chromosomes.Count())
-            {
-                currentChromosome = 0;
-            }
         }
 
         private void NextGeneration()
