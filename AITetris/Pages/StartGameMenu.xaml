@@ -79,11 +79,12 @@
                     x:Name="Upgrade1"
                     Grid.Column="0"
                     Grid.Row="0"
-                    Content="+1 revive"
+                    Content="+1 Revive"
                     FontFamily="Tahoma"
                     FontSize="12"
                     FontWeight="Bold"
-                    Click="Upgrade1_Click">
+                    Click="Upgrade1_Click"
+                    Margin="5,5">
 
                 </Button>
 
@@ -91,11 +92,12 @@
                     x:Name="Upgrade2"
                     Grid.Column="1"
                     Grid.Row="0"
-                    Content="+1 revive"
+                    Content="+1 Revive"
                     FontFamily="Tahoma"
                     FontSize="12"
                     FontWeight="Bold"
-                    Click="Upgrade2_Click">
+                    Click="Upgrade2_Click"
+                    Margin="5,5">
 
                 </Button>
 
@@ -103,11 +105,12 @@
                     x:Name="Upgrade3"
                     Grid.Column="2"
                     Grid.Row="0"
-                    Content="+1 revive"
+                    Content="+1 Revive"
                     FontFamily="Tahoma"
                     FontSize="12"
                     FontWeight="Bold"
-                    Click="Upgrade3_Click">
+                    Click="Upgrade3_Click"
+                    Margin="5,5">
 
                 </Button>
 
@@ -119,7 +122,8 @@
                     FontFamily="Tahoma"
                     FontSize="12"
                     FontWeight="Bold"
-                    Click="Upgrade4_Click">
+                    Click="Upgrade4_Click"
+                    Margin="5,5">
 
                 </Button>
 
@@ -131,7 +135,8 @@
                     FontFamily="Tahoma"
                     FontSize="12"
                     FontWeight="Bold"
-                    Click="Upgrade5_Click">
+                    Click="Upgrade5_Click"
+                    Margin="5,5">
 
                 </Button>
 
@@ -143,7 +148,8 @@
                     FontFamily="Tahoma"
                     FontSize="12"
                     FontWeight="Bold"
-                    Click="Upgrade6_Click">
+                    Click="Upgrade6_Click"
+                    Margin="5,5">
 
                 </Button>
 
@@ -151,11 +157,12 @@
                     x:Name="Upgrade7"
                     Grid.Column="0"
                     Grid.Row="2"
-                    Content="E LineClear"
+                    Content="+1 Emergency Line Clear"
                     FontFamily="Tahoma"
                     FontSize="12"
                     FontWeight="Bold"
-                    Click="Upgrade7_Click">
+                    Click="Upgrade7_Click"
+                    Margin="5,5">
 
                 </Button>
 
@@ -163,11 +170,12 @@
                     x:Name="Upgrade8"
                     Grid.Column="1"
                     Grid.Row="2"
-                    Content="E LineClear"
+                    Content="+1 Emergency Line Clear"
                     FontFamily="Tahoma"
                     FontSize="12"
                     FontWeight="Bold"
-                    Click="Upgrade8_Click">
+                    Click="Upgrade8_Click"
+                    Margin="5,5">
 
                 </Button>
 
@@ -175,11 +183,12 @@
                     x:Name="Upgrade9"
                     Grid.Column="2"
                     Grid.Row="2"
-                    Content="E LineClear"
+                    Content="+1 Emergency Line Clear"
                     FontFamily="Tahoma"
                     FontSize="12"
                     FontWeight="Bold"
-                    Click="Upgrade9_Click">
+                    Click="Upgrade9_Click"
+                    Margin="5,5">
 
                 </Button>
 
@@ -187,11 +196,12 @@
                     x:Name="Upgrade10"
                     Grid.Column="0"
                     Grid.Row="3"
-                    Content="removeSwap"
+                    Content="+1 Remove Swap"
                     FontFamily="Tahoma"
                     FontSize="12"
                     FontWeight="Bold"
-                    Click="Upgrade10_Click">
+                    Click="Upgrade10_Click"
+                    Margin="5,5">
 
                 </Button>
 
@@ -199,11 +209,12 @@
                     x:Name="Upgrade11"
                     Grid.Column="1"
                     Grid.Row="3"
-                    Content="slowTime30s"
+                    Content="+1 Slow time 30s"
                     FontFamily="Tahoma"
                     FontSize="12"
                     FontWeight="Bold"
-                    Click="Upgrade11_Click">
+                    Click="Upgrade11_Click"
+                    Margin="5,5">
 
                 </Button>
 
@@ -211,11 +222,12 @@
                     x:Name="Upgrade12"
                     Grid.Column="2"
                     Grid.Row="3"
-                    Content="slowTime30s"
+                    Content="+1 Slow time 30s"
                     FontFamily="Tahoma"
                     FontSize="12"
                     FontWeight="Bold"
-                    Click="Upgrade12_Click">
+                    Click="Upgrade12_Click"
+                    Margin="5,5">
 
                 </Button>
             </Grid>

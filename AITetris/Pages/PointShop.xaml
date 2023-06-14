@@ -452,7 +452,7 @@
                     <!-- Upgrade title -->
                     <Label
                         x:Name="Upgrade10_NameLbl"
-                        Content="Remove swap"
+                        Content="+1 Remove swap"
                         HorizontalContentAlignment="Center"
                         VerticalContentAlignment="Center"
                         FontFamily="Tahoma"
@@ -494,7 +494,7 @@
                     <!-- Upgrade title -->
                     <Label
                         x:Name="Upgrade11_NameLbl"
-                        Content="Slow time 30s"
+                        Content="+1 Slow time 30s"
                         HorizontalContentAlignment="Center"
                         VerticalContentAlignment="Center"
                         FontFamily="Tahoma"
@@ -536,7 +536,7 @@
                     <!-- Upgrade title -->
                     <Label
                         x:Name="Upgrade12_NameLbl"
-                        Content="Slow time 30s"
+                        Content="+1 Slow time 30s"
                         HorizontalContentAlignment="Center"
                         VerticalContentAlignment="Center"
                         FontFamily="Tahoma"
