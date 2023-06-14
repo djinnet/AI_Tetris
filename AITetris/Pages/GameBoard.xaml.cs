@@ -242,20 +242,16 @@ namespace AITetris.Pages
         // Todo! - Sebastian - Dokumentation
         private void RotateFigure()
         {
-            
-            if (CanRotate())
+            EraseSquares(figure.squares, GameBoardGameGrid);
+            figure.Rotate();
+            if (!CanRotate())
             {
-                EraseSquares(figure.squares, GameBoardGameGrid);
                 figure.Rotate();
-                if (!CanRotate())
-                {
-                    figure.Rotate();
-                    figure.Rotate();
-                    figure.Rotate();
-                }
-                Kickback();
-                DrawSquares(figure.squares, GameBoardGameGrid);
+                figure.Rotate();
+                figure.Rotate();
             }
+            Kickback();
+            DrawSquares(figure.squares, GameBoardGameGrid);
         }
 
         // Todo! - Sebastian - Dokumentation
