@@ -789,17 +789,6 @@ namespace AITetris.Pages
             return output;
         }
 
-        //Todo delete
-        private void Advance()
-        {
-            AI aI = (AI)game.character;
-
-            if (currentChromosome == aI.population[currentIndividual].chromosomes.Count())
-            {
-                currentChromosome = 0;
-            }
-        }
-
         private void NextGeneration()
         {
             List<Individual> newPopulation = new List<Individual>();
