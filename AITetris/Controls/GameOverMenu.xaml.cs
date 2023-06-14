@@ -226,6 +226,7 @@ namespace AITetris.Controllers
         // Navigation
         private void GameOverMenuControlQuitGame_Click(object sender, RoutedEventArgs e)
         {
+            Window.GetWindow(this).KeyDown -= gameBoard.GamePage_KeyDown;
             string exeDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
             int metaCurrency = Convert.ToInt32(File.ReadAllText(exeDir + "/Assets/JSON/MetaCurrency.txt"));
             File.WriteAllText(exeDir + "/Assets/JSON/MetaCurrency.txt", ((gameBoard.game.points / 100) + metaCurrency).ToString());

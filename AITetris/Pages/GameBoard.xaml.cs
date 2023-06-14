@@ -1163,7 +1163,7 @@ namespace AITetris.Pages
         }
 
         //A key down event handler
-        private void GamePage_KeyDown(object sender, KeyEventArgs e)
+        public void GamePage_KeyDown(object sender, KeyEventArgs e)
         {
             //If statment checking if the player has lost and the player is a player
             if (!hasLost && game.isPlayer)
