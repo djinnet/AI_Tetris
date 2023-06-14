@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Media;
+using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
@@ -83,6 +84,16 @@ namespace AITetris.Pages
         public GameBoard(Character character, Upgrades upgrades)
         {
             InitializeComponent();
+
+            //// Add a background to the page
+            //// Get path to background
+            //string imagePath = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\Assets\\Sprites\\Background\\SirBackground2.png";
+
+            //// Set an image source
+            //ImageSource imageSource = new BitmapImage(new Uri(imagePath));
+
+            //// Add image source to image
+            //GameBoardBackground.Source = imageSource;
 
             // Set scoreboard timer state to false to ensure it runs
             isScoreboardTimerPaused = false;

@@ -24,6 +24,16 @@
             <RowDefinition Height="25" />
         </Grid.RowDefinitions>
 
+        <!-- Background -->
+        <Image
+            x:Name="PointShopBackground"
+            Grid.Column="0"
+            Grid.ColumnSpan="3"
+            Grid.Row="0"
+            Grid.RowSpan="5"
+            Opacity="0.2"
+            Stretch="Uniform"/>
+
         <!-- Page title -->
         <Label
             x:Name="ShopTitleLbl"

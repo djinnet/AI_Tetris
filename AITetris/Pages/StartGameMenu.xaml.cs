@@ -17,6 +17,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using AITetris.Classes;
+using System.Reflection;
 
 namespace AITetris.Pages
 {
@@ -44,6 +45,16 @@ namespace AITetris.Pages
         public StartGameMenu()
         {
             InitializeComponent();
+
+            // Add a background to the page
+            // Get path to background
+            string imagePath = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\Assets\\Sprites\\Background\\SirBackground2.png";
+
+            // Set an image source
+            ImageSource imageSource = new BitmapImage(new Uri(imagePath));
+
+            // Add image source to image
+            StartGameBackground.Source = imageSource;
 
             // Set the focus of the page to this textbox
             Nametxtbox.Focus();
