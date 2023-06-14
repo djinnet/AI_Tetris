@@ -11,9 +11,6 @@ namespace AITetris.Classes
     {
         public Player(string name) : base(name)
         {
-            metaCurrency = 0;
         }
-
-        public int metaCurrency;
     }
 }
