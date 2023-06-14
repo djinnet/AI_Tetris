@@ -1,4 +1,5 @@
-﻿using AITetris.Pages;
+﻿using AITetris.Classes;
+using AITetris.Pages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -13,6 +14,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using static System.Formats.Asn1.AsnWriter;
 
 namespace AITetris.Controls
 {
@@ -30,6 +32,74 @@ namespace AITetris.Controls
 
             // Set game to an instance of the current game
             this.game = game;
+
+            AddUpgradeToPauseMenuUpgradesSP();
+        }
+
+        // Function that adds the active upgrades from the startmenu to the pause menu
+        private void AddUpgradeToPauseMenuUpgradesSP()
+        {
+            // Clear stackpanel to avoid dublication
+            PauseMenuUpgradesSP.Children.Clear();
+
+            // Add amount of revives
+            PauseMenuUpgradesSP.Children.Add(
+                new Label { 
+                    Content = "Revives left: " + game.game.upgrades.revive,
+                    FontFamily = new FontFamily("Tahoma"),
+                    FontSize = 20,
+                    FontWeight = FontWeights.Bold,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    Margin = new Thickness(10, 10, 10, 10)
+                });
+
+            // Add amount of score multiplier
+            PauseMenuUpgradesSP.Children.Add(
+                new Label
+                {
+                    Content = "Score multiplier: " + game.game.upgrades.scoreMultiplier + "x",
+                    FontFamily = new FontFamily("Tahoma"),
+                    FontSize = 20,
+                    FontWeight = FontWeights.Bold,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    Margin = new Thickness(10, 10, 10, 10)
+                });
+
+            // Add amount of remove swap
+            PauseMenuUpgradesSP.Children.Add(
+                new Label
+                {
+                    Content = "Remove swap left: " + (game.game.upgrades.removeSwap ? "1":"0"),
+                    FontFamily = new FontFamily("Tahoma"),
+                    FontSize = 20,
+                    FontWeight = FontWeights.Bold,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    Margin = new Thickness(10, 10, 10, 10)
+                });
+
+            // Add amount of emergency line clears
+            PauseMenuUpgradesSP.Children.Add(
+                new Label
+                {
+                    Content = "Emergency line clears left: " + game.game.upgrades.emergancyLineClear,
+                    FontFamily = new FontFamily("Tahoma"),
+                    FontSize = 20,
+                    FontWeight = FontWeights.Bold,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    Margin = new Thickness(10, 10, 10, 10)
+                });
+            
+            // Add amount of slow time
+            PauseMenuUpgradesSP.Children.Add(
+                new Label
+                {
+                    Content = "Slow time left: " + game.game.upgrades.slowTime,
+                    FontFamily = new FontFamily("Tahoma"),
+                    FontSize = 20,
+                    FontWeight = FontWeights.Bold,
+                    HorizontalAlignment = HorizontalAlignment.Center,
+                    Margin = new Thickness(10, 10, 10, 10)
+                });
         }
 
         // UI buttons
