@@ -264,18 +264,25 @@ namespace AITetris.Pages
                 else
                 {
                     // AI is on and continuing as an AI
-                    // Todo! - Sebastian - Dokumentation
 
+                    // PopulationSize is set here.
                     int populationSize = 10;
-                    // (((xBoard.length + border) * yBoard.length) + gameFigure.squares + nextFigure.squares + swapFigure.squares) * outputAmount
+
+                    // Calculate output though the following formula;
+                    //      (((xBoard.length + border) * yBoard.length) + gameFigure.squares + nextFigure.squares + swapFigure.squares) * outputAmount
                     int inputSize = (((10 + 2) * 20) + 4 + 4 + 4) * 4;
+
+                    // Sets a new AI
                     AI ai = new AI(Nametxtbox.Text, populationSize, inputSize);
+
+                    // Starts a new game and navigates to the gameBoard.
                     GameBoard gameBoard = new GameBoard(ai, activatedUpgrades);
                     NavigationService.Navigate(gameBoard);
                 }
             }
             else if (Nametxtbox.Text.Length == 0 && AIToggle == 1)
             {
+                // Sets a new game based on the loaded AI. Then navigates to the gameBoard.
                 AI ai = generations[StartGameMenuAIDropdown.Items.IndexOf(StartGameMenuAIDropdown.SelectedItem)];
                 GameBoard gameBoard = new GameBoard(ai, activatedUpgrades);
                 NavigationService.Navigate(gameBoard);
