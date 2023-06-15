@@ -8,6 +8,7 @@ namespace AITetris.Classes
 {
     public class Character
     {
+        // Constructor for making a new Character.
         public Character(string name)
         {
             this.name = name;

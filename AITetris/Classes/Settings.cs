@@ -9,6 +9,7 @@ namespace AITetris.Classes
 {
     public class Settings
     {
+        // Constructor for Settings with default values.
         public Settings()
         {
             gameSpeed = 10.0;

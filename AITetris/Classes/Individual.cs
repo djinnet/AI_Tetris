@@ -9,12 +9,14 @@ namespace AITetris.Classes
 {
     public class Individual
     {
+        // Constructor for making an Individual with full data.
         public Individual(int[] chromosomes, double fitness)
         {
             this.chromosomes = chromosomes;
             this.fitness = fitness;
         }
 
+        // Constructor for making an Individual with a predetermined length.
         public Individual(int length)
         {
             chromosomeLength = length;
@@ -26,6 +28,7 @@ namespace AITetris.Classes
         private int chromosomeLength;
         private Random rng = new Random();
 
+        // Populates the chromosomes array and makes fitness 0.
         public void GenerateIndividual()
         {
             fitness = 0;
@@ -37,6 +40,7 @@ namespace AITetris.Classes
             }
         }
 
+        // Returns -1, 0, or 3.
         public int RandomChromosome()
         {
             return rng.Next(-1, 2);
@@ -56,7 +60,4 @@ namespace AITetris.Classes
   - move("down") / move("instant") (-1 / 1)
   - rotate() (0/1)
   - swap() (0/1)
-
- 
- 
  */

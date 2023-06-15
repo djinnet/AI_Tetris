@@ -8,6 +8,7 @@ namespace AITetris.Classes
 {
     public class Game
     {
+        // Constructor for making an entirely new Game.
         public Game(Board board, Character character, Settings settings, Upgrades upgrades)
         {
             this.board = board;
@@ -19,6 +20,7 @@ namespace AITetris.Classes
             this.upgrades = upgrades;
         }
 
+        // Constructor for making a new Game from database information.
         public Game(Character character, int points, int linesCleared, int time, bool isPlayer, int rank)
         {
             this.character = character;

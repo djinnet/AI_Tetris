@@ -9,6 +9,7 @@ namespace AITetris.Classes
 {
     public class TetrisFigure
     {
+        // Constuctor for a TetrisFigure.
         public TetrisFigure(int[] coordinates, FigureType figureType)
         {
             this.figureType = figureType;
@@ -31,6 +32,7 @@ namespace AITetris.Classes
         private int[] referenceCoords;
         private string color;
 
+        // Calculates the new shape, through the formula: (x,y) => (y,-x)
         public void Rotate()
         {
             for (int i = 0; i < shape.GetLength(0); i++)
@@ -44,6 +46,7 @@ namespace AITetris.Classes
             ShapeToBoard();
         }
 
+        // Changes the referenceCoords according to direction to move.
         public void Move(string direction)
         {
             switch (direction)
@@ -66,6 +69,7 @@ namespace AITetris.Classes
             ShapeToBoard();
         }
 
+        // Changes the referenceCoords to exact coordinates.
         public void MoveTo(int[] coords)
         {
             referenceCoords = coords;
@@ -73,6 +77,7 @@ namespace AITetris.Classes
             ShapeToBoard();
         }
 
+        // Sets shape to the default shape for the figure.
         private void SetStartShape()
         {
             switch (figureType)
@@ -141,6 +146,7 @@ namespace AITetris.Classes
             }
         }
 
+        // Combines shape and referenceCoords to calculate square coordinates.
         private void ShapeToBoard()
         {
             for (int i = 0; i < squares.Length; i++)
@@ -151,6 +157,7 @@ namespace AITetris.Classes
         }
     }
 
+    // Enumeration for the different types of figures.
     public enum FigureType
     {
         I,
