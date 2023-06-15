@@ -201,12 +201,19 @@ namespace AITetris.Pages
         {
             if(isSerching)
             {
-                if (SQLCalls.GetPrevious10Leaderboard(scores[0].rank, LeaderboardControlsFindPlayerTxtbox.Text).Count != 0)
+                if (scores.Count != 0)
                 {
-                    scores = SQLCalls.GetPrevious10Leaderboard(scores[0].rank, LeaderboardControlsFindPlayerTxtbox.Text);
-                    LeaderboardGrid.Children.Clear();
-                    FillLeaderboard();
-                    LeaderboardNextTenBtn.IsEnabled = true;
+                    if (SQLCalls.GetPrevious10Leaderboard(scores[0].rank, LeaderboardControlsFindPlayerTxtbox.Text).Count != 0)
+                    {
+                        scores = SQLCalls.GetPrevious10Leaderboard(scores[0].rank, LeaderboardControlsFindPlayerTxtbox.Text);
+                        LeaderboardGrid.Children.Clear();
+                        FillLeaderboard();
+                        LeaderboardNextTenBtn.IsEnabled = true;
+                    }
+                    else
+                    {
+                        LeaderboardPrieviousTenBtn.IsEnabled = false;
+                    }
                 }
                 else
                 {
@@ -234,12 +241,19 @@ namespace AITetris.Pages
         {
             if (isSerching)
             {
-                if (SQLCalls.GetNext10Leaderboard(scores[scores.Count - 1].rank, LeaderboardControlsFindPlayerTxtbox.Text).Count != 0)
+                if (scores.Count != 0)
                 {
-                    scores = SQLCalls.GetNext10Leaderboard(scores[scores.Count - 1].rank, LeaderboardControlsFindPlayerTxtbox.Text);
-                    LeaderboardGrid.Children.Clear();
-                    FillLeaderboard();
-                    LeaderboardPrieviousTenBtn.IsEnabled = true;
+                    if (SQLCalls.GetNext10Leaderboard(scores[scores.Count - 1].rank, LeaderboardControlsFindPlayerTxtbox.Text).Count != 0)
+                    {
+                        scores = SQLCalls.GetNext10Leaderboard(scores[scores.Count - 1].rank, LeaderboardControlsFindPlayerTxtbox.Text);
+                        LeaderboardGrid.Children.Clear();
+                        FillLeaderboard();
+                        LeaderboardPrieviousTenBtn.IsEnabled = true;
+                    }
+                    else
+                    {
+                        LeaderboardNextTenBtn.IsEnabled = false;
+                    }
                 }
                 else
                 {
