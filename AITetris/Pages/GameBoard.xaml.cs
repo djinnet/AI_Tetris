@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Media;
+using System.Reflection;
 using System.Text;
 using System.Text.Json;
 using System.Threading;
@@ -61,6 +62,7 @@ namespace AITetris.Pages
         private bool hasSwapped = false;
         private bool hasLost = false;
         private bool isPaused = false;
+        private bool revived = false;
 
         //Execution directory
         private string exeDir;
@@ -83,6 +85,16 @@ namespace AITetris.Pages
         public GameBoard(Character character, Upgrades upgrades)
         {
             InitializeComponent();
+
+            //// Add a background to the page
+            //// Get path to background
+            //string imagePath = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\Assets\\Sprites\\Background\\SirBackground2.png";
+
+            //// Set an image source
+            //ImageSource imageSource = new BitmapImage(new Uri(imagePath));
+
+            //// Add image source to image
+            //GameBoardBackground.Source = imageSource;
 
             // Set scoreboard timer state to false to ensure it runs
             isScoreboardTimerPaused = false;
@@ -593,8 +605,6 @@ namespace AITetris.Pages
                             bestFitness = currentFitness;
                         }
 
-                        //Debug.WriteLine("Disengaging individual: " + currentIndividual);
-                        //Debug.WriteLine("Total Fitness: " + (game.character as AI).population[currentIndividual].fitness);
                         currentIndividual++;
 
                         if (currentIndividual == (game.character as AI).population.Count())
@@ -602,12 +612,6 @@ namespace AITetris.Pages
                             NextGeneration();
                             currentIndividual = 0;
                             (game.character as AI).generationNumber++;
-                            //Debug.WriteLine("Engaging generation: " + (game.character as AI).generationNumber);
-                            //Debug.WriteLine("Engaging individual: " + currentIndividual);
-                        }
-                        else
-                        {
-                            //Debug.WriteLine("Engaging individual: " + currentIndividual);
                         }
                     }
 
@@ -655,7 +659,14 @@ namespace AITetris.Pages
             // Stop the current game timers
             
             game.time = Convert.ToInt32(elapsedTime.TotalMilliseconds);
-            SQLCalls.CreateLeaderboardEntry(game);
+            if (!revived)
+            {
+                SQLCalls.CreateLeaderboardEntry(game);
+            }
+            else
+            {
+                SQLCalls.UpdateLeaderboardEntry(game);
+            }
             
             PauseTime(scoreboardTimer);
             autoMoveTimer.Stop();
@@ -713,7 +724,6 @@ namespace AITetris.Pages
             double calcRotate = CalculateOutput();
             double calcSwap = CalculateOutput();
 
-            //Debug.WriteLine("Move: " + calcMove);
             if (calcMove < 0)
             {
                 MoveFigure("left");
@@ -803,11 +813,9 @@ namespace AITetris.Pages
             Random random = new Random();
             Individual mate = population[random.Next(population.Length)];
 
-            //Debug.WriteLine("New population: ");
 
             // 0. Best
             newPopulation.Add(population.First(i => i.fitness == population.Max(i => i.fitness)));
-            Debug.WriteLine("Fitness: " + newPopulation.Last().fitness + " - Best: " + bestFitness);
 
             // 1. Child of best & random + mutation
             // 2. Child of best & random + mutation
@@ -816,7 +824,6 @@ namespace AITetris.Pages
             for (int i = 0; i < 4; i++)
             {
                 newPopulation.Add(Reproduce(newPopulation[0], mate, random));
-                //Debug.WriteLine("Fitness: " + newPopulation.Last());
             }
 
             // 5. New random
@@ -828,7 +835,6 @@ namespace AITetris.Pages
             for (int i = newPopulation.Count(); i < population.Length; i++)
             {
                 newPopulation.Add(new Individual(newPopulation[0].chromosomes.Length));
-                //Debug.WriteLine("Fitness: " + newPopulation.Last());
             }
 
             (game.character as AI).population = newPopulation.ToArray();
@@ -1079,6 +1085,7 @@ namespace AITetris.Pages
         public void Revive()
         {
             hasLost = false;
+            revived = true;
             ClearBoard();
             game.upgrades.revive--;
             backgroundMusic.Play();

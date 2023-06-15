@@ -18,6 +18,7 @@ using System.IO;
 using AITetris.Classes;
 using AITetris.Controllers;
 using AITetris.Controls;
+using System.Reflection;
 
 namespace AITetris.Pages
 {
@@ -35,6 +36,16 @@ namespace AITetris.Pages
         public SettingsMenu()
         {
             InitializeComponent();
+
+            // Add a background to the page
+            // Get path to background
+            string imagePath = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\Assets\\Sprites\\Background\\SirBackground2.png";
+
+            // Set an image source
+            ImageSource imageSource = new BitmapImage(new Uri(imagePath));
+
+            // Add image source to image
+            SettingsMenuBackground.Source = imageSource;
 
             // Set the execution directory path
             exeDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);

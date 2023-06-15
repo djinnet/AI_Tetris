@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -23,6 +24,16 @@ namespace AITetris.Pages
         public MainPage()
         {
             InitializeComponent();
+
+            // Add a background to the page
+            // Get path to background
+            string imagePath = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\Assets\\Sprites\\Background\\SirBackground2.png";
+
+            // Set an image source
+            ImageSource imageSource = new BitmapImage(new Uri(imagePath));
+
+            // Add image source to image
+            MainPageBackground.Source = imageSource;
         }
 
         // UI buttons

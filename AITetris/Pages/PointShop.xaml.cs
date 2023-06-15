@@ -40,7 +40,15 @@ namespace AITetris.Pages
         {
             InitializeComponent();
 
-            Debug.WriteLine(exeDir);
+            // Add a background to the page
+            // Get path to background
+            string imagePath = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\Assets\\Sprites\\Background\\SirBackground2.png";
+
+            // Set an image source
+            ImageSource imageSource = new BitmapImage(new Uri(imagePath));
+
+            // Add image source to image
+            PointShopBackground.Source = imageSource;
 
             metaCurrency = Convert.ToInt32(File.ReadAllText(exeDir + "/Assets/JSON/MetaCurrency.txt"));
 

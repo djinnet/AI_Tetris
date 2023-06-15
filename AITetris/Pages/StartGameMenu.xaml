@@ -25,6 +25,16 @@
             <RowDefinition Height="25" />
         </Grid.RowDefinitions>
 
+        <!-- Background -->
+        <Image
+            x:Name="StartGameBackground"
+            Grid.Column="0"
+            Grid.ColumnSpan="5"
+            Grid.Row="0"
+            Grid.RowSpan="4"
+            Opacity="0.2"
+            Stretch="Uniform"/>
+
         <!-- Page title -->
         <Label
             x:Name="StartGameMenuTitle"
@@ -269,16 +279,6 @@
                 
             </TextBox>
 
-            <!-- Label for Player/AI slider -->
-            <Label 
-                x:Name="StartGameMenuToggleAI"
-                Content="Toggle AI"
-                HorizontalContentAlignment="Center"
-                VerticalContentAlignment="Center"
-                FontFamily="Tahoma"
-                FontSize="12"
-                FontWeight="Bold"/>
-
             <!-- Grid containing the Player/AI slider elements -->
             <!-- Gridsize is 3 cols by 3 rows -->
             <Grid
@@ -295,7 +295,22 @@
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
                     <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
+                
+                <!-- Label for Player/AI slider -->
+                <Label 
+                    x:Name="StartGameMenuToggleAI"
+                    Grid.Column="1"
+                    Grid.Row="0"
+                    Content="Toggle Player or AI"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="12"
+                    FontWeight="Bold"/>
 
                 <!-- Player side label -->
                 <Label
@@ -326,6 +341,53 @@
                     Grid.Column="2"
                     Grid.Row="1" 
                     Content="AI"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="12"
+                    FontWeight="Bold"/>
+
+                <!-- Label for Player/AI slider -->
+                <Label 
+                    x:Name="StartGameMenuToggleAITraining"
+                    Grid.Column="1"
+                    Grid.Row="2"
+                    Content="Toggle AI Training"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="12"
+                    FontWeight="Bold"/>
+
+                <!-- AI training Off -->
+                <Label
+                    x:Name="AITrainingOff"
+                    Grid.Column="0"
+                    Grid.Row="3"
+                    Content="Off"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="12"
+                    FontWeight="Bold"/>
+
+                <!-- Player / AI slider -->
+                <Slider 
+                    x:Name="AITrainingOnOffSlider"
+                    Grid.Column="1"
+                    Grid.Row="3"
+                    Maximum="1"
+                    TickPlacement="BottomRight"
+                    TickFrequency="1"
+                    IsSnapToTickEnabled="True"
+                    ValueChanged="AITrainingOnOffSlider_ValueChanged" />
+
+                <!-- AI side label -->
+                <Label
+                    x:Name="AITrainingOn"
+                    Grid.Column="2"
+                    Grid.Row="3" 
+                    Content="On"
                     HorizontalContentAlignment="Center"
                     VerticalContentAlignment="Center"
                     FontFamily="Tahoma"

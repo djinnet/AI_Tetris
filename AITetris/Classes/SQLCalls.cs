@@ -53,6 +53,23 @@ namespace AITetris.Classes
             }
         }
 
+        public static void UpdateLeaderboardEntry(Game gameToUpdate)
+        {
+            using (SqlConnection conn = new SqlConnection(connectionString))
+            {
+                string query = "UPDATE Leaderboard SET Name = @Name, Points = @Points, LinesCleared = @LinesCleared, GameTimeInMs = @GameTimeInMs, IsPlayer = @IsPlayer WHERE Rank = @Rank";
+                SqlCommand cmd = new SqlCommand(query, conn);
+                cmd.Parameters.AddWithValue("@Name", gameToUpdate.character.name);
+                cmd.Parameters.AddWithValue("@Points", gameToUpdate.points);
+                cmd.Parameters.AddWithValue("@LinesCleared", gameToUpdate.linesCleared);
+                cmd.Parameters.AddWithValue("@GameTimeInMs", gameToUpdate.time);
+                cmd.Parameters.AddWithValue("@IsPlayer", gameToUpdate.isPlayer);
+                cmd.Parameters.AddWithValue("@Rank", gameToUpdate.rank);
+                conn.Open();
+                cmd.ExecuteNonQuery();
+            }
+        }
+
         public static List<Game> SearchLeaderboardOnName(string name)
         {
             List<Game> foundGames = new List<Game>();
