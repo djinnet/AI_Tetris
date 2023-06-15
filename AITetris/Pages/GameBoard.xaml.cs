@@ -989,7 +989,7 @@ namespace AITetris.Pages
         
             // Every ten lines cleared
             
-            if (game.linesCleared % 10 == 0)
+            if (game.linesCleared % 10 == 0 & game.linesCleared != 0)
             
             {
                 // Recalculating the automovetimerinterval setting the value lower to increase the tick speed
