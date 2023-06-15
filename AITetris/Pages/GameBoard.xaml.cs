@@ -78,6 +78,7 @@ namespace AITetris.Pages
         // Machine learning variables
         private int currentIndividual;
         private int currentChromosome;
+        private double bestFitness;
 
         private Random rand;
 
@@ -113,6 +114,7 @@ namespace AITetris.Pages
             {
                 currentIndividual = 0;
                 currentChromosome = 0;
+                bestFitness = 0.0;
                 rand = new Random((game.character as AI).seed);
             }
             else
@@ -139,8 +141,8 @@ namespace AITetris.Pages
                 GameBoardAINameLbl.Content = character.name;
                 GameBoardGenerationLbl.Content = "Generation: " + (game.character as AI).generationNumber.ToString();
                 GameBoardIndividualLbl.Content = "Individual: " + currentIndividual.ToString();
-                GameBoardCurrentFitnessLbl.Content = "Current Fitness: " + "";// Todo! - Sebastian - Dokumentation
-                GameBoardBestFitnessLbl.Content = "Best Fitness: " + "";// Todo! - Sebastian - Dokumentation
+                GameBoardCurrentFitnessLbl.Content = "Current Fitness: " + (game.character as AI).population[currentIndividual].fitness;
+                GameBoardBestFitnessLbl.Content = "Best Fitness: " + bestFitness.ToString();
                 GameBoardLastFitnessLbl.Content = "Last Fitness: " + (game.character as AI).population[currentIndividual].fitness.ToString();
             }
 
@@ -595,13 +597,13 @@ namespace AITetris.Pages
                 {
                     if (!game.isPlayer)
                     {
-                        (game.character as AI).population[currentIndividual].fitness = EvaluateFitness();
+                        double currentFitness = EvaluateFitness();
+                        (game.character as AI).population[currentIndividual].fitness = currentFitness;
 
-                        // Set the AI panel labels
-                        GameBoardAINameLbl.Content = game.character.name;
-                        GameBoardGenerationLbl.Content = "Generation: " + (game.character as AI).generationNumber.ToString();
-                        GameBoardIndividualLbl.Content = "Individual: " + currentIndividual.ToString();
-                        GameBoardLastFitnessLbl.Content = "Last Fitness: " + (game.character as AI).population[currentIndividual].fitness.ToString();
+                        if (currentFitness > bestFitness)
+                        {
+                            bestFitness = currentFitness;
+                        }
 
                         currentIndividual++;
 
@@ -611,10 +613,6 @@ namespace AITetris.Pages
                             currentIndividual = 0;
                             (game.character as AI).generationNumber++;
                         }
-                        else
-                        {
-
-                        }
                     }
 
                     ClearBoard();
@@ -622,6 +620,15 @@ namespace AITetris.Pages
                     game.points = 0;
                     if (!game.isPlayer)
                     {
+                        double currentFitness = EvaluateFitness();
+
+                        // Set the AI panel labels
+                        GameBoardAINameLbl.Content = game.character.name;
+                        GameBoardGenerationLbl.Content = "Generation: " + (game.character as AI).generationNumber.ToString();
+                        GameBoardIndividualLbl.Content = "Individual: " + currentIndividual.ToString();
+                        GameBoardLastFitnessLbl.Content = "Last Fitness: " + currentFitness.ToString();
+                        GameBoardBestFitnessLbl.Content = "Best Fitness: " + bestFitness.ToString();
+
                         rand = new Random((game.character as AI).seed);
                     }
                     scoreboardTimer = new DispatcherTimer();
@@ -808,7 +815,7 @@ namespace AITetris.Pages
 
 
             // 0. Best
-            newPopulation.Add(population.MaxBy(i => i.fitness));
+            newPopulation.Add(population.First(i => i.fitness == population.Max(i => i.fitness)));
 
             // 1. Child of best & random + mutation
             // 2. Child of best & random + mutation
@@ -830,7 +837,7 @@ namespace AITetris.Pages
                 newPopulation.Add(new Individual(newPopulation[0].chromosomes.Length));
             }
 
-            population = newPopulation.ToArray();
+            (game.character as AI).population = newPopulation.ToArray();
         }
 
         private Individual Reproduce(Individual best, Individual mate, Random random)
@@ -875,6 +882,13 @@ namespace AITetris.Pages
         {
             // Move the figure down
             MoveFigure("down");
+            if (!game.isPlayer && !hasLost)
+            {
+                AIMove();
+                (game.character as AI).population[currentIndividual].fitness = EvaluateFitness();
+                GameBoardCurrentFitnessLbl.Content = "Current Fitness: " + (game.character as AI).population[currentIndividual].fitness;
+
+            }
         }
 
         // A function that starts the score timer
@@ -918,12 +932,6 @@ namespace AITetris.Pages
                 {
                     // Backup if timer fails the formatting
                     GameBoardScoreTimeLbl.Content = "00:00:00:000";
-                }
-
-                // Todo! - Sebastian - Dokumentation
-                if (((int)elapsedTime.TotalMilliseconds) % 500 <= 10 && !game.isPlayer && !hasLost)
-                {
-                    AIMove();
                 }
             }
         }
