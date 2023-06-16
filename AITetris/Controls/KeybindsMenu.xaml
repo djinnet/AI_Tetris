@@ -23,251 +23,279 @@
 
         <Grid.RowDefinitions>
             <RowDefinition Height="25" />
-            <RowDefinition Height="100" />
             <RowDefinition Height="*" />
             <RowDefinition Height="25" />
         </Grid.RowDefinitions>
 
-        <!-- User control title -->
-        <Label
-            x:Name="KeybindsMenuTitleLbl"
-            Grid.Column="1"
-            Grid.ColumnSpan="3"
+        <StackPanel
+            Orientation="Vertical"
+            Grid.Column="2"
             Grid.Row="1"
+            HorizontalAlignment="Center"
+            VerticalAlignment="Center">
+
+            <!-- User control title -->
+            <Label
+            x:Name="KeybindsMenuTitleLbl"
             Content="Keybinds"
             HorizontalContentAlignment="Center"
             VerticalContentAlignment="Center"
             FontFamily="Tahoma"
             FontSize="25"
             FontWeight="Bold"
-            Margin="0, 10"/>
+            Margin="0,0,0,15"/>
 
-        <!-- Grid holding all the keybind elements -->
-        <!-- Gridsize is 3 cols by 8 rows -->
-        <Grid
-            x:Name="KeybindsMenuKeybindGrid"
-            Grid.Column="2"
-            Grid.Row="2">
+            <StackPanel
+                Orientation="Horizontal">
 
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="*" />
-            </Grid.ColumnDefinitions>
+                <!-- Pause title -->
+                <Label 
+                    x:Name="KeybindsMenuKeybindPauseLbl"
+                    Content="Pause"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="15"
+                    FontWeight="Bold"
+                    Width="125"
+                    Height="50"/>
 
-            <Grid.RowDefinitions>
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-                <RowDefinition Height="*" />
-            </Grid.RowDefinitions>
+                <!-- Pause set key -->
+                <Button
+                    x:Name="KeybindsMenuKeybindPauseBtn"
+                    Content="Set Keybind"
+                    Click="KeybindsMenuKeybindPauseBtn_Click"
+                    Width="100"
+                    Height="50">
 
-            <!-- Pause title -->
-            <Label 
-                x:Name="KeybindsMenuKeybindPauseLbl"
-                Grid.Column="0"
-                Grid.Row="0"
-                Content="Pause"
-                HorizontalContentAlignment="Center"
-                VerticalContentAlignment="Center"
-                FontFamily="Tahoma"
-                FontSize="15"
-                FontWeight="Bold"/>
+                </Button>
 
-            <!-- Pause set key -->
-            <Button
-                x:Name="KeybindsMenuKeybindPauseBtn"
-                Grid.Column="1"
-                Grid.Row="0"
-                Content="Set Keybind"
-                Click="KeybindsMenuKeybindPauseBtn_Click">
-                
-            </Button>
+                <!-- Pause Txt -->
+                <TextBox 
+                    x:Name="KeybindsMenuKeybindPauseTxtbox"
+                    IsReadOnly="True"
+                    VerticalContentAlignment="Center"
+                    HorizontalContentAlignment="Center"
+                    Width="100"
+                    Height="50"/>
 
-            <!-- Pause Txt -->
-            <TextBox 
-                x:Name="KeybindsMenuKeybindPauseTxtbox"
-                Grid.Column="2"
-                Grid.Row="0"
-                IsReadOnly="True"/>
+            </StackPanel>
 
-            <!-- Switch title -->
-            <Label 
-                x:Name="KeybindsMenuKeybindSwitchLbl"
-                Grid.Column="0"
-                Grid.Row="1"
-                Content="Swich"
-                HorizontalContentAlignment="Center"
-                VerticalContentAlignment="Center"
-                FontFamily="Tahoma"
-                FontSize="15"
-                FontWeight="Bold"/>
+            <StackPanel
+                Orientation="Horizontal">
 
-            <!-- Switch set key -->
-            <Button
-                x:Name="KeybindsMenuKeybindSwitchBtn"
-                Grid.Column="1"
-                Grid.Row="1"
-                Content="Set Keybind"
-                Click="KeybindsMenuKeybindSwitchBtn_Click">
+                <!-- Switch title -->
+                <Label 
+                    x:Name="KeybindsMenuKeybindSwitchLbl"
+                    Content="Swich"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="15"
+                    FontWeight="Bold"
+                    Width="125"
+                    Height="50"/>
 
-            </Button>
+                <!-- Switch set key -->
+                <Button
+                    x:Name="KeybindsMenuKeybindSwitchBtn"
+                    Content="Set Keybind"
+                    Click="KeybindsMenuKeybindSwitchBtn_Click"
+                    Width="100"
+                    Height="50">
 
-            <!-- Switch Txt -->
-            <TextBox 
-                x:Name="KeybindsMenuKeybindSwitchTxtbox"
-                Grid.Column="2"
-                Grid.Row="1"
-                IsReadOnly="True"/>
+                </Button>
 
-            <!-- Instant title -->
-            <Label 
-                x:Name="KeybindsMenuKeybindInstantDropLbl"
-                Grid.Column="0"
-                Grid.Row="2"
-                Content="Instant Drop"
-                HorizontalContentAlignment="Center"
-                VerticalContentAlignment="Center"
-                FontFamily="Tahoma"
-                FontSize="15"
-                FontWeight="Bold"/>
+                <!-- Switch Txt -->
+                <TextBox 
+                    x:Name="KeybindsMenuKeybindSwitchTxtbox"
+                    IsReadOnly="True"
+                    VerticalContentAlignment="Center"
+                    HorizontalContentAlignment="Center"
+                    Width="100"
+                    Height="50"/>
 
-            <!-- Instant set key -->
-            <Button
-                x:Name="KeybindsMenuKeybindInstantDropBtn"
-                Grid.Column="1"
-                Grid.Row="2"
-                Content="Set Keybind"
-                Click="KeybindsMenuKeybindInstantDropBtn_Click">
+            </StackPanel>
 
-            </Button>
+            <StackPanel
+                Orientation="Horizontal">
 
-            <!-- Instant Txt -->
-            <TextBox 
-                x:Name="KeybindsMenuKeybindInstantDropTxtbox"
-                Grid.Column="2"
-                Grid.Row="2"
-                IsReadOnly="True"/>
+                <!-- Instant title -->
+                <Label 
+                    x:Name="KeybindsMenuKeybindInstantDropLbl"
+                    Content="Instant Drop"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="15"
+                    FontWeight="Bold"
+                    Width="125"
+                    Height="50"/>
 
-            <!-- Rotate title -->
-            <Label 
-                x:Name="KeybindsMenuKeybindRotateLbl"
-                Grid.Column="0"
-                Grid.Row="3"
-                Content="Rotate"
-                HorizontalContentAlignment="Center"
-                VerticalContentAlignment="Center"
-                FontFamily="Tahoma"
-                FontSize="15"
-                FontWeight="Bold"/>
+                <!-- Instant set key -->
+                <Button
+                    x:Name="KeybindsMenuKeybindInstantDropBtn"
+                    Content="Set Keybind"
+                    Click="KeybindsMenuKeybindInstantDropBtn_Click"
+                    Width="100"
+                    Height="50">
 
-            <!-- Rotate set key -->
-            <Button
-                x:Name="KeybindsMenuKeybindRotateBtn"
-                Grid.Column="1"
-                Grid.Row="3"
-                Content="Set Keybind"
-                Click="KeybindsMenuKeybindRotateBtn_Click">
+                </Button>
 
-            </Button>
+                <!-- Instant Txt -->
+                <TextBox 
+                    x:Name="KeybindsMenuKeybindInstantDropTxtbox"
+                    IsReadOnly="True"
+                    VerticalContentAlignment="Center"
+                    HorizontalContentAlignment="Center"
+                    Width="100"
+                    Height="50"/>
 
-            <!-- Rotate Txt -->
-            <TextBox 
-                x:Name="KeybindsMenuKeybindRotateTxtbox"
-                Grid.Column="2"
-                Grid.Row="3"
-                IsReadOnly="True"/>
+            </StackPanel>
 
-            <!-- Left title -->
-            <Label 
-                x:Name="KeybindsMenuKeybindLeftLbl"
-                Grid.Column="0"
-                Grid.Row="4"
-                Content="Left"
-                HorizontalContentAlignment="Center"
-                VerticalContentAlignment="Center"
-                FontFamily="Tahoma"
-                FontSize="15"
-                FontWeight="Bold"/>
+            <StackPanel
+                Orientation="Horizontal">
 
-            <!-- Left set key -->
-            <Button
-                x:Name="KeybindsMenuKeybindLeftBtn"
-                Grid.Column="1"
-                Grid.Row="4"
-                Content="Set Keybind"
-                Click="KeybindsMenuKeybindLeftBtn_Click">
+                <!-- Rotate title -->
+                <Label 
+                    x:Name="KeybindsMenuKeybindRotateLbl"
+                    Content="Rotate"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="15"
+                    FontWeight="Bold"
+                    Width="125"
+                    Height="50"/>
 
-            </Button>
+                <!-- Rotate set key -->
+                <Button
+                    x:Name="KeybindsMenuKeybindRotateBtn"
+                    Content="Set Keybind"
+                    Click="KeybindsMenuKeybindRotateBtn_Click"
+                    Width="100"
+                    Height="50">
 
-            <!-- Left Txt -->
-            <TextBox 
-                x:Name="KeybindsMenuKeybindLeftTxtbox"
-                Grid.Column="2"
-                Grid.Row="4"
-                IsReadOnly="True"/>
+                </Button>
 
-            <!-- Right title -->
-            <Label 
-                x:Name="KeybindsMenuKeybindRightLbl"
-                Grid.Column="0"
-                Grid.Row="5"
-                Content="Right"
-                HorizontalContentAlignment="Center"
-                VerticalContentAlignment="Center"
-                FontFamily="Tahoma"
-                FontSize="15"
-                FontWeight="Bold"/>
+                <!-- Rotate Txt -->
+                <TextBox 
+                    x:Name="KeybindsMenuKeybindRotateTxtbox"
+                    IsReadOnly="True"
+                    VerticalContentAlignment="Center"
+                    HorizontalContentAlignment="Center"
+                    Width="100"
+                    Height="50"/>
 
-            <!-- Right set key -->
-            <Button
-                x:Name="KeybindsMenuKeybindRightBtn"
-                Grid.Column="1"
-                Grid.Row="5"
-                Content="Set Keybind"
-                Click="KeybindsMenuKeybindRightBtn_Click">
+            </StackPanel>
 
-            </Button>
+            <StackPanel
+                Orientation="Horizontal">
 
-            <!-- Right Txt -->
-            <TextBox 
-                x:Name="KeybindsMenuKeybindRightTxtbox"
-                Grid.Column="2"
-                Grid.Row="5"
-                IsReadOnly="True"/>
+                <!-- Left title -->
+                <Label 
+                    x:Name="KeybindsMenuKeybindLeftLbl"
+                    Content="Left"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="15"
+                    FontWeight="Bold"
+                    Width="125"
+                    Height="50"/>
 
-            <!-- Down title -->
-            <Label 
-                x:Name="KeybindsMenuKeybindDownLbl"
-                Grid.Column="0"
-                Grid.Row="6"
-                Content="Down"
-                HorizontalContentAlignment="Center"
-                VerticalContentAlignment="Center"
-                FontFamily="Tahoma"
-                FontSize="15"
-                FontWeight="Bold"/>
+                <!-- Left set key -->
+                <Button
+                    x:Name="KeybindsMenuKeybindLeftBtn"
+                    Content="Set Keybind"
+                    Click="KeybindsMenuKeybindLeftBtn_Click"
+                    Width="100"
+                    Height="50">
 
-            <!-- Down set key -->
-            <Button
-                x:Name="KeybindsMenuKeybindDownBtn"
-                Grid.Column="1"
-                Grid.Row="6"
-                Content="Set Keybind"
-                Click="KeybindsMenuKeybindDownBtn_Click">
+                </Button>
 
-            </Button>
+                <!-- Left Txt -->
+                <TextBox 
+                    x:Name="KeybindsMenuKeybindLeftTxtbox"
+                    IsReadOnly="True"
+                    VerticalContentAlignment="Center"
+                    HorizontalContentAlignment="Center"
+                    Width="100"
+                    Height="50"/>
 
-            <!-- Down Txt -->
-            <TextBox 
-                x:Name="KeybindsMenuKeybindDownTxtbox"
-                Grid.Column="2"
-                Grid.Row="6"
-                IsReadOnly="True"/>
+            </StackPanel>
+
+            <StackPanel
+                Orientation="Horizontal">
+
+                <!-- Right title -->
+                <Label 
+                    x:Name="KeybindsMenuKeybindRightLbl"
+                    Content="Right"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="15"
+                    FontWeight="Bold"
+                    Width="125"
+                    Height="50"/>
+
+                <!-- Right set key -->
+                <Button
+                    x:Name="KeybindsMenuKeybindRightBtn"
+                    Content="Set Keybind"
+                    Click="KeybindsMenuKeybindRightBtn_Click"
+                    Width="100"
+                    Height="50">
+
+                </Button>
+
+                <!-- Right Txt -->
+                <TextBox 
+                    x:Name="KeybindsMenuKeybindRightTxtbox"
+                    IsReadOnly="True"
+                    VerticalContentAlignment="Center"
+                    HorizontalContentAlignment="Center"
+                    Width="100"
+                    Height="50"/>
+
+            </StackPanel>
+
+            <StackPanel
+                Orientation="Horizontal">
+
+                <!-- Down title -->
+                <Label 
+                    x:Name="KeybindsMenuKeybindDownLbl"
+                    Content="Down"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="15"
+                    FontWeight="Bold"
+                    Width="125"
+                    Height="50"/>
+
+                <!-- Down set key -->
+                <Button
+                    x:Name="KeybindsMenuKeybindDownBtn"
+                    Content="Set Keybind"
+                    Click="KeybindsMenuKeybindDownBtn_Click"
+                    Width="100"
+                    Height="50">
+
+                </Button>
+
+                <!-- Down Txt -->
+                <TextBox 
+                    x:Name="KeybindsMenuKeybindDownTxtbox"
+                    IsReadOnly="True"
+                    VerticalContentAlignment="Center"
+                    HorizontalContentAlignment="Center"
+                    Width="100"
+                    Height="50"/>
+
+            </StackPanel>
 
             <!-- Navigation button -->
             <Button
@@ -282,9 +310,10 @@
                 FontSize="12"
                 FontWeight="Bold" 
                 Margin="0, 5"
-                Click="KeybindsMenuBackToSettings_Click">
-
+                Click="KeybindsMenuBackToSettings_Click"
+                Width="325"
+                Height="50">
             </Button>
-        </Grid>
+        </StackPanel>
     </Grid>
 </UserControl>
