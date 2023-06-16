@@ -16,7 +16,6 @@
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="25" />
             <ColumnDefinition Width="*" />
-            <ColumnDefinition Width="*" />
             <ColumnDefinition Width="25" />
         </Grid.ColumnDefinitions>
 
@@ -27,304 +26,326 @@
             <RowDefinition Height="25" />
         </Grid.RowDefinitions>
 
-        <!-- User control title -->
-        <Label
-            x:Name="SettingsTitleLbl"
-            Grid.Column="1"
-            Grid.Row="1"
-            Grid.ColumnSpan="2"
-            Content="Settings"
-            HorizontalContentAlignment="Center"
-            VerticalContentAlignment="Center"
-            FontFamily="Tahoma"
-            FontSize="25"
-            FontWeight="Bold" />
-
-        <!-- Border used as a container for holding the grid with sliders -->
+        <!-- Border used as a container for slider controls -->
         <Border
             x:Name="SettingsSliderControlsBorder"
             Grid.Column="1"
-            Grid.Row="2"
+            Grid.Row="1"
+            Grid.RowSpan="2"
             MinWidth="375"
             HorizontalAlignment="Center"
             VerticalAlignment="Center">
 
-            <!-- Grid holding all the sliders -->
-            <!-- Gridsize is 5 cols by 8 rows -->
-            <Grid
-                x:Name="SettingsSliderGrid">
-
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="125" />
-                    <ColumnDefinition Width="200" />
-                    <ColumnDefinition Width="50" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-
-                <!-- Volume title -->
+            <StackPanel>
+                <!-- Page title -->
                 <Label
-                    x:Name="SettingsSliderTitleVolume"
+                    x:Name="SettingsTitleLbl"
                     Grid.Column="1"
                     Grid.Row="1"
-                    Content="Volume"
-                    FontFamily="Tahoma"
-                    FontSize="15"
-                    FontWeight="Bold"
-                    ToolTip="Game volume range (0% - 100%)"/>
-
-                <!-- Volume slider -->
-                <Slider 
-                    x:Name="SettingsSliderVolume"
-                    Grid.Column="2"
-                    Grid.Row="1"
-                    Maximum="100"
-                    TickPlacement="BottomRight"
-                    TickFrequency="5"
-                    IsSnapToTickEnabled="True"
-                    ValueChanged="SettingsSliderVolume_ValueChanged"/>
-
-                <!-- Volume textbox -->
-                <TextBox
-                    x:Name="SettingsSliderValueVolume"
-                    Grid.Column="3"
-                    Grid.Row="1"
-                    Text="{Binding ElementName=SettingsSliderVolume, Path=Value, UpdateSourceTrigger=PropertyChanged}"
-                    FontFamily="Tahoma"
-                    FontSize="15"
-                    FontWeight="Bold">
-
-                </TextBox>
-
-                <!-- Speed title -->
-                <Label
-                    x:Name="SettingsSliderTitleSpeed"
-                    Grid.Column="1"
-                    Grid.Row="2"
-                    Content="Speed"
-                    FontFamily="Tahoma"
-                    FontSize="15"
-                    FontWeight="Bold"
-                    ToolTip="Game starting speed range (0 - 10000), the lower the value the faster it goes."/>
-
-                <!-- Speed slider -->
-                <Slider 
-                    x:Name="SettingsSliderSpeed"
-                    Grid.Column="2"
-                    Grid.Row="2"
-                    Maximum="10000"
-                    TickPlacement="BottomRight"
-                    TickFrequency="1"
-                    IsSnapToTickEnabled="True"
-                    ValueChanged="SettingsSliderSpeed_ValueChanged"/>
-
-                <!-- Speed textbox -->
-                <TextBox
-                    x:Name="SettingsSliderValueSpeed"
-                    Grid.Column="3"
-                    Grid.Row="2"
-                    Text="{Binding ElementName=SettingsSliderSpeed, Path=Value, UpdateSourceTrigger=PropertyChanged}"
-                    FontFamily="Tahoma"
-                    FontSize="15"
-                    FontWeight="Bold">
-
-                </TextBox>
-
-                <!-- DeltaSpeed title -->
-                <Label
-                    x:Name="SettingsSliderTitleDeltaSpeed"
-                    Grid.Column="1"
-                    Grid.Row="3"
-                    Content="Delta Speed"
-                    FontFamily="Tahoma"
-                    FontSize="15"
-                    FontWeight="Bold"
-                    ToolTip="Game delta speed range (0% - 100%), the higher the value the faster it goes."/>
-
-                <!-- DeltaSpeed slider -->
-                <Slider 
-                    x:Name="SettingsSliderDeltaSpeed"
-                    Grid.Column="2"
-                    Grid.Row="3"
-                    Maximum="100"
-                    TickPlacement="BottomRight"
-                    TickFrequency="5"
-                    IsSnapToTickEnabled="True"
-                    ValueChanged="SettingsSliderDeltaSpeed_ValueChanged"/>
-
-                <!-- DeltaSpeed textbox -->
-                <TextBox
-                    x:Name="SettingsSliderValueDeltaSpeed"
-                    Grid.Column="3"
-                    Grid.Row="3"
-                    Text="{Binding ElementName=SettingsSliderDeltaSpeed, Path=Value, UpdateSourceTrigger=PropertyChanged}"
-                    FontFamily="Tahoma"
-                    FontSize="15"
-                    FontWeight="Bold">
-
-                </TextBox>
-
-                <!-- AI Training title -->
-                <Label
-                    x:Name="SettingsSliderTitleAITraining"
-                    Grid.Column="1"
-                    Grid.Row="4"
-                    Content="AI Training"
-                    FontFamily="Tahoma"
-                    FontSize="15"
-                    FontWeight="Bold"
-                    ToolTip="Toggle Ai training on and off"/>
-
-                <!-- AI Training slider -->
-                <Slider 
-                    x:Name="SettingsSliderAITraining"
-                    Grid.Column="2"
-                    Grid.Row="4"
-                    Maximum="1"
-                    TickPlacement="BottomRight"
-                    TickFrequency="1"
-                    IsSnapToTickEnabled="True"
-                    ValueChanged="SettingsSliderAITraining_ValueChanged"/>
-
-                <!-- AI Training state -->
-                <Label
-                    x:Name="SettingsSliderValueAITraining"
-                    Grid.Column="3"
-                    Grid.Row="4"
-                    Content="Off"
-                    FontFamily="Tahoma"
-                    FontSize="15"
-                    FontWeight="Bold"/>
-
-                <!-- Save Block title -->
-                <Label
-                    x:Name="SettingsSliderTitleSaveBlock"
-                    Grid.Column="1"
-                    Grid.Row="5"
-                    Content="Save Block"
-                    FontFamily="Tahoma"
-                    FontSize="15"
-                    FontWeight="Bold"
-                    ToolTip="Toggle Save block on and off"/>
-
-                <!-- Save Block slider -->
-                <Slider 
-                    x:Name="SettingsSliderSaveBlock"
-                    Grid.Column="2"
-                    Grid.Row="5"
-                    Maximum="1"
-                    TickPlacement="BottomRight"
-                    TickFrequency="1"
-                    IsSnapToTickEnabled="True"
-                    ValueChanged="SettingsSliderSaveBlock_ValueChanged"/>
-
-                <!-- Save Block state -->
-                <Label
-                    x:Name="SettingsSliderValueSaveBlock"
-                    Grid.Column="3"
-                    Grid.Row="5"
-                    Content="Off"
-                    FontFamily="Tahoma"
-                    FontSize="15"
-                    FontWeight="Bold"/>
-
-                <!-- Next Block title -->
-                <Label
-                    x:Name="SettingsSliderTitleNextBlock"
-                    Grid.Column="1"
-                    Grid.Row="6"
-                    Content="Next Block"
-                    FontFamily="Tahoma"
-                    FontSize="15"
-                    FontWeight="Bold"
-                    ToolTip="Toggle Next block on and off"/>
-
-                <!-- Next Block slider -->
-                <Slider 
-                    x:Name="SettingsSliderNextBlock"
-                    Grid.Column="2"
-                    Grid.Row="6"
-                    Maximum="1"
-                    TickPlacement="BottomRight"
-                    TickFrequency="1"
-                    IsSnapToTickEnabled="True"
-                    ValueChanged="SettingsSliderNextBlock_ValueChanged"/>
-
-                <!-- Next Block state -->
-                <Label
-                    x:Name="SettingsSliderValueNextBlock"
-                    Grid.Column="3"
-                    Grid.Row="6"
-                    Content="Off"
-                    FontFamily="Tahoma"
-                    FontSize="15"
-                    FontWeight="Bold"/>
-
-            </Grid>
-        </Border>
-
-        <!-- Border used as a container for holding the button controls stackpanel -->
-        <Border
-            x:Name="SettingsControlsBorder"
-            Grid.Column="2"
-            Grid.Row="2"
-            MinWidth="375"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Center">
-
-            <!-- Stackpanel that holds all the button controls -->
-            <StackPanel
-                x:Name="SettingsControlsSP">
-
-                <!-- Button that opens the keybind menu -->
-                <Button
-                    x:Name="SettingsControlsKeybinds"
-                    Content="Keybinds"
+                    Grid.ColumnSpan="2"
+                    Content="Settings"
                     HorizontalContentAlignment="Center"
                     VerticalContentAlignment="Center"
                     FontFamily="Tahoma"
-                    FontSize="15"
-                    FontWeight="Bold" 
-                    Margin="0, 10"
-                    Click="SettingsControlsKeybinds_Click">
-                </Button>
+                    FontSize="25"
+                    FontWeight="Bold"
+                    Margin="0,0,0,15"/>
 
-                <!-- Button that apply the set settings -->
-                <Button
-                    x:Name="SettingsControlsApplySettings"
-                    Content="Apply Settings"
-                    HorizontalContentAlignment="Center"
-                    VerticalContentAlignment="Center"
-                    FontFamily="Tahoma"
-                    FontSize="15"
-                    FontWeight="Bold" 
-                    Margin="0, 10"
-                    Click="SettingsControlsApplySettings_Click">
-                </Button>
+                <!-- Grid used to hold the Slider UI in place -->
+                <!-- Gridsize is 5 cols by 8 rows -->
+                <Grid
+                    x:Name="SettingsSliderGrid"
+                    Margin="0,0,0,15">
 
-                <!-- Button that returns to pause menu -->
-                <Button
-                    x:Name="SettingsControlsPauseMenu"
-                    Content="Pause Menu"
-                    HorizontalContentAlignment="Center"
-                    VerticalContentAlignment="Center"
-                    FontFamily="Tahoma"
-                    FontSize="15"
-                    FontWeight="Bold" 
-                    Margin="0, 10"
-                    Click="SettingsControlsPauseMenu_Click">
-                </Button>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="125" />
+                        <ColumnDefinition Width="200" />
+                        <ColumnDefinition Width="50" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <!-- Volume -->
+                    <!-- Title of slider setting -->
+                    <Label
+                        x:Name="SettingsSliderTitleVolume"
+                        Grid.Column="1"
+                        Grid.Row="1"
+                        Content="Volume"
+                        FontFamily="Tahoma"
+                        FontSize="15"
+                        FontWeight="Bold"
+                        ToolTip="Game volume range (0% - 100%)"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"/>
+
+                    <!-- Slider control of setting -->
+                    <Slider 
+                        x:Name="SettingsSliderVolume"
+                        Grid.Column="2"
+                        Grid.Row="1"
+                        Maximum="100"
+                        TickPlacement="BottomRight"
+                        TickFrequency="5"
+                        IsSnapToTickEnabled="True"
+                        ValueChanged="SettingsSliderVolume_ValueChanged"/>
+
+                    <!-- Textbox that holds the current amount of the setting -->
+                    <TextBox
+                        x:Name="SettingsSliderValueVolume"
+                        Grid.Column="3"
+                        Grid.Row="1"
+                        Text="{Binding ElementName=SettingsSliderVolume, Path=Value, UpdateSourceTrigger=PropertyChanged}"
+                        FontFamily="Tahoma"
+                        FontSize="15"
+                        FontWeight="Bold"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center">
+                    </TextBox>
+
+                    <!-- Speed -->
+                    <!-- Title of slider setting -->
+                    <Label
+                        x:Name="SettingsSliderTitleSpeed"
+                        Grid.Column="1"
+                        Grid.Row="2"
+                        Content="Speed"
+                        FontFamily="Tahoma"
+                        FontSize="15"
+                        FontWeight="Bold"
+                        ToolTip="Game starting speed range (0 - 10000), the lower the value the faster it goes."
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"/>
+
+                    <!-- Slider control of setting -->
+                    <Slider 
+                        x:Name="SettingsSliderSpeed"
+                        Grid.Column="2"
+                        Grid.Row="2"
+                        Maximum="10000"
+                        TickPlacement="BottomRight"
+                        TickFrequency="1"
+                        IsSnapToTickEnabled="True"
+                        ValueChanged="SettingsSliderSpeed_ValueChanged"/>
+
+                    <!-- Textbox that holds the current amount of the setting -->
+                    <TextBox
+                        x:Name="SettingsSliderValueSpeed"
+                        Grid.Column="3"
+                        Grid.Row="2"
+                        Text="{Binding ElementName=SettingsSliderSpeed, Path=Value, UpdateSourceTrigger=PropertyChanged}"
+                        FontFamily="Tahoma"
+                        FontSize="15"
+                        FontWeight="Bold"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center">
+                    </TextBox>
+
+                    <!-- DeltaSpeed -->
+                    <!-- Title of slider setting -->
+                    <Label
+                        x:Name="SettingsSliderTitleDeltaSpeed"
+                        Grid.Column="1"
+                        Grid.Row="3"
+                        Content="Delta Speed"
+                        FontFamily="Tahoma"
+                        FontSize="15"
+                        FontWeight="Bold"
+                        ToolTip="Game delta speed range (0% - 100%), the higher the value the faster it goes."
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"/>
+
+                    <!-- Slider control of setting -->
+                    <Slider 
+                        x:Name="SettingsSliderDeltaSpeed"
+                        Grid.Column="2"
+                        Grid.Row="3"
+                        Maximum="100"
+                        TickPlacement="BottomRight"
+                        TickFrequency="5"
+                        IsSnapToTickEnabled="True"
+                        ValueChanged="SettingsSliderDeltaSpeed_ValueChanged"/>
+
+                    <!-- Textbox that holds the current amount of the setting -->
+                    <TextBox
+                        x:Name="SettingsSliderValueDeltaSpeed"
+                        Grid.Column="3"
+                        Grid.Row="3"
+                        Text="{Binding ElementName=SettingsSliderDeltaSpeed, Path=Value, UpdateSourceTrigger=PropertyChanged}"
+                        FontFamily="Tahoma"
+                        FontSize="15"
+                        FontWeight="Bold"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center">
+                    </TextBox>
+
+                    <!-- AI Training -->
+                    <!-- Title of slider setting -->
+                    <Label
+                        x:Name="SettingsSliderTitleAITraining"
+                        Grid.Column="1"
+                        Grid.Row="4"
+                        Content="AI Training"
+                        FontFamily="Tahoma"
+                        FontSize="15"
+                        FontWeight="Bold"
+                        ToolTip="Toggle Ai training on and off"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"/>
+
+                    <!-- Slider control of setting -->
+                    <Slider 
+                        x:Name="SettingsSliderAITraining"
+                        Grid.Column="2"
+                        Grid.Row="4"
+                        Maximum="1"
+                        TickPlacement="BottomRight"
+                        TickFrequency="1"
+                        IsSnapToTickEnabled="True"
+                        ValueChanged="SettingsSliderAITraining_ValueChanged"/>
+
+                    <!-- Label that holds the current amount of the setting -->
+                    <Label
+                        x:Name="SettingsSliderValueAITraining"
+                        Grid.Column="3"
+                        Grid.Row="4"
+                        Content="Off"
+                        FontFamily="Tahoma"
+                        FontSize="15"
+                        FontWeight="Bold"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"/>
+
+                    <!-- Save Block -->
+                    <!-- Title of slider setting -->
+                    <Label
+                        x:Name="SettingsSliderTitleSaveBlock"
+                        Grid.Column="1"
+                        Grid.Row="5"
+                        Content="Save Block"
+                        FontFamily="Tahoma"
+                        FontSize="15"
+                        FontWeight="Bold"
+                        ToolTip="Toggle Save block on and off"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"/>
+
+                    <!-- Slider control of setting -->
+                    <Slider 
+                        x:Name="SettingsSliderSaveBlock"
+                        Grid.Column="2"
+                        Grid.Row="5"
+                        Maximum="1"
+                        TickPlacement="BottomRight"
+                        TickFrequency="1"
+                        IsSnapToTickEnabled="True"
+                        ValueChanged="SettingsSliderSaveBlock_ValueChanged"/>
+
+                    <!-- Label that holds the current amount of the setting -->
+                    <Label
+                        x:Name="SettingsSliderValueSaveBlock"
+                        Grid.Column="3"
+                        Grid.Row="5"
+                        Content="Off"
+                        FontFamily="Tahoma"
+                        FontSize="15"
+                        FontWeight="Bold"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"/>
+
+                    <!-- Next Block -->
+                    <!-- Title of slider setting -->
+                    <Label
+                        x:Name="SettingsSliderTitleNextBlock"
+                        Grid.Column="1"
+                        Grid.Row="6"
+                        Content="Next Block"
+                        FontFamily="Tahoma"
+                        FontSize="15"
+                        FontWeight="Bold"
+                        ToolTip="Toggle Next block on and off"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"/>
+
+                    <!-- Slider control of setting -->
+                    <Slider 
+                        x:Name="SettingsSliderNextBlock"
+                        Grid.Column="2"
+                        Grid.Row="6"
+                        Maximum="1"
+                        TickPlacement="BottomRight"
+                        TickFrequency="1"
+                        IsSnapToTickEnabled="True"
+                        ValueChanged="SettingsSliderNextBlock_ValueChanged"/>
+
+                    <!-- Label that holds the current amount of the setting -->
+                    <Label
+                        x:Name="SettingsSliderValueNextBlock"
+                        Grid.Column="3"
+                        Grid.Row="6"
+                        Content="Off"
+                        FontFamily="Tahoma"
+                        FontSize="15"
+                        FontWeight="Bold"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center" />
+
+                </Grid>
+
+                <!-- Stackpanel holding the UI buttons -->
+                <StackPanel
+                    x:Name="SettingsControlsSP">
+
+                    <!-- UI button that open the keybind user control -->
+                    <Button
+                        x:Name="SettingsControlsKeybinds"
+                        Content="Keybinds"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="15"
+                        FontWeight="Bold" 
+                        Margin="0, 10"
+                        Click="SettingsControlsKeybinds_Click">
+                    </Button>
+
+                    <!-- UI button that apply the set settings -->
+                    <Button
+                        x:Name="SettingsControlsApplySettings"
+                        Content="Apply Settings"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="15"
+                        FontWeight="Bold" 
+                        Margin="0, 10"
+                        Click="SettingsControlsApplySettings_Click">
+                    </Button>
+
+                    <!-- UI button that navigates back to Main Menu -->
+                    <Button
+                        x:Name="SettingsControlsPauseMenu"
+                        Content="Pause Menu"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="15"
+                        FontWeight="Bold" 
+                        Margin="0, 10"
+                        Click="SettingsControlsPauseMenu_Click">
+                    </Button>
+                </StackPanel>
             </StackPanel>
         </Border>
     </Grid>

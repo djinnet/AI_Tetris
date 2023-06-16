@@ -173,7 +173,6 @@ namespace AITetris.Pages
             // Locate and size the user control
             Grid.SetColumn(menu, 1);
             Grid.SetRow(menu, 1);
-            Grid.SetColumnSpan(menu, 2);
             Grid.SetRowSpan(menu, 2);
 
             // Set the state to true since there is new changes
