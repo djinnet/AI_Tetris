@@ -35,452 +35,424 @@
             Opacity="0.2"
             Stretch="Uniform"/>
 
-        <!-- Page title -->
-        <Label
-            x:Name="StartGameMenuTitle"
+        <Grid
             Grid.Column="1"
-            Grid.Row="1"
             Grid.ColumnSpan="3"
-            Content="Start Game Menu"
-            HorizontalContentAlignment="Center"
-            VerticalContentAlignment="Center"
-            FontFamily="Tahoma"
-            FontSize="25"
-            FontWeight="Bold"/>
+            Grid.Row="1"
+            Grid.RowSpan="2"
+            Margin="0,0,0,200">
 
-        <!-- Stackpanel holding all the upgrade UI -->
-        <StackPanel
-            x:Name="StartGameMenuUpgradesSP"
-            Grid.Column="1"
-            Grid.Row="2"
-            Margin="10, 10">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+                <ColumnDefinition Width="*" />
+            </Grid.ColumnDefinitions>
+
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+
+            <!-- Page title -->
+            <Label
+                x:Name="StartGameMenuTitle"
+                Grid.Column="0"
+                Grid.Row="0"
+                Grid.ColumnSpan="3"
+                Content="Start Game Menu"
+                HorizontalContentAlignment="Center"
+                VerticalContentAlignment="Bottom"
+                FontFamily="Tahoma"
+                FontSize="25"
+                FontWeight="Bold"
+                Margin="0,0,0,15"/>
+
+            <!-- Stackpanel holding all the upgrade UI -->
+            <StackPanel
+                x:Name="StartGameMenuUpgradesSP"
+                Grid.Column="0"
+                Grid.Row="1"
+                Margin="10,10"
+                VerticalAlignment="Top">
+
+                <!-- Stackpanel Title -->
+                <Label
+                    x:Name="StartGameMenuUpgrades"
+                    Content="Upgrades"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="20"
+                    FontWeight="Bold"
+                    Margin="0, 0, 0, 15"/>
+
+                <!-- Grid holding the upgrade buttons -->
+                <!-- Gridsize is 3 cols by 4 rows -->
+                <Grid
+                    x:Name="StartGameMenuUpgradesGrid">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="55" />
+                        <RowDefinition Height="55" />
+                        <RowDefinition Height="55" />
+                        <RowDefinition Height="55" />
+                    </Grid.RowDefinitions>
+
+                    <!-- UI buttons for all upgrades 1 - 12 -->
+                    <Button
+                        x:Name="Upgrade1"
+                        Grid.Column="0"
+                        Grid.Row="0"
+                        Content="+1 Revive"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold"
+                        Click="Upgrade1_Click"
+                        Margin="5,5">
+                    </Button>
+
+                    <Button
+                        x:Name="Upgrade2"
+                        Grid.Column="1"
+                        Grid.Row="0"
+                        Content="+1 Revive"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold"
+                        Click="Upgrade2_Click"
+                        Margin="5,5">
+                    </Button>
+
+                    <Button
+                        x:Name="Upgrade3"
+                        Grid.Column="2"
+                        Grid.Row="0"
+                        Content="+1 Revive"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold"
+                        Click="Upgrade3_Click"
+                        Margin="5,5">
+                    </Button>
+
+                    <Button
+                        x:Name="Upgrade4"
+                        Grid.Column="0"
+                        Grid.Row="1"
+                        Content="Score +25%"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold"
+                        Click="Upgrade4_Click"
+                        Margin="5,5">
+                    </Button>
+
+                    <Button
+                        x:Name="Upgrade5"
+                        Grid.Column="1"
+                        Grid.Row="1"
+                        Content="Score +25%"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold"
+                        Click="Upgrade5_Click"
+                        Margin="5,5">
+                    </Button>
+
+                    <Button
+                        x:Name="Upgrade6"
+                        Grid.Column="2"
+                        Grid.Row="1"
+                        Content="Score +50%"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold"
+                        Click="Upgrade6_Click"
+                        Margin="5,5">
+                    </Button>
+
+                    <Button
+                        x:Name="Upgrade7"
+                        Grid.Column="0"
+                        Grid.Row="2"
+                        Content="+1 Emergency Line Clear"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold"
+                        Click="Upgrade7_Click"
+                        Margin="5,5">
+                    </Button>
+
+                    <Button
+                        x:Name="Upgrade8"
+                        Grid.Column="1"
+                        Grid.Row="2"
+                        Content="+1 Emergency Line Clear"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold"
+                        Click="Upgrade8_Click"
+                        Margin="5,5">
+                    </Button>
+
+                    <Button
+                        x:Name="Upgrade9"
+                        Grid.Column="2"
+                        Grid.Row="2"
+                        Content="+1 Emergency Line Clear"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold"
+                        Click="Upgrade9_Click"
+                        Margin="5,5">
+                    </Button>
+
+                    <Button
+                        x:Name="Upgrade10"
+                        Grid.Column="0"
+                        Grid.Row="3"
+                        Content="+1 Remove Swap"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold"
+                        Click="Upgrade10_Click"
+                        Margin="5,5">
+                    </Button>
+
+                    <Button
+                        x:Name="Upgrade11"
+                        Grid.Column="1"
+                        Grid.Row="3"
+                        Content="+1 Slow time 30s"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold"
+                        Click="Upgrade11_Click"
+                        Margin="5,5">
+                    </Button>
+
+                    <Button
+                        x:Name="Upgrade12"
+                        Grid.Column="2"
+                        Grid.Row="3"
+                        Content="+1 Slow time 30s"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold"
+                        Click="Upgrade12_Click"
+                        Margin="5,5">
+                    </Button>
+                </Grid>
+            </StackPanel>
             
-            <!-- Stackpanel Title -->
-            <Label
-                x:Name="StartGameMenuUpgrades"
-                Content="Upgrades"
-                HorizontalContentAlignment="Center"
-                VerticalContentAlignment="Center"
-                FontFamily="Tahoma"
-                FontSize="20"
-                FontWeight="Bold"
-                Margin="0, 15"/>
+            <!-- Stackpanel holding the controls for starting a game -->
+            <StackPanel
+                x:Name="StartGameMenuCreatePlayer"
+                Grid.Column="1"
+                Grid.Row="1"
+                Margin="10, 10"
+                VerticalAlignment="Top">
 
-            <!-- Grid holding the upgrade buttons -->
-            <!-- Gridsize is 3 cols by 4 rows -->
-            <Grid
-                x:Name="StartGameMenuUpgradesGrid">
-
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="55" />
-                    <RowDefinition Height="55" />
-                    <RowDefinition Height="55" />
-                    <RowDefinition Height="55" />
-                </Grid.RowDefinitions>
-                
-                <!-- UI buttons for all upgrades 1 - 12 -->
-                <Button
-                    x:Name="Upgrade1"
-                    Grid.Column="0"
-                    Grid.Row="0"
-                    Content="+1 Revive"
+                <!-- Stackpanel title -->
+                <Label
+                    x:Name="StartGameMenuPlayerControls"
+                    Content="Player controls"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
                     FontFamily="Tahoma"
-                    FontSize="12"
+                    FontSize="20"
                     FontWeight="Bold"
-                    Click="Upgrade1_Click"
-                    Margin="5,5">
+                    Margin="0,0,0, 15"/>
 
-                </Button>
-
-                <Button
-                    x:Name="Upgrade2"
-                    Grid.Column="1"
-                    Grid.Row="0"
-                    Content="+1 Revive"
-                    FontFamily="Tahoma"
-                    FontSize="12"
-                    FontWeight="Bold"
-                    Click="Upgrade2_Click"
-                    Margin="5,5">
-
-                </Button>
-
-                <Button
-                    x:Name="Upgrade3"
-                    Grid.Column="2"
-                    Grid.Row="0"
-                    Content="+1 Revive"
-                    FontFamily="Tahoma"
-                    FontSize="12"
-                    FontWeight="Bold"
-                    Click="Upgrade3_Click"
-                    Margin="5,5">
-
-                </Button>
-
-                <Button
-                    x:Name="Upgrade4"
-                    Grid.Column="0"
-                    Grid.Row="1"
-                    Content="Score +25%"
-                    FontFamily="Tahoma"
-                    FontSize="12"
-                    FontWeight="Bold"
-                    Click="Upgrade4_Click"
-                    Margin="5,5">
-
-                </Button>
-
-                <Button
-                    x:Name="Upgrade5"
-                    Grid.Column="1"
-                    Grid.Row="1"
-                    Content="Score +25%"
-                    FontFamily="Tahoma"
-                    FontSize="12"
-                    FontWeight="Bold"
-                    Click="Upgrade5_Click"
-                    Margin="5,5">
-
-                </Button>
-
-                <Button
-                    x:Name="Upgrade6"
-                    Grid.Column="2"
-                    Grid.Row="1"
-                    Content="Score +50%"
-                    FontFamily="Tahoma"
-                    FontSize="12"
-                    FontWeight="Bold"
-                    Click="Upgrade6_Click"
-                    Margin="5,5">
-
-                </Button>
-
-                <Button
-                    x:Name="Upgrade7"
-                    Grid.Column="0"
-                    Grid.Row="2"
-                    Content="+1 Emergency Line Clear"
-                    FontFamily="Tahoma"
-                    FontSize="12"
-                    FontWeight="Bold"
-                    Click="Upgrade7_Click"
-                    Margin="5,5">
-
-                </Button>
-
-                <Button
-                    x:Name="Upgrade8"
-                    Grid.Column="1"
-                    Grid.Row="2"
-                    Content="+1 Emergency Line Clear"
-                    FontFamily="Tahoma"
-                    FontSize="12"
-                    FontWeight="Bold"
-                    Click="Upgrade8_Click"
-                    Margin="5,5">
-
-                </Button>
-
-                <Button
-                    x:Name="Upgrade9"
-                    Grid.Column="2"
-                    Grid.Row="2"
-                    Content="+1 Emergency Line Clear"
-                    FontFamily="Tahoma"
-                    FontSize="12"
-                    FontWeight="Bold"
-                    Click="Upgrade9_Click"
-                    Margin="5,5">
-
-                </Button>
-
-                <Button
-                    x:Name="Upgrade10"
-                    Grid.Column="0"
-                    Grid.Row="3"
-                    Content="+1 Remove Swap"
-                    FontFamily="Tahoma"
-                    FontSize="12"
-                    FontWeight="Bold"
-                    Click="Upgrade10_Click"
-                    Margin="5,5">
-
-                </Button>
-
-                <Button
-                    x:Name="Upgrade11"
-                    Grid.Column="1"
-                    Grid.Row="3"
-                    Content="+1 Slow time 30s"
-                    FontFamily="Tahoma"
-                    FontSize="12"
-                    FontWeight="Bold"
-                    Click="Upgrade11_Click"
-                    Margin="5,5">
-
-                </Button>
-
-                <Button
-                    x:Name="Upgrade12"
-                    Grid.Column="2"
-                    Grid.Row="3"
-                    Content="+1 Slow time 30s"
-                    FontFamily="Tahoma"
-                    FontSize="12"
-                    FontWeight="Bold"
-                    Click="Upgrade12_Click"
-                    Margin="5,5">
-
-                </Button>
-            </Grid>
-        </StackPanel>
-
-        <!-- Stackpanel holding the controls for starting a game -->
-        <StackPanel
-            x:Name="StartGameMenuCreatePlayer"
-            Grid.Column="2"
-            Grid.Row="2"
-            Margin="10, 10">
-
-            <!-- Stackpanel title -->
-            <Label
-                x:Name="StartGameMenuPlayerControls"
-                Content="Player controls"
-                HorizontalContentAlignment="Center"
-                VerticalContentAlignment="Center"
-                FontFamily="Tahoma"
-                FontSize="20"
-                FontWeight="Bold"
-                Margin="0, 15"/>
-
-            <!-- Label for the textbox -->
-            <Label 
-                x:Name="StartGameMenuPlayerNameLbl"
-                Content="Player Name"
-                HorizontalContentAlignment="Center"
-                VerticalContentAlignment="Center"
-                FontFamily="Tahoma"
-                FontSize="12"
-                FontWeight="Bold"/>
-
-            <!-- Textbox to write a name in -->
-            <TextBox
-                x:Name="Nametxtbox"
-                TextWrapping="Wrap"
-                Margin="0, 15">
-                
-            </TextBox>
-
-            <!-- Grid containing the Player/AI slider elements -->
-            <!-- Gridsize is 3 cols by 3 rows -->
-            <Grid
-                x:Name="StartGameMenuToggleAIGrid"
-                Margin="0, 15">
-
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="75" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="75" />
-                </Grid.ColumnDefinitions>
-
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                    <RowDefinition Height="*"/>
-                </Grid.RowDefinitions>
-                
-                <!-- Label for Player/AI slider -->
+                <!-- Label for the textbox -->
                 <Label 
-                    x:Name="StartGameMenuToggleAI"
-                    Grid.Column="1"
-                    Grid.Row="0"
-                    Content="Toggle Player or AI"
+                    x:Name="StartGameMenuPlayerNameLbl"
+                    Content="Player Name"
                     HorizontalContentAlignment="Center"
                     VerticalContentAlignment="Center"
                     FontFamily="Tahoma"
                     FontSize="12"
                     FontWeight="Bold"/>
 
-                <!-- Player side label -->
+                <!-- Textbox to write a name in -->
+                <TextBox
+                    x:Name="Nametxtbox"
+                    TextWrapping="Wrap"
+                    Margin="0, 15">
+                </TextBox>
+
+                <!-- Grid containing the Player/AI slider elements -->
+                <!-- Gridsize is 3 cols by 3 rows -->
+                <Grid
+                    x:Name="StartGameMenuToggleAIGrid">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="75" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="75" />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="*"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- Label for Player/AI slider -->
+                    <Label 
+                        x:Name="StartGameMenuToggleAI"
+                        Grid.Column="1"
+                        Grid.Row="0"
+                        Content="Toggle Player or AI"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold"/>
+
+                    <!-- Player side label -->
+                    <Label
+                        x:Name="PlayerSide"
+                        Grid.Column="0"
+                        Grid.Row="1"
+                        Content="Player"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold"/>
+
+                    <!-- Player / AI slider -->
+                    <Slider 
+                        x:Name="PlayerOrAISlider"
+                        Grid.Column="1"
+                        Grid.Row="1"
+                        Maximum="1"
+                        TickPlacement="BottomRight"
+                        TickFrequency="1"
+                        IsSnapToTickEnabled="True"
+                        ValueChanged="PlayerOrAISlider_ValueChanged" />
+
+                    <!-- AI side label -->
+                    <Label
+                        x:Name="AISide"
+                        Grid.Column="2"
+                        Grid.Row="1" 
+                        Content="AI"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold"/>
+
+                    <!-- Label for Player/AI slider -->
+                    <Label 
+                        x:Name="StartGameMenuToggleAITraining"
+                        Grid.Column="1"
+                        Grid.Row="2"
+                        Content="Toggle AI Training"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold"/>
+
+                    <!-- AI training Off -->
+                    <Label
+                        x:Name="AITrainingOff"
+                        Grid.Column="0"
+                        Grid.Row="3"
+                        Content="Off"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold"/>
+
+                    <!-- Player / AI slider -->
+                    <Slider 
+                        x:Name="AITrainingOnOffSlider"
+                        Grid.Column="1"
+                        Grid.Row="3"
+                        Maximum="1"
+                        TickPlacement="BottomRight"
+                        TickFrequency="1"
+                        IsSnapToTickEnabled="True"
+                        ValueChanged="AITrainingOnOffSlider_ValueChanged" />
+
+                    <!-- AI side label -->
+                    <Label
+                        x:Name="AITrainingOn"
+                        Grid.Column="2"
+                        Grid.Row="3" 
+                        Content="On"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold"/>
+                </Grid>
+
+                <!-- UI button for starting the game -->
+                <Button
+                    x:Name="StartGameMenuStartGameBtn"
+                    Content="Start Game"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="12"
+                    FontWeight="Bold" 
+                    Margin="0, 5"
+                    Click="StartGameMenuStartGameBtn_Click">
+                </Button>
+
+                <!-- UI button for navigating back to main menu -->
+                <Button
+                    x:Name="StartGameMenuMainMenuBtn"
+                    Content="Main Menu"
+                    HorizontalContentAlignment="Center"
+                    VerticalContentAlignment="Center"
+                    FontFamily="Tahoma"
+                    FontSize="12"
+                    FontWeight="Bold" 
+                    Margin="0, 5"
+                    Click="StartGameMenuMainMenuBtn_Click">
+                </Button>
+            </StackPanel>
+
+            <!-- Stackpanel holding the dropdown for AI selection -->
+            <StackPanel
+                x:Name="StartGameMenuAIDropdownSP"
+                Grid.Column="2"
+                Grid.Row="1"
+                Margin="10, 10"
+                VerticalAlignment="Top">
+
+                <!-- Stackpanel title -->
                 <Label
-                    x:Name="PlayerSide"
-                    Grid.Column="0"
-                    Grid.Row="1"
-                    Content="Player"
+                    x:Name="StartGameMenuDropdownTitle"
+                    Content="Pick an AI"
                     HorizontalContentAlignment="Center"
                     VerticalContentAlignment="Center"
                     FontFamily="Tahoma"
-                    FontSize="12"
-                    FontWeight="Bold"/>
+                    FontSize="20"
+                    FontWeight="Bold"
+                    Margin="0,0,0,15"/>
 
-                <!-- Player / AI slider -->
-                <Slider 
-                    x:Name="PlayerOrAISlider"
-                    Grid.Column="1"
-                    Grid.Row="1"
-                    Maximum="1"
-                    TickPlacement="BottomRight"
-                    TickFrequency="1"
-                    IsSnapToTickEnabled="True"
-                    ValueChanged="PlayerOrAISlider_ValueChanged" />
-
-                <!-- AI side label -->
-                <Label
-                    x:Name="AISide"
-                    Grid.Column="2"
-                    Grid.Row="1" 
-                    Content="AI"
-                    HorizontalContentAlignment="Center"
-                    VerticalContentAlignment="Center"
-                    FontFamily="Tahoma"
-                    FontSize="12"
-                    FontWeight="Bold"/>
-
-                <!-- Label for Player/AI slider -->
-                <Label 
-                    x:Name="StartGameMenuToggleAITraining"
-                    Grid.Column="1"
-                    Grid.Row="2"
-                    Content="Toggle AI Training"
-                    HorizontalContentAlignment="Center"
-                    VerticalContentAlignment="Center"
-                    FontFamily="Tahoma"
-                    FontSize="12"
-                    FontWeight="Bold"/>
-
-                <!-- AI training Off -->
-                <Label
-                    x:Name="AITrainingOff"
-                    Grid.Column="0"
-                    Grid.Row="3"
-                    Content="Off"
-                    HorizontalContentAlignment="Center"
-                    VerticalContentAlignment="Center"
-                    FontFamily="Tahoma"
-                    FontSize="12"
-                    FontWeight="Bold"/>
-
-                <!-- Player / AI slider -->
-                <Slider 
-                    x:Name="AITrainingOnOffSlider"
-                    Grid.Column="1"
-                    Grid.Row="3"
-                    Maximum="1"
-                    TickPlacement="BottomRight"
-                    TickFrequency="1"
-                    IsSnapToTickEnabled="True"
-                    ValueChanged="AITrainingOnOffSlider_ValueChanged" />
-
-                <!-- AI side label -->
-                <Label
-                    x:Name="AITrainingOn"
-                    Grid.Column="2"
-                    Grid.Row="3" 
-                    Content="On"
-                    HorizontalContentAlignment="Center"
-                    VerticalContentAlignment="Center"
-                    FontFamily="Tahoma"
-                    FontSize="12"
-                    FontWeight="Bold"/>
-            </Grid>
-
-            <!-- UI button for starting the game -->
-            <Button
-                x:Name="StartGameMenuStartGameBtn"
-                Content="Start Game"
-                HorizontalContentAlignment="Center"
-                VerticalContentAlignment="Center"
-                FontFamily="Tahoma"
-                FontSize="12"
-                FontWeight="Bold" 
-                Margin="0, 5"
-                Click="StartGameMenuStartGameBtn_Click">
-
-            </Button>
-
-            <!-- UI button for navigating back to main menu -->
-            <Button
-                x:Name="StartGameMenuMainMenuBtn"
-                Content="Main Menu"
-                HorizontalContentAlignment="Center"
-                VerticalContentAlignment="Center"
-                FontFamily="Tahoma"
-                FontSize="12"
-                FontWeight="Bold" 
-                Margin="0, 5"
-                Click="StartGameMenuMainMenuBtn_Click">
-
-            </Button>
-        </StackPanel>
-
-        <!-- Stackpanel holding the dropdown for AI selection -->
-        <StackPanel
-            x:Name="StartGameMenuAIDropdownSP"
-            Grid.Column="3"
-            Grid.Row="2"
-            Margin="10, 10">
-
-            <!-- Stackpanel title -->
-            <Label
-                x:Name="StartGameMenuDropdownTitle"
-                Content="Pick an AI"
-                HorizontalContentAlignment="Center"
-                VerticalContentAlignment="Center"
-                FontFamily="Tahoma"
-                FontSize="20"
-                FontWeight="Bold"
-                Margin="0, 15"/>
-
-            <!-- Combobox acting as the dropdown -->
-            <ComboBox
-                x:Name="StartGameMenuAIDropdown">
-
-                <!-- Placeholder item in the combobox set as focus --><!--
-                <ComboBoxItem 
-                    IsSelected="True"
-                    Content="Placeholder AI #1">
-
-                </ComboBoxItem>
-
-                --><!-- Placeholder item in the combobox --><!--
-                <ComboBoxItem 
-                    IsSelected="False"
-                    Content="Placeholder AI #2">
-
-                </ComboBoxItem>
-
-                --><!-- Placeholder item in the combobox --><!--
-                <ComboBoxItem 
-                    IsSelected="False"
-                    Content="Placeholder AI #3">
-
-                </ComboBoxItem>
-
-                --><!-- Placeholder item in the combobox --><!--
-                <ComboBoxItem 
-                    IsSelected="False"
-                    Content="Placeholder AI #4">
-
-                </ComboBoxItem>
-
-                --><!-- Placeholder item in the combobox --><!--
-                <ComboBoxItem 
-                    IsSelected="False"
-                    Content="Placeholder AI #5">
-
-                </ComboBoxItem>-->
-            </ComboBox>
-        </StackPanel>
+                <!-- Combobox acting as the dropdown -->
+                <ComboBox
+                    x:Name="StartGameMenuAIDropdown">
+                </ComboBox>
+            </StackPanel>
+        </Grid>
     </Grid>
 </Page>

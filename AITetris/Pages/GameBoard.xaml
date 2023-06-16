@@ -459,7 +459,7 @@
                     Content="Controls"
                     HorizontalContentAlignment="Center"
                     FontFamily="Tahoma"
-                    FontSize="20"
+                    FontSize="17"
                     FontWeight="Bold"
                     Margin="0, 5" />
 
@@ -469,7 +469,7 @@
                     Content="Pause (Esc)"
                     HorizontalContentAlignment="Center"
                     FontFamily="Tahoma"
-                    FontSize="15"
+                    FontSize="13"
                     FontWeight="Bold"/>
 
                 <!-- Save label -->
@@ -478,7 +478,7 @@
                     Content="Save (E)"
                     HorizontalContentAlignment="Center"
                     FontFamily="Tahoma"
-                    FontSize="15"
+                    FontSize="13"
                     FontWeight="Bold"/>
 
                 <!-- Rotate label -->
@@ -487,7 +487,7 @@
                     Content="Rotate (W)"
                     HorizontalContentAlignment="Center"
                     FontFamily="Tahoma"
-                    FontSize="15"
+                    FontSize="13"
                     FontWeight="Bold"/>
 
                 <!-- Left label -->
@@ -496,7 +496,7 @@
                     Content="Left (A)"
                     HorizontalContentAlignment="Center"
                     FontFamily="Tahoma"
-                    FontSize="15"
+                    FontSize="13"
                     FontWeight="Bold"/>
 
                 <!-- Right label -->
@@ -505,7 +505,7 @@
                     Content="Right (D)"
                     HorizontalContentAlignment="Center"
                     FontFamily="Tahoma"
-                    FontSize="15"
+                    FontSize="13"
                     FontWeight="Bold"/>
 
                 <!-- Down label -->
@@ -514,7 +514,7 @@
                     Content="Down (S)"
                     HorizontalContentAlignment="Center"
                     FontFamily="Tahoma"
-                    FontSize="15"
+                    FontSize="13"
                     FontWeight="Bold"/>
 
                 <!-- Instant down label -->
@@ -523,7 +523,7 @@
                     Content="Instant Down (Space)"
                     HorizontalContentAlignment="Center"
                     FontFamily="Tahoma"
-                    FontSize="15"
+                    FontSize="13"
                     FontWeight="Bold"/>
             </StackPanel>
         </Border>

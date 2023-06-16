@@ -34,153 +34,142 @@
             Opacity="0.2"
             Stretch="Uniform"/>
 
-        <!-- Page title -->
-        <Label
-            x:Name="LeaderboardTitleLbl"
-            Grid.Column="1"
-            Grid.Row="1"
-            Content="Leaderboard"
-            HorizontalContentAlignment="Center"
-            VerticalContentAlignment="Center"
-            FontFamily="Tahoma"
-            FontSize="25"
-            FontWeight="Bold" />
-
         <!-- Border used as a container for the leaderboard grid -->
         <Border
             x:Name="LeaderboardGridBorder"
             Grid.Column="1"
-            Grid.Row="2"
-            BorderBrush="Silver"
-            BorderThickness="2"
+            Grid.Row="1"
+            Grid.RowSpan="3"
             HorizontalAlignment="Center"
             VerticalAlignment="Center">
 
-            <!-- Dynamic grid set from the FillLeaderboard function the codebehind -->
-            <!-- Gridsize is 6 cols by X rows -->
-            <Grid
-                x:Name="LeaderboardGrid">
-
-            </Grid>
-        </Border>
-
-        <!-- Border used as a container for the leaderboard controls -->
-        <Border
-            x:Name="LeaderbordControlsBorder"
-            Grid.Column="1"
-            Grid.Row="3">
-
-            <!-- Stackpanel holding all the controls for the leaderboard -->
-            <StackPanel
-                x:Name="LeaderboardControlsSP"
-                HorizontalAlignment="Center"
-                VerticalAlignment="Center"
-                MinWidth="300">
-                
-                <!-- Label for the textbox telling what the content should be -->
-                <Label 
-                    x:Name="LeaderboardControlsFindPlayerLbl"
-                    Content="Enter a name"
+            <StackPanel>
+                <!-- Page title -->
+                <Label
+                    x:Name="LeaderboardTitleLbl"
+                    Content="Leaderboard"
                     HorizontalContentAlignment="Center"
                     VerticalContentAlignment="Center"
                     FontFamily="Tahoma"
-                    FontSize="12"
-                    FontWeight="Bold"/>
-
-                <!-- Textbox for entering a name to search for -->
-                <TextBox
-                    x:Name="LeaderboardControlsFindPlayerTxtbox"
-                    TextWrapping="Wrap"
-                    Margin="0, 5" />
-
-                <!-- Search button -->
-                <Button
-                    x:Name="LeaderboardControlsFindPlayerBtn"
-                    Content="Find player"
-                    HorizontalContentAlignment="Center"
-                    VerticalContentAlignment="Center"
-                    FontFamily="Tahoma"
-                    FontSize="12"
+                    FontSize="25"
                     FontWeight="Bold" 
-                    Margin="0, 5"
-                    Click="LeaderboardControlsFindPlayerBtn_Click">
-                    
-                </Button>
+                    Margin="0, 0, 0, 15"/>
 
-                <!-- Grid holding the prievious ten and next ten button -->
-                <!-- Gridsize is 2 cols by 1 row -->
+                <!-- Dynamic grid set from the FillLeaderboard function the codebehind -->
+                <!-- Gridsize is 6 cols by X rows -->
                 <Grid
-                    x:Name="LeaderboardControlsNextPrievious">
+                    x:Name="LeaderboardGrid"
+                    Margin="0, 0, 0, 15">
 
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="*" />
-                        <ColumnDefinition Width="*" />
-                    </Grid.ColumnDefinitions>
-
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="*" />
-                    </Grid.RowDefinitions>
-
-                    <!-- Search button prievious ten -->
-                    <Button
-                        x:Name="LeaderboardPrieviousTenBtn"
-                        Grid.Column="0"
-                        Grid.Row="0"
-                        Content="Prievious 10"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        FontFamily="Tahoma"
-                        FontSize="12"
-                        FontWeight="Bold" 
-                        Margin="2, 5"
-                        Click="LeaderboardPrieviousTenBtn_Click">
-
-                    </Button>
-
-                    <!-- Search button next ten -->
-                    <Button
-                        x:Name="LeaderboardNextTenBtn"
-                        Grid.Column="1"
-                        Grid.Row="0"
-                        Content="Next 10"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        FontFamily="Tahoma"
-                        FontSize="12"
-                        FontWeight="Bold" 
-                        Margin="2, 5"
-                        Click="LeaderboardNextTenBtn_Click">
-
-                    </Button>
                 </Grid>
 
-                <!-- A button to refresh the leaderboard -->
-                <Button
-                    x:Name="LeaderboardRefreshBtn"
-                    Content="Refresh"
-                    HorizontalContentAlignment="Center"
-                    VerticalContentAlignment="Center"
-                    FontFamily="Tahoma"
-                    FontSize="12"
-                    FontWeight="Bold" 
-                    Margin="0, 5"
-                    Click="LeaderboardRefreshBtn_Click">
+                <!-- Stackpanel holding all the controls for the leaderboard -->
+                <StackPanel
+                    x:Name="LeaderboardControlsSP"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center"
+                    MinWidth="300">
 
-                </Button>
+                    <!-- Label for the textbox telling what the content should be -->
+                    <Label 
+                        x:Name="LeaderboardControlsFindPlayerLbl"
+                        Content="Enter a name"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold"/>
 
-                <!-- Navigation button -->
-                <Button
-                    x:Name="LeaderboardBackToMainBtn"
-                    Content="Main Menu"
-                    HorizontalContentAlignment="Center"
-                    VerticalContentAlignment="Center"
-                    FontFamily="Tahoma"
-                    FontSize="12"
-                    FontWeight="Bold" 
-                    Margin="0, 5"
-                    Click="LeaderboardBackToMainBtn_Click">
+                    <!-- Textbox for entering a name to search for -->
+                    <TextBox
+                        x:Name="LeaderboardControlsFindPlayerTxtbox"
+                        TextWrapping="Wrap"
+                        Margin="0, 5" />
 
-                </Button>
+                    <!-- Search button -->
+                    <Button
+                        x:Name="LeaderboardControlsFindPlayerBtn"
+                        Content="Find player"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold" 
+                        Margin="0, 5"
+                        Click="LeaderboardControlsFindPlayerBtn_Click">
+                    </Button>
+
+                    <!-- Grid holding the prievious ten and next ten button -->
+                    <!-- Gridsize is 2 cols by 1 row -->
+                    <Grid
+                        x:Name="LeaderboardControlsNextPrievious">
+
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
+
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*" />
+                        </Grid.RowDefinitions>
+
+                        <!-- Search button prievious ten -->
+                        <Button
+                            x:Name="LeaderboardPrieviousTenBtn"
+                            Grid.Column="0"
+                            Grid.Row="0"
+                            Content="Prievious 10"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontFamily="Tahoma"
+                            FontSize="12"
+                            FontWeight="Bold" 
+                            Margin="2, 5"
+                            Click="LeaderboardPrieviousTenBtn_Click">
+                        </Button>
+
+                        <!-- Search button next ten -->
+                        <Button
+                            x:Name="LeaderboardNextTenBtn"
+                            Grid.Column="1"
+                            Grid.Row="0"
+                            Content="Next 10"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontFamily="Tahoma"
+                            FontSize="12"
+                            FontWeight="Bold" 
+                            Margin="2, 5"
+                            Click="LeaderboardNextTenBtn_Click">
+                        </Button>
+                    </Grid>
+
+                    <!-- A button to refresh the leaderboard -->
+                    <Button
+                        x:Name="LeaderboardRefreshBtn"
+                        Content="Refresh"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold" 
+                        Margin="0, 5"
+                        Click="LeaderboardRefreshBtn_Click">
+                    </Button>
+
+                    <!-- Navigation button -->
+                    <Button
+                        x:Name="LeaderboardBackToMainBtn"
+                        Content="Main Menu"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="12"
+                        FontWeight="Bold" 
+                        Margin="0, 5"
+                        Click="LeaderboardBackToMainBtn_Click">
+                    </Button>
+                </StackPanel>
             </StackPanel>
         </Border>
     </Grid>
