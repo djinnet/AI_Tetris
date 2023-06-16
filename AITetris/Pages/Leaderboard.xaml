@@ -115,17 +115,17 @@
 
                         <!-- Search button prievious ten -->
                         <Button
-                            x:Name="LeaderboardPrieviousTenBtn"
+                            x:Name="LeaderboardPreviousTenBtn"
                             Grid.Column="0"
                             Grid.Row="0"
-                            Content="Prievious 10"
+                            Content="Previous 10"
                             HorizontalContentAlignment="Center"
                             VerticalContentAlignment="Center"
                             FontFamily="Tahoma"
                             FontSize="12"
                             FontWeight="Bold" 
                             Margin="2, 5"
-                            Click="LeaderboardPrieviousTenBtn_Click">
+                            Click="LeaderboardPreviousTenBtn_Click">
                         </Button>
 
                         <!-- Search button next ten -->

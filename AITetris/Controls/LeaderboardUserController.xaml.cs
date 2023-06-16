@@ -194,7 +194,7 @@ namespace AITetris.Controls
             FillLeaderboard();
         }
 
-        private void LeaderboardPrieviousTenBtn_Click(object sender, RoutedEventArgs e)
+        private void LeaderboardPreviousTenBtn_Click(object sender, RoutedEventArgs e)
         {
             //check if searching
             if (isSerching)
@@ -217,13 +217,13 @@ namespace AITetris.Controls
                     else
                     {
                         //disable LeaderboardPrieviousTenBtn
-                        LeaderboardPrieviousTenBtn.IsEnabled = false;
+                        LeaderboardPreviousTenBtn.IsEnabled = false;
                     }
                 }
                 else
                 {
                     //disable LeaderboardPrieviousTenBtn
-                    LeaderboardPrieviousTenBtn.IsEnabled = false;
+                    LeaderboardPreviousTenBtn.IsEnabled = false;
                 }
             }
             else
@@ -243,7 +243,7 @@ namespace AITetris.Controls
                 else
                 {
                     //disable LeaderboardPrieviousTenBtn
-                    LeaderboardPrieviousTenBtn.IsEnabled = false;
+                    LeaderboardPreviousTenBtn.IsEnabled = false;
                 }
             }
         }
@@ -267,7 +267,7 @@ namespace AITetris.Controls
                         //fill the leaderboard with the gotten entries
                         FillLeaderboard();
                         //enable LeaderboardPrieviousTenBtn
-                        LeaderboardPrieviousTenBtn.IsEnabled = true;
+                        LeaderboardPreviousTenBtn.IsEnabled = true;
                     }
                     else
                     {
@@ -293,7 +293,7 @@ namespace AITetris.Controls
                     //fill the leaderboard with the gotten entries
                     FillLeaderboard();
                     //enable LeaderboardPrieviousTenBtn
-                    LeaderboardPrieviousTenBtn.IsEnabled = true;
+                    LeaderboardPreviousTenBtn.IsEnabled = true;
                 }
                 else
                 {
@@ -312,7 +312,7 @@ namespace AITetris.Controls
             //bool to note we are not searching
             isSerching = false;
             //enable LeaderboardPrieviousTenBtn
-            LeaderboardPrieviousTenBtn.IsEnabled = true;
+            LeaderboardPreviousTenBtn.IsEnabled = true;
             //enable LeaderboardNextTenBtn
             LeaderboardNextTenBtn.IsEnabled = true;
             //fill the leaderboard with the gotten entries

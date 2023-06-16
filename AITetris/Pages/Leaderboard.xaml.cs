@@ -201,7 +201,7 @@ namespace AITetris.Pages
         }
 
         //function that finds the prievious ten in the leaderboard
-        private void LeaderboardPrieviousTenBtn_Click(object sender, RoutedEventArgs e)
+        private void LeaderboardPreviousTenBtn_Click(object sender, RoutedEventArgs e)
         {
             //check if searching
             if(isSerching)
@@ -224,13 +224,13 @@ namespace AITetris.Pages
                     else
                     {
                         //disable LeaderboardPrieviousTenBtn
-                        LeaderboardPrieviousTenBtn.IsEnabled = false;
+                        LeaderboardPreviousTenBtn.IsEnabled = false;
                     }
                 }
                 else
                 {
                     //disable LeaderboardPrieviousTenBtn
-                    LeaderboardPrieviousTenBtn.IsEnabled = false;
+                    LeaderboardPreviousTenBtn.IsEnabled = false;
                 }
             }
             else
@@ -250,7 +250,7 @@ namespace AITetris.Pages
                 else
                 {
                     //disable LeaderboardPrieviousTenBtn
-                    LeaderboardPrieviousTenBtn.IsEnabled = false;
+                    LeaderboardPreviousTenBtn.IsEnabled = false;
                 }
             }
         }
@@ -274,7 +274,7 @@ namespace AITetris.Pages
                         //fill the leaderboard with the gotten entries
                         FillLeaderboard();
                         //enable LeaderboardPrieviousTenBtn
-                        LeaderboardPrieviousTenBtn.IsEnabled = true;
+                        LeaderboardPreviousTenBtn.IsEnabled = true;
                     }
                     else
                     {
@@ -300,7 +300,7 @@ namespace AITetris.Pages
                     //fill the leaderboard with the gotten entries
                     FillLeaderboard();
                     //enable LeaderboardPrieviousTenBtn
-                    LeaderboardPrieviousTenBtn.IsEnabled = true;
+                    LeaderboardPreviousTenBtn.IsEnabled = true;
                 }
                 else
                 {
@@ -319,7 +319,7 @@ namespace AITetris.Pages
             //bool to note we are not searching
             isSerching = false;
             //enable LeaderboardPrieviousTenBtn
-            LeaderboardPrieviousTenBtn.IsEnabled = true;
+            LeaderboardPreviousTenBtn.IsEnabled = true;
             //enable LeaderboardNextTenBtn
             LeaderboardNextTenBtn.IsEnabled = true;
             //fill the leaderboard with the gotten entries

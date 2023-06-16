@@ -504,7 +504,7 @@
                         <!-- Upgrade title -->
                         <Label
                             x:Name="Upgrade11_NameLbl"
-                            Content="+1 Slow time 30s"
+                            Content="Slow time +30s"
                             HorizontalContentAlignment="Center"
                             VerticalContentAlignment="Center"
                             FontFamily="Tahoma"
@@ -546,7 +546,7 @@
                         <!-- Upgrade title -->
                         <Label
                             x:Name="Upgrade12_NameLbl"
-                            Content="+1 Slow time 30s"
+                            Content="Slow time +30s"
                             HorizontalContentAlignment="Center"
                             VerticalContentAlignment="Center"
                             FontFamily="Tahoma"
