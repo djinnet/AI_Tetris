@@ -12,6 +12,7 @@ namespace AITetris.Classes
 {
     public class Square
     {
+        // Contructor for Square that assigns X and Y values, and determines the full image path.
         public Square(int coordinateX, int coordinateY, string color)
         {
             this.coordinateX = coordinateX;

@@ -8,6 +8,7 @@ namespace AITetris.Classes
 {
     public class Board
     {
+        // Constructor for making a new Board.
         public Board(int xLength, int yLength)
         {
             squares = new List<Square>();

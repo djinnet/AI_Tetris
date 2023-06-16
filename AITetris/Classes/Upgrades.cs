@@ -8,6 +8,7 @@ namespace AITetris.Classes
 {
     public class Upgrades
     {
+        // Constructor to initialize Upgrades and set default scoreMultiplier.
         public Upgrades()
         {
             scoreMultiplier = 1;

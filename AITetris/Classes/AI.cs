@@ -9,6 +9,7 @@ namespace AITetris.Classes
 {
     public class AI : Character
     {
+        // Constructor for making an entirely new AI.
         public AI(string name, int populationSize, int inputSize) : base(name)
         {
             this.populationSize = populationSize;
@@ -18,6 +19,7 @@ namespace AITetris.Classes
             GeneratePopulation(inputSize);
         }
 
+        // Constructor for making an AI from database information.
         public AI(int id, string name, int seed, Individual[] population, int generationNumber) : base(name)
         {
             this.generationID = id;
@@ -34,6 +36,7 @@ namespace AITetris.Classes
 
         private int populationSize;
 
+        // Generates a full population for the AI..
         public void GeneratePopulation(int inputSize)
         {
             population = new Individual[populationSize];

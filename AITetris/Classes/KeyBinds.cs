@@ -9,6 +9,7 @@ namespace AITetris.Classes
 {
     public class KeyBinds
     {
+        // Constructor for setting KeyBinds with default value.
         public KeyBinds()
         {
             insta = Key.Space;
