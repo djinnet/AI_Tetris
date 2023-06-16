@@ -184,83 +184,138 @@ namespace AITetris.Controls
 
         private void LeaderboardControlsFindPlayerBtn_Click(object sender, RoutedEventArgs e)
         {
+            //call sql database with name from text box
             scores = SQLCalls.SearchLeaderboardOnName(LeaderboardControlsFindPlayerTxtbox.Text);
+            //clear current leaderboard
             LeaderboardGrid.Children.Clear();
+            //bool to note we are searching now
             isSerching = true;
+            //fill the leaderboard with the gotten entries
             FillLeaderboard();
         }
 
         private void LeaderboardPrieviousTenBtn_Click(object sender, RoutedEventArgs e)
         {
+            //check if searching
             if (isSerching)
             {
-                if (SQLCalls.GetPrevious10Leaderboard(scores[0].rank, LeaderboardControlsFindPlayerTxtbox.Text).Count != 0)
+                //check if searched name yeilded results
+                if (scores.Count != 0)
                 {
-                    scores = SQLCalls.GetPrevious10Leaderboard(scores[0].rank, LeaderboardControlsFindPlayerTxtbox.Text);
-                    LeaderboardGrid.Children.Clear();
-                    FillLeaderboard();
-                    LeaderboardNextTenBtn.IsEnabled = true;
+                    //check if there are any previous entries to get
+                    if (SQLCalls.GetPrevious10Leaderboard(scores[0].rank, LeaderboardControlsFindPlayerTxtbox.Text).Count != 0)
+                    {
+                        //call sql database for previous 10 by rank with searched name
+                        scores = SQLCalls.GetPrevious10Leaderboard(scores[0].rank, LeaderboardControlsFindPlayerTxtbox.Text);
+                        //clear current leaderboard
+                        LeaderboardGrid.Children.Clear();
+                        //fill the leaderboard with the gotten entries
+                        FillLeaderboard();
+                        //enable LeaderboardNextTenBtn
+                        LeaderboardNextTenBtn.IsEnabled = true;
+                    }
+                    else
+                    {
+                        //disable LeaderboardPrieviousTenBtn
+                        LeaderboardPrieviousTenBtn.IsEnabled = false;
+                    }
                 }
                 else
                 {
+                    //disable LeaderboardPrieviousTenBtn
                     LeaderboardPrieviousTenBtn.IsEnabled = false;
                 }
             }
             else
             {
+                //check if there are any previous entries to get
                 if (SQLCalls.GetPrevious10Leaderboard(scores[0].rank).Count != 0)
                 {
+                    //call sql database for previous 10 by rank
                     scores = SQLCalls.GetPrevious10Leaderboard(scores[0].rank);
+                    //clear current leaderboard
                     LeaderboardGrid.Children.Clear();
+                    //fill the leaderboard with the gotten entries
                     FillLeaderboard();
+                    //enable LeaderboardNextTenBtn
                     LeaderboardNextTenBtn.IsEnabled = true;
                 }
                 else
                 {
+                    //disable LeaderboardPrieviousTenBtn
                     LeaderboardPrieviousTenBtn.IsEnabled = false;
                 }
             }
         }
 
+        //function that finds the next ten in the leaderboard
         private void LeaderboardNextTenBtn_Click(object sender, RoutedEventArgs e)
         {
+            //check if searching
             if (isSerching)
             {
-                if (SQLCalls.GetNext10Leaderboard(scores[scores.Count - 1].rank, LeaderboardControlsFindPlayerTxtbox.Text).Count != 0)
+                //check if searched name yeilded results
+                if (scores.Count != 0)
                 {
-                    scores = SQLCalls.GetNext10Leaderboard(scores[scores.Count - 1].rank, LeaderboardControlsFindPlayerTxtbox.Text);
-                    LeaderboardGrid.Children.Clear();
-                    FillLeaderboard();
-                    LeaderboardPrieviousTenBtn.IsEnabled = true;
+                    //check if there are any next entries to get
+                    if (SQLCalls.GetNext10Leaderboard(scores[scores.Count - 1].rank, LeaderboardControlsFindPlayerTxtbox.Text).Count != 0)
+                    {
+                        //call sql database for next 10 by rank with searched name
+                        scores = SQLCalls.GetNext10Leaderboard(scores[scores.Count - 1].rank, LeaderboardControlsFindPlayerTxtbox.Text);
+                        //clear current leaderboard
+                        LeaderboardGrid.Children.Clear();
+                        //fill the leaderboard with the gotten entries
+                        FillLeaderboard();
+                        //enable LeaderboardPrieviousTenBtn
+                        LeaderboardPrieviousTenBtn.IsEnabled = true;
+                    }
+                    else
+                    {
+                        //disable LeaderboardNextTenBtn
+                        LeaderboardNextTenBtn.IsEnabled = false;
+                    }
                 }
                 else
                 {
+                    //disable LeaderboardNextTenBtn
                     LeaderboardNextTenBtn.IsEnabled = false;
                 }
             }
             else
             {
+                //check if there are any next entries to get
                 if (SQLCalls.GetNext10Leaderboard(scores[scores.Count - 1].rank).Count != 0)
                 {
+                    //call sql database for next 10 by rank
                     scores = SQLCalls.GetNext10Leaderboard(scores[scores.Count - 1].rank);
+                    //clear current leaderboard
                     LeaderboardGrid.Children.Clear();
+                    //fill the leaderboard with the gotten entries
                     FillLeaderboard();
+                    //enable LeaderboardPrieviousTenBtn
                     LeaderboardPrieviousTenBtn.IsEnabled = true;
                 }
                 else
                 {
+                    //disable LeaderboardNextTenBtn
                     LeaderboardNextTenBtn.IsEnabled = false;
                 }
             }
         }
 
+        //function that refresh the leaderboard
         private void LeaderboardRefreshBtn_Click(object sender, RoutedEventArgs e)
         {
             scores = SQLCalls.GetLeaderboardTop10();
+            //clear current leaderboard
             LeaderboardGrid.Children.Clear();
+            //bool to note we are not searching
             isSerching = false;
+            //enable LeaderboardPrieviousTenBtn
             LeaderboardPrieviousTenBtn.IsEnabled = true;
+            //enable LeaderboardNextTenBtn
             LeaderboardNextTenBtn.IsEnabled = true;
+            //fill the leaderboard with the gotten entries
             FillLeaderboard();
         }
     }
