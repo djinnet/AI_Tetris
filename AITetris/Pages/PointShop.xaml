@@ -34,589 +34,579 @@
             Opacity="0.2"
             Stretch="Uniform"/>
 
-        <!-- Page title -->
-        <Label
-            x:Name="ShopTitleLbl"
-            Grid.Column="1"
-            Grid.Row="1"
-            Grid.ColumnSpan="2"
-            Content="Point shop"
-            HorizontalContentAlignment="Center"
-            VerticalContentAlignment="Center"
-            FontFamily="Tahoma"
-            FontSize="25"
-            FontWeight="Bold" />
-
         <!-- Border used as a container for the grid with upgrades -->
         <Border
             x:Name="PointShopShopGridBorder"
             Grid.Column="1"
-            Grid.Row="2"
+            Grid.Row="1"
+            Grid.RowSpan="3"
             MinWidth="375"
             HorizontalAlignment="Center"
             VerticalAlignment="Center">
 
-            <!-- Grid holding the upgrade stackpaanels -->
-            <!-- Gridsize is 3 cols by 4 rows -->
-            <Grid
-                x:Name="PointShopShopGrid">
-
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                    <ColumnDefinition Width="*" />
-                </Grid.ColumnDefinitions>
-
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                    <RowDefinition Height="*" />
-                </Grid.RowDefinitions>
-
-                <!-- Upgrades 1-12-->
-                <StackPanel
-                    x:Name="Upgrade1SP"
-                    Grid.Column="0"
-                    Grid.Row="0"
-                    Margin="5, 5">
-
-                    <!-- Upgrade title -->
-                    <Label
-                        x:Name="Upgrade1_NameLbl"
-                        Content="+1 Revive"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        FontFamily="Tahoma"
-                        FontSize="15"
-                        FontWeight="Bold"
-                        ToolTip="Add one revive to the next game when activated"/>
-
-                    <!-- Upgrade price -->
-                    <Label
-                        x:Name="Upgrade1_PriceLbl"
-                        Content="500 Meta"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        FontFamily="Tahoma"
-                        FontSize="9"
-                        FontWeight="Bold" />
-
-                    <!-- Buy button for the upgrade -->
-                    <Button
-                        x:Name="Upgrade1_buyBtn"
-                        Content="Buy"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        FontFamily="Tahoma"
-                        FontSize="12"
-                        FontWeight="Bold" 
-                        Margin="0, 5"
-                        Click="Upgrade1_buyBtn_Click">
-                    </Button>
-
-                </StackPanel>
-
-                <StackPanel
-                    x:Name="Upgrade2SP"
-                    Grid.Column="1"
-                    Grid.Row="0"
-                    Margin="5, 5">
-
-                    <!-- Upgrade title -->
-                    <Label
-                        x:Name="Upgrade2_NameLbl"
-                        Content="+1 Revive"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        FontFamily="Tahoma"
-                        FontSize="15"
-                        FontWeight="Bold"
-                        ToolTip="Add one revive to the next game when activated"/>
-
-                    <!-- Upgrade price -->
-                    <Label
-                        x:Name="Upgrade2_PriceLbl"
-                        Content="500 Meta"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        FontFamily="Tahoma"
-                        FontSize="9"
-                        FontWeight="Bold" />
-
-                    <!-- Buy button for the upgrade -->
-                    <Button
-                        x:Name="Upgrade2_buyBtn"
-                        Content="Buy"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        FontFamily="Tahoma"
-                        FontSize="12"
-                        FontWeight="Bold" 
-                        Margin="0, 5"
-                        Click="Upgrade2_buyBtn_Click">
-                    </Button>
-
-                </StackPanel>
-
-                <StackPanel
-                    x:Name="Upgrade3SP"
-                    Grid.Column="2"
-                    Grid.Row="0"
-                    Margin="5, 5">
-
-                    <!-- Upgrade title -->
-                    <Label
-                        x:Name="Upgrade3_NameLbl"
-                        Content="+1 Revive"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        FontFamily="Tahoma"
-                        FontSize="15"
-                        FontWeight="Bold"
-                        ToolTip="Add one revive to the next game when activated"/>
-
-                    <!-- Upgrade price -->
-                    <Label
-                        x:Name="Upgrade3_PriceLbl"
-                        Content="500 Meta"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        FontFamily="Tahoma"
-                        FontSize="9"
-                        FontWeight="Bold" />
-
-                    <!-- Buy button for the upgrade -->
-                    <Button
-                        x:Name="Upgrade3_buyBtn"
-                        Content="Buy"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        FontFamily="Tahoma"
-                        FontSize="12"
-                        FontWeight="Bold" 
-                        Margin="0, 5"
-                        Click="Upgrade3_buyBtn_Click">
-                    </Button>
-
-                </StackPanel>
-
-                <StackPanel
-                    x:Name="Upgrade4SP"
-                    Grid.Column="0"
-                    Grid.Row="1"
-                    Margin="5, 5">
-
-                    <!-- Upgrade title -->
-                    <Label
-                        x:Name="Upgrade4_NameLbl"
-                        Content="Score +25%"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        FontFamily="Tahoma"
-                        FontSize="15"
-                        FontWeight="Bold"
-                        ToolTip="Add a permanent 25% point increase to the next game when activated"/>
-
-                    <!-- Upgrade price -->
-                    <Label
-                        x:Name="Upgrade4_PriceLbl"
-                        Content="500 Meta"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        FontFamily="Tahoma"
-                        FontSize="9"
-                        FontWeight="Bold" />
-
-                    <!-- Buy button for the upgrade -->
-                    <Button
-                        x:Name="Upgrade4_buyBtn"
-                        Content="Buy"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        FontFamily="Tahoma"
-                        FontSize="12"
-                        FontWeight="Bold" 
-                        Margin="0, 5"
-                        Click="Upgrade4_buyBtn_Click">
-                    </Button>
-
-                </StackPanel>
-
-                <StackPanel
-                    x:Name="Upgrade5SP"
-                    Grid.Column="1"
-                    Grid.Row="1"
-                    Margin="5, 5">
-
-                    <!-- Upgrade title -->
-                    <Label
-                        x:Name="Upgrade5_NameLbl"
-                        Content="Score +25%"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        FontFamily="Tahoma"
-                        FontSize="15"
-                        FontWeight="Bold"
-                        ToolTip="Add a permanent 25% point increase to the next game when activated"/>
-
-                    <!-- Upgrade price -->
-                    <Label
-                        x:Name="Upgrade5_PriceLbl"
-                        Content="500 Meta"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        FontFamily="Tahoma"
-                        FontSize="9"
-                        FontWeight="Bold" />
-
-                    <!-- Buy button for the upgrade -->
-                    <Button
-                        x:Name="Upgrade5_buyBtn"
-                        Content="Buy"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        FontFamily="Tahoma"
-                        FontSize="12"
-                        FontWeight="Bold" 
-                        Margin="0, 5"
-                        Click="Upgrade5_buyBtn_Click">
-                    </Button>
-
-                </StackPanel>
-
-                <StackPanel
-                    x:Name="Upgrade6SP"
-                    Grid.Column="2"
-                    Grid.Row="1"
-                    Margin="5, 5">
-
-                    <!-- Upgrade title -->
-                    <Label
-                        x:Name="Upgrade6_NameLbl"
-                        Content="Score +50%"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        FontFamily="Tahoma"
-                        FontSize="15"
-                        FontWeight="Bold"
-                        ToolTip="Add a permanent 50% point increase to the next game when activated"/>
-
-                    <!-- Upgrade price -->
-                    <Label
-                        x:Name="Upgrade6_PriceLbl"
-                        Content="500 Meta"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        FontFamily="Tahoma"
-                        FontSize="9"
-                        FontWeight="Bold" />
-
-                    <!-- Buy button for the upgrade -->
-                    <Button
-                        x:Name="Upgrade6_buyBtn"
-                        Content="Buy"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        FontFamily="Tahoma"
-                        FontSize="12"
-                        FontWeight="Bold" 
-                        Margin="0, 5"
-                        Click="Upgrade6_buyBtn_Click">
-                    </Button>
-
-                </StackPanel>
-
-                <StackPanel
-                    x:Name="Upgrade7SP"
-                    Grid.Column="0"
-                    Grid.Row="2"
-                    Margin="5, 5">
-
-                    <!-- Upgrade title -->
-                    <Label
-                        x:Name="Upgrade7_NameLbl"
-                        Content="+1 Emergency Line Clear"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        FontFamily="Tahoma"
-                        FontSize="15"
-                        FontWeight="Bold"
-                        ToolTip="A button in the Actions panel will be available. This button removes the lowest 2 lines in the gameboard. In the next game when activated"/>
-
-                    <!-- Upgrade price -->
-                    <Label
-                        x:Name="Upgrade7_PriceLbl"
-                        Content="500 Meta"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        FontFamily="Tahoma"
-                        FontSize="9"
-                        FontWeight="Bold" />
-
-                    <!-- Buy button for the upgrade -->
-                    <Button
-                        x:Name="Upgrade7_buyBtn"
-                        Content="Buy"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        FontFamily="Tahoma"
-                        FontSize="12"
-                        FontWeight="Bold" 
-                        Margin="0, 5"
-                        Click="Upgrade7_buyBtn_Click">
-                    </Button>
-
-                </StackPanel>
-
-                <StackPanel
-                    x:Name="Upgrade8SP"
-                    Grid.Column="1"
-                    Grid.Row="2"
-                    Margin="5, 5">
-
-                    <!-- Upgrade title -->
-                    <Label
-                        x:Name="Upgrade8_NameLbl"
-                        Content="+1 Emergency Line Clear"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        FontFamily="Tahoma"
-                        FontSize="15"
-                        FontWeight="Bold"
-                        ToolTip="A button in the Actions panel will be available. This button removes the lowest 2 lines in the gameboard. In the next game when activated"/>
-
-                    <!-- Upgrade price -->
-                    <Label
-                        x:Name="Upgrade8_PriceLbl"
-                        Content="500 Meta"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        FontFamily="Tahoma"
-                        FontSize="9"
-                        FontWeight="Bold" />
-
-                    <!-- Buy button for the upgrade -->
-                    <Button
-                        x:Name="Upgrade8_buyBtn"
-                        Content="Buy"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        FontFamily="Tahoma"
-                        FontSize="12"
-                        FontWeight="Bold" 
-                        Margin="0, 5"
-                        Click="Upgrade8_buyBtn_Click">
-                    </Button>
-
-                </StackPanel>
-
-                <StackPanel
-                    x:Name="Upgrade9SP"
-                    Grid.Column="2"
-                    Grid.Row="2"
-                    Margin="5, 5">
-
-                    <!-- Upgrade title -->
-                    <Label
-                        x:Name="Upgrade9_NameLbl"
-                        Content="+1 Emergency Line Clear"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        FontFamily="Tahoma"
-                        FontSize="15"
-                        FontWeight="Bold"
-                        ToolTip="A button in the Actions panel will be available. This button removes the lowest 2 lines in the gameboard. In the next game when activated"/>
-
-                    <!-- Upgrade price -->
-                    <Label
-                        x:Name="Upgrade9_PriceLbl"
-                        Content="500 Meta"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        FontFamily="Tahoma"
-                        FontSize="9"
-                        FontWeight="Bold" />
-
-                    <!-- Buy button for the upgrade -->
-                    <Button
-                        x:Name="Upgrade9_buyBtn"
-                        Content="Buy"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        FontFamily="Tahoma"
-                        FontSize="12"
-                        FontWeight="Bold" 
-                        Margin="0, 5"
-                        Click="Upgrade9_buyBtn_Click">
-                    </Button>
-
-                </StackPanel>
-
-                <StackPanel
-                    x:Name="Upgrade10SP"
-                    Grid.Column="0"
-                    Grid.Row="3"
-                    Margin="5, 5">
-
-                    <!-- Upgrade title -->
-                    <Label
-                        x:Name="Upgrade10_NameLbl"
-                        Content="+1 Remove swap"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        FontFamily="Tahoma"
-                        FontSize="15"
-                        FontWeight="Bold"
-                        ToolTip="A button in the Actions panel will be available. This button removes the swapped block from the swap block panel. In the next game when activated"/>
-
-                    <!-- Upgrade price -->
-                    <Label
-                        x:Name="Upgrade10_PriceLbl"
-                        Content="500 Meta"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        FontFamily="Tahoma"
-                        FontSize="9"
-                        FontWeight="Bold" />
-
-                    <!-- Buy button for the upgrade -->
-                    <Button
-                        x:Name="Upgrade10_buyBtn"
-                        Content="Buy"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        FontFamily="Tahoma"
-                        FontSize="12"
-                        FontWeight="Bold" 
-                        Margin="0, 5"
-                        Click="Upgrade10_buyBtn_Click">
-                    </Button>
-
-                </StackPanel>
-
-                <StackPanel
-                    x:Name="Upgrade11SP"
-                    Grid.Column="1"
-                    Grid.Row="3"
-                    Margin="5, 5">
-
-                    <!-- Upgrade title -->
-                    <Label
-                        x:Name="Upgrade11_NameLbl"
-                        Content="+1 Slow time 30s"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        FontFamily="Tahoma"
-                        FontSize="15"
-                        FontWeight="Bold"
-                        ToolTip="A button in the Actions panel will be available. This button add a 30 second slow time effect. In the next game when activated"/>
-
-                    <!-- Upgrade price -->
-                    <Label
-                        x:Name="Upgrade11_PriceLbl"
-                        Content="500 Meta"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        FontFamily="Tahoma"
-                        FontSize="9"
-                        FontWeight="Bold" />
-
-                    <!-- Buy button for the upgrade -->
-                    <Button
-                        x:Name="Upgrade11_buyBtn"
-                        Content="Buy"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        FontFamily="Tahoma"
-                        FontSize="12"
-                        FontWeight="Bold" 
-                        Margin="0, 5"
-                        Click="Upgrade11_buyBtn_Click">
-                    </Button>
-
-                </StackPanel>
-
-                <StackPanel
-                    x:Name="Upgrade12SP"
-                    Grid.Column="2"
-                    Grid.Row="3"
-                    Margin="5, 5">
-
-                    <!-- Upgrade title -->
-                    <Label
-                        x:Name="Upgrade12_NameLbl"
-                        Content="+1 Slow time 30s"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        FontFamily="Tahoma"
-                        FontSize="15"
-                        FontWeight="Bold"
-                        ToolTip="A button in the Actions panel will be available. This button add a 30 second slow time effect. In the next game when activated"/>
-
-                    <!-- Upgrade price -->
-                    <Label
-                        x:Name="Upgrade12_PriceLbl"
-                        Content="500 Meta"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        FontFamily="Tahoma"
-                        FontSize="9"
-                        FontWeight="Bold" />
-
-                    <!-- Buy button for the upgrade -->
-                    <Button
-                        x:Name="Upgrade12_buyBtn"
-                        Content="Buy"
-                        HorizontalContentAlignment="Center"
-                        VerticalContentAlignment="Center"
-                        FontFamily="Tahoma"
-                        FontSize="12"
-                        FontWeight="Bold" 
-                        Margin="0, 5"
-                        Click="Upgrade12_buyBtn_Click">
-                    </Button>
-
-                </StackPanel>
-            </Grid>
-            
-        </Border>
-
-        <!-- Border used as a container for the stackpanel holding the controls -->
-        <Border
-            x:Name="PointShopShopControlsBorder"
-            Grid.Column="1"
-            Grid.Row="3"
-            MinWidth="375"
-            HorizontalAlignment="Center"
-            VerticalAlignment="Top">
-
-            <!-- Stackpanel holding the wallet Label and navigation button -->
-            <StackPanel
-                x:Name="PointShopShopControlsSP">
-
-                <!-- Wallet Label -->
+            <StackPanel>
+                <!-- Page title -->
                 <Label
-                    x:Name="PointShopShopControlsMetaCurrency"
-                    Content="Wallet: 0"
+                    x:Name="ShopTitleLbl"
+                    Content="Point shop"
                     HorizontalContentAlignment="Center"
                     VerticalContentAlignment="Center"
                     FontFamily="Tahoma"
-                    FontSize="20"
-                    FontWeight="Bold" />
+                    FontSize="25"
+                    FontWeight="Bold"
+                    Margin="0,0,0,15"/>
 
-                <!-- Navigation button -->
-                <Button
-                    x:Name="PointShopShopControlsBackToMainMenu"
-                    Content="Main Menu"
-                    HorizontalContentAlignment="Center"
-                    VerticalContentAlignment="Center"
-                    FontFamily="Tahoma"
-                    FontSize="15"
-                    FontWeight="Bold" 
-                    Margin="0, 10"
-                    Click="PointShopShopControlsBackToMainMenu_Click">
-                </Button>
+                <!-- Grid holding the upgrade stackpaanels -->
+                <!-- Gridsize is 3 cols by 4 rows -->
+                <Grid
+                    x:Name="PointShopShopGrid"
+                    Margin="0,0,0,15">
+
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                        <ColumnDefinition Width="*" />
+                    </Grid.ColumnDefinitions>
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
+
+                    <!-- Upgrades 1-12-->
+                    <StackPanel
+                        x:Name="Upgrade1SP"
+                        Grid.Column="0"
+                        Grid.Row="0"
+                        Margin="5, 5">
+
+                        <!-- Upgrade title -->
+                        <Label
+                            x:Name="Upgrade1_NameLbl"
+                            Content="+1 Revive"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontFamily="Tahoma"
+                            FontSize="15"
+                            FontWeight="Bold"
+                            ToolTip="Add one revive to the next game when activated"/>
+
+                        <!-- Upgrade price -->
+                        <Label
+                            x:Name="Upgrade1_PriceLbl"
+                            Content="500 Meta"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontFamily="Tahoma"
+                            FontSize="9"
+                            FontWeight="Bold" />
+
+                        <!-- Buy button for the upgrade -->
+                        <Button
+                            x:Name="Upgrade1_buyBtn"
+                            Content="Buy"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontFamily="Tahoma"
+                            FontSize="12"
+                            FontWeight="Bold" 
+                            Margin="0, 5"
+                            Click="Upgrade1_buyBtn_Click">
+                        </Button>
+
+                    </StackPanel>
+
+                    <StackPanel
+                        x:Name="Upgrade2SP"
+                        Grid.Column="1"
+                        Grid.Row="0"
+                        Margin="5, 5">
+
+                        <!-- Upgrade title -->
+                        <Label
+                            x:Name="Upgrade2_NameLbl"
+                            Content="+1 Revive"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontFamily="Tahoma"
+                            FontSize="15"
+                            FontWeight="Bold"
+                            ToolTip="Add one revive to the next game when activated"/>
+
+                        <!-- Upgrade price -->
+                        <Label
+                            x:Name="Upgrade2_PriceLbl"
+                            Content="500 Meta"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontFamily="Tahoma"
+                            FontSize="9"
+                            FontWeight="Bold" />
+
+                        <!-- Buy button for the upgrade -->
+                        <Button
+                            x:Name="Upgrade2_buyBtn"
+                            Content="Buy"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontFamily="Tahoma"
+                            FontSize="12"
+                            FontWeight="Bold" 
+                            Margin="0, 5"
+                            Click="Upgrade2_buyBtn_Click">
+                        </Button>
+
+                    </StackPanel>
+
+                    <StackPanel
+                        x:Name="Upgrade3SP"
+                        Grid.Column="2"
+                        Grid.Row="0"
+                        Margin="5, 5">
+
+                        <!-- Upgrade title -->
+                        <Label
+                            x:Name="Upgrade3_NameLbl"
+                            Content="+1 Revive"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontFamily="Tahoma"
+                            FontSize="15"
+                            FontWeight="Bold"
+                            ToolTip="Add one revive to the next game when activated"/>
+
+                        <!-- Upgrade price -->
+                        <Label
+                            x:Name="Upgrade3_PriceLbl"
+                            Content="500 Meta"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontFamily="Tahoma"
+                            FontSize="9"
+                            FontWeight="Bold" />
+
+                        <!-- Buy button for the upgrade -->
+                        <Button
+                            x:Name="Upgrade3_buyBtn"
+                            Content="Buy"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontFamily="Tahoma"
+                            FontSize="12"
+                            FontWeight="Bold" 
+                            Margin="0, 5"
+                            Click="Upgrade3_buyBtn_Click">
+                        </Button>
+
+                    </StackPanel>
+
+                    <StackPanel
+                        x:Name="Upgrade4SP"
+                        Grid.Column="0"
+                        Grid.Row="1"
+                        Margin="5, 5">
+
+                        <!-- Upgrade title -->
+                        <Label
+                            x:Name="Upgrade4_NameLbl"
+                            Content="Score +25%"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontFamily="Tahoma"
+                            FontSize="15"
+                            FontWeight="Bold"
+                            ToolTip="Add a permanent 25% point increase to the next game when activated"/>
+
+                        <!-- Upgrade price -->
+                        <Label
+                            x:Name="Upgrade4_PriceLbl"
+                            Content="500 Meta"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontFamily="Tahoma"
+                            FontSize="9"
+                            FontWeight="Bold" />
+
+                        <!-- Buy button for the upgrade -->
+                        <Button
+                            x:Name="Upgrade4_buyBtn"
+                            Content="Buy"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontFamily="Tahoma"
+                            FontSize="12"
+                            FontWeight="Bold" 
+                            Margin="0, 5"
+                            Click="Upgrade4_buyBtn_Click">
+                        </Button>
+
+                    </StackPanel>
+
+                    <StackPanel
+                        x:Name="Upgrade5SP"
+                        Grid.Column="1"
+                        Grid.Row="1"
+                        Margin="5, 5">
+
+                        <!-- Upgrade title -->
+                        <Label
+                            x:Name="Upgrade5_NameLbl"
+                            Content="Score +25%"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontFamily="Tahoma"
+                            FontSize="15"
+                            FontWeight="Bold"
+                            ToolTip="Add a permanent 25% point increase to the next game when activated"/>
+
+                        <!-- Upgrade price -->
+                        <Label
+                            x:Name="Upgrade5_PriceLbl"
+                            Content="500 Meta"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontFamily="Tahoma"
+                            FontSize="9"
+                            FontWeight="Bold" />
+
+                        <!-- Buy button for the upgrade -->
+                        <Button
+                            x:Name="Upgrade5_buyBtn"
+                            Content="Buy"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontFamily="Tahoma"
+                            FontSize="12"
+                            FontWeight="Bold" 
+                            Margin="0, 5"
+                            Click="Upgrade5_buyBtn_Click">
+                        </Button>
+
+                    </StackPanel>
+
+                    <StackPanel
+                        x:Name="Upgrade6SP"
+                        Grid.Column="2"
+                        Grid.Row="1"
+                        Margin="5, 5">
+
+                        <!-- Upgrade title -->
+                        <Label
+                            x:Name="Upgrade6_NameLbl"
+                            Content="Score +50%"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontFamily="Tahoma"
+                            FontSize="15"
+                            FontWeight="Bold"
+                            ToolTip="Add a permanent 50% point increase to the next game when activated"/>
+
+                        <!-- Upgrade price -->
+                        <Label
+                            x:Name="Upgrade6_PriceLbl"
+                            Content="500 Meta"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontFamily="Tahoma"
+                            FontSize="9"
+                            FontWeight="Bold" />
+
+                        <!-- Buy button for the upgrade -->
+                        <Button
+                            x:Name="Upgrade6_buyBtn"
+                            Content="Buy"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontFamily="Tahoma"
+                            FontSize="12"
+                            FontWeight="Bold" 
+                            Margin="0, 5"
+                            Click="Upgrade6_buyBtn_Click">
+                        </Button>
+
+                    </StackPanel>
+
+                    <StackPanel
+                        x:Name="Upgrade7SP"
+                        Grid.Column="0"
+                        Grid.Row="2"
+                        Margin="5, 5">
+
+                        <!-- Upgrade title -->
+                        <Label
+                            x:Name="Upgrade7_NameLbl"
+                            Content="+1 Emergency Line Clear"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontFamily="Tahoma"
+                            FontSize="15"
+                            FontWeight="Bold"
+                            ToolTip="A button in the Actions panel will be available. This button removes the lowest 2 lines in the gameboard. In the next game when activated"/>
+
+                        <!-- Upgrade price -->
+                        <Label
+                            x:Name="Upgrade7_PriceLbl"
+                            Content="500 Meta"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontFamily="Tahoma"
+                            FontSize="9"
+                            FontWeight="Bold" />
+
+                        <!-- Buy button for the upgrade -->
+                        <Button
+                            x:Name="Upgrade7_buyBtn"
+                            Content="Buy"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontFamily="Tahoma"
+                            FontSize="12"
+                            FontWeight="Bold" 
+                            Margin="0, 5"
+                            Click="Upgrade7_buyBtn_Click">
+                        </Button>
+                    </StackPanel>
+
+                    <StackPanel
+                        x:Name="Upgrade8SP"
+                        Grid.Column="1"
+                        Grid.Row="2"
+                        Margin="5, 5">
+
+                        <!-- Upgrade title -->
+                        <Label
+                            x:Name="Upgrade8_NameLbl"
+                            Content="+1 Emergency Line Clear"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontFamily="Tahoma"
+                            FontSize="15"
+                            FontWeight="Bold"
+                            ToolTip="A button in the Actions panel will be available. This button removes the lowest 2 lines in the gameboard. In the next game when activated"/>
+
+                        <!-- Upgrade price -->
+                        <Label
+                            x:Name="Upgrade8_PriceLbl"
+                            Content="500 Meta"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontFamily="Tahoma"
+                            FontSize="9"
+                            FontWeight="Bold" />
+
+                        <!-- Buy button for the upgrade -->
+                        <Button
+                            x:Name="Upgrade8_buyBtn"
+                            Content="Buy"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontFamily="Tahoma"
+                            FontSize="12"
+                            FontWeight="Bold" 
+                            Margin="0, 5"
+                            Click="Upgrade8_buyBtn_Click">
+                        </Button>
+
+                    </StackPanel>
+
+                    <StackPanel
+                        x:Name="Upgrade9SP"
+                        Grid.Column="2"
+                        Grid.Row="2"
+                        Margin="5, 5">
+
+                        <!-- Upgrade title -->
+                        <Label
+                            x:Name="Upgrade9_NameLbl"
+                            Content="+1 Emergency Line Clear"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontFamily="Tahoma"
+                            FontSize="15"
+                            FontWeight="Bold"
+                            ToolTip="A button in the Actions panel will be available. This button removes the lowest 2 lines in the gameboard. In the next game when activated"/>
+
+                        <!-- Upgrade price -->
+                        <Label
+                            x:Name="Upgrade9_PriceLbl"
+                            Content="500 Meta"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontFamily="Tahoma"
+                            FontSize="9"
+                            FontWeight="Bold" />
+
+                        <!-- Buy button for the upgrade -->
+                        <Button
+                            x:Name="Upgrade9_buyBtn"
+                            Content="Buy"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontFamily="Tahoma"
+                            FontSize="12"
+                            FontWeight="Bold" 
+                            Margin="0, 5"
+                            Click="Upgrade9_buyBtn_Click">
+                        </Button>
+
+                    </StackPanel>
+
+                    <StackPanel
+                        x:Name="Upgrade10SP"
+                        Grid.Column="0"
+                        Grid.Row="3"
+                        Margin="5, 5">
+
+                        <!-- Upgrade title -->
+                        <Label
+                            x:Name="Upgrade10_NameLbl"
+                            Content="+1 Remove swap"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontFamily="Tahoma"
+                            FontSize="15"
+                            FontWeight="Bold"
+                            ToolTip="A button in the Actions panel will be available. This button removes the swapped block from the swap block panel. In the next game when activated"/>
+
+                        <!-- Upgrade price -->
+                        <Label
+                            x:Name="Upgrade10_PriceLbl"
+                            Content="500 Meta"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontFamily="Tahoma"
+                            FontSize="9"
+                            FontWeight="Bold" />
+
+                        <!-- Buy button for the upgrade -->
+                        <Button
+                            x:Name="Upgrade10_buyBtn"
+                            Content="Buy"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontFamily="Tahoma"
+                            FontSize="12"
+                            FontWeight="Bold" 
+                            Margin="0, 5"
+                            Click="Upgrade10_buyBtn_Click">
+                        </Button>
+
+                    </StackPanel>
+
+                    <StackPanel
+                        x:Name="Upgrade11SP"
+                        Grid.Column="1"
+                        Grid.Row="3"
+                        Margin="5, 5">
+
+                        <!-- Upgrade title -->
+                        <Label
+                            x:Name="Upgrade11_NameLbl"
+                            Content="+1 Slow time 30s"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontFamily="Tahoma"
+                            FontSize="15"
+                            FontWeight="Bold"
+                            ToolTip="A button in the Actions panel will be available. This button add a 30 second slow time effect. In the next game when activated"/>
+
+                        <!-- Upgrade price -->
+                        <Label
+                            x:Name="Upgrade11_PriceLbl"
+                            Content="500 Meta"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontFamily="Tahoma"
+                            FontSize="9"
+                            FontWeight="Bold" />
+
+                        <!-- Buy button for the upgrade -->
+                        <Button
+                            x:Name="Upgrade11_buyBtn"
+                            Content="Buy"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontFamily="Tahoma"
+                            FontSize="12"
+                            FontWeight="Bold" 
+                            Margin="0, 5"
+                            Click="Upgrade11_buyBtn_Click">
+                        </Button>
+
+                    </StackPanel>
+
+                    <StackPanel
+                        x:Name="Upgrade12SP"
+                        Grid.Column="2"
+                        Grid.Row="3"
+                        Margin="5, 5">
+
+                        <!-- Upgrade title -->
+                        <Label
+                            x:Name="Upgrade12_NameLbl"
+                            Content="+1 Slow time 30s"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontFamily="Tahoma"
+                            FontSize="15"
+                            FontWeight="Bold"
+                            ToolTip="A button in the Actions panel will be available. This button add a 30 second slow time effect. In the next game when activated"/>
+
+                        <!-- Upgrade price -->
+                        <Label
+                            x:Name="Upgrade12_PriceLbl"
+                            Content="500 Meta"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontFamily="Tahoma"
+                            FontSize="9"
+                            FontWeight="Bold" />
+
+                        <!-- Buy button for the upgrade -->
+                        <Button
+                            x:Name="Upgrade12_buyBtn"
+                            Content="Buy"
+                            HorizontalContentAlignment="Center"
+                            VerticalContentAlignment="Center"
+                            FontFamily="Tahoma"
+                            FontSize="12"
+                            FontWeight="Bold" 
+                            Margin="0, 5"
+                            Click="Upgrade12_buyBtn_Click">
+                        </Button>
+
+                    </StackPanel>
+                </Grid>
+
+                <!-- Stackpanel holding the wallet Label and navigation button -->
+                <StackPanel
+                    x:Name="PointShopShopControlsSP">
+
+                    <!-- Wallet Label -->
+                    <Label
+                        x:Name="PointShopShopControlsMetaCurrency"
+                        Content="Wallet: 0"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="20"
+                        FontWeight="Bold" />
+
+                    <!-- Navigation button -->
+                    <Button
+                        x:Name="PointShopShopControlsBackToMainMenu"
+                        Content="Main Menu"
+                        HorizontalContentAlignment="Center"
+                        VerticalContentAlignment="Center"
+                        FontFamily="Tahoma"
+                        FontSize="15"
+                        FontWeight="Bold" 
+                        Margin="0, 10"
+                        Click="PointShopShopControlsBackToMainMenu_Click">
+                    </Button>
+                </StackPanel>
             </StackPanel>
         </Border>
     </Grid>
