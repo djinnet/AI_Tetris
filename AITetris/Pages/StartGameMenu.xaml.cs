@@ -16,8 +16,8 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
-using AITetris.Classes;
 using System.Reflection;
+using AITetris.Services;
 
 namespace AITetris.Pages
 {
@@ -64,13 +64,13 @@ namespace AITetris.Pages
             settings = JsonSerializer.Deserialize<Settings>(File.ReadAllText(exeDir + "/Assets/JSON/Settings.json"));
 
             // Set the slider value accordingly to the settings
-            AITrainingOnOffSlider.Value = settings.enableTraining ? 1:0;
+            AITrainingOnOffSlider.Value = settings.EnableTraining ? 1:0;
 
             for (int i = 0; i < StartGameMenuUpgradesGrid.Children.Count; i++)
             {
                 if(StartGameMenuUpgradesGrid.Children[i] is Button button)
                 {
-                    button.IsEnabled = activatedUpgrades.purchasedUpgrades[i];
+                    button.IsEnabled = activatedUpgrades.PurchasedUpgrades[i];
                 }
             }
 
@@ -81,11 +81,11 @@ namespace AITetris.Pages
         {
             ComboBox dropdown = StartGameMenuAIDropdown;
 
-            generations = SQLCalls.Load10AIGenerations();
+            generations = DatabaseService.Load10AIGenerations();
 
             foreach (AI ai in generations) 
             {
-                dropdown.Items.Add(ai.name + " " + ai.generationNumber);
+                dropdown.Items.Add(ai.Name + " " + ai.GenerationNumber);
             }
 
             dropdown.SelectedItem = dropdown.Items[0];
@@ -107,26 +107,26 @@ namespace AITetris.Pages
                     case 0:
                     case 1:
                     case 2:
-                        activatedUpgrades.revive++;
+                        activatedUpgrades.Revive++;
                         break;
                     case 3:
                     case 4:
-                        activatedUpgrades.scoreMultiplier += 0.25;
+                        activatedUpgrades.ScoreMultiplier += 0.25;
                         break;
                     case 5:
-                        activatedUpgrades.scoreMultiplier += 0.5;
+                        activatedUpgrades.ScoreMultiplier += 0.5;
                         break;
                     case 6:
                     case 7:
                     case 8:
-                        activatedUpgrades.emergancyLineClear++;
+                        activatedUpgrades.EmergancyLineClear++;
                         break;
                     case 9:
-                        activatedUpgrades.removeSwap = true;
+                        activatedUpgrades.RemoveSwap = true;
                         break;
                     case 10:
                     case 11:
-                        activatedUpgrades.slowTime += 30;
+                        activatedUpgrades.SlowTime += 30;
                         break;
                 }
             }
@@ -142,26 +142,26 @@ namespace AITetris.Pages
                     case 0:
                     case 1:
                     case 2:
-                        activatedUpgrades.revive--;
+                        activatedUpgrades.Revive--;
                         break;
                     case 3:
                     case 4:
-                        activatedUpgrades.scoreMultiplier -= 0.25;
+                        activatedUpgrades.ScoreMultiplier -= 0.25;
                         break;
                     case 5:
-                        activatedUpgrades.scoreMultiplier -= 0.5;
+                        activatedUpgrades.ScoreMultiplier -= 0.5;
                         break;
                     case 6:
                     case 7:
                     case 8:
-                        activatedUpgrades.emergancyLineClear--;
+                        activatedUpgrades.EmergancyLineClear--;
                         break;
                     case 9:
-                        activatedUpgrades.removeSwap = false;
+                        activatedUpgrades.RemoveSwap = false;
                         break;
                     case 10:
                     case 11:
-                        activatedUpgrades.slowTime -= 30;
+                        activatedUpgrades.SlowTime -= 30;
                         break;
                 }
             }
@@ -273,7 +273,7 @@ namespace AITetris.Pages
                     int inputSize = (((10 + 2) * 20) + 4 + 4 + 4) * 4;
 
                     // Sets a new AI
-                    AI ai = new AI(Nametxtbox.Text, populationSize, inputSize);
+                    AI ai = AI.Create(Nametxtbox.Text, populationSize, inputSize);//new AI(Nametxtbox.Text, populationSize, inputSize);
 
                     // Starts a new game and navigates to the gameBoard.
                     GameBoard gameBoard = new GameBoard(ai, activatedUpgrades);
@@ -337,7 +337,7 @@ namespace AITetris.Pages
                 {
                     if (StartGameMenuUpgradesGrid.Children[i] is Button button)
                     {
-                        button.IsEnabled = activatedUpgrades.purchasedUpgrades[i];
+                        button.IsEnabled = activatedUpgrades.PurchasedUpgrades[i];
                     }
                 }
             }
@@ -346,7 +346,7 @@ namespace AITetris.Pages
         private void AITrainingOnOffSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             // Set the enableTraining to the value of the slider value
-            settings.enableTraining = ((Slider)sender).Value == 1 ? true : false;
+            settings.EnableTraining = ((Slider)sender).Value == 1 ? true : false;
 
             // Write new settings to the settings file
             File.WriteAllText(exeDir + "/Assets/JSON/Settings.json", JsonSerializer.Serialize(settings, new JsonSerializerOptions() { WriteIndented = true }));

@@ -54,12 +54,12 @@ namespace AITetris.Pages
             settings = JsonSerializer.Deserialize<Settings>(File.ReadAllText(exeDir + "/Assets/JSON/Settings.json"));
 
             // Set the settings controls using the settings
-            SettingsSliderVolume.Value = settings.volume;
-            SettingsSliderSpeed.Value = settings.startSpeed;
-            SettingsSliderDeltaSpeed.Value = settings.gameSpeed;
-            SettingsSliderAITraining.Value = Convert.ToInt32(settings.enableTraining);
-            SettingsSliderSaveBlock.Value = Convert.ToInt32(settings.enableSwapBlock);
-            SettingsSliderNextBlock.Value = Convert.ToInt32(settings.enableNextBlock);
+            SettingsSliderVolume.Value = settings.Volume;
+            SettingsSliderSpeed.Value = settings.StartSpeed;
+            SettingsSliderDeltaSpeed.Value = settings.GameSpeed;
+            SettingsSliderAITraining.Value = Convert.ToInt32(settings.EnableTraining);
+            SettingsSliderSaveBlock.Value = Convert.ToInt32(settings.EnableSwapBlock);
+            SettingsSliderNextBlock.Value = Convert.ToInt32(settings.EnableNextBlock);
 
             // Set the state to false since there is no new changes
             SettingsControlsApplySettings.IsEnabled = false;
@@ -70,7 +70,7 @@ namespace AITetris.Pages
         private void SettingsSliderVolume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             // Set the settings.volume to the slider value
-            settings.volume = (int)((Slider)sender).Value;
+            settings.Volume = (int)((Slider)sender).Value;
 
             // Set the state to true since there is new changes
             SettingsControlsApplySettings.IsEnabled = true;
@@ -80,7 +80,7 @@ namespace AITetris.Pages
         private void SettingsSliderSpeed_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             // Set the settings.startspeed to the slider value
-            settings.startSpeed = ((Slider)sender).Value;
+            settings.StartSpeed = ((Slider)sender).Value;
 
             // Set the state to true since there is new changes
             SettingsControlsApplySettings.IsEnabled = true;
@@ -90,7 +90,7 @@ namespace AITetris.Pages
         private void SettingsSliderDeltaSpeed_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             // Set the settings.deltaspeed to the slider value
-            settings.gameSpeed = ((Slider)sender).Value;
+            settings.GameSpeed = ((Slider)sender).Value;
 
             // Set the state to true since there is new changes
             SettingsControlsApplySettings.IsEnabled = true;
@@ -104,13 +104,13 @@ namespace AITetris.Pages
             if (e.NewValue == 0)
             {
                 // Toggle setting off
-                settings.enableTraining = false;
+                settings.EnableTraining = false;
                 SettingsSliderValueAITraining.Content = "Off";
             }
             else
             {
                 // Toggle setting on
-                settings.enableTraining = true;
+                settings.EnableTraining = true;
                 SettingsSliderValueAITraining.Content = "On";
             }
 
@@ -125,13 +125,13 @@ namespace AITetris.Pages
             if (e.NewValue == 0)
             {
                 // Toggle setting off
-                settings.enableSwapBlock = false;
+                settings.EnableSwapBlock = false;
                 SettingsSliderValueSaveBlock.Content = "Off";
             }
             else
             {
                 // Toggle setting on
-                settings.enableSwapBlock = true;
+                settings.EnableSwapBlock = true;
                 SettingsSliderValueSaveBlock.Content = "On";
             }
 
@@ -146,13 +146,13 @@ namespace AITetris.Pages
             if (e.NewValue == 0)
             {
                 // Toggle setting off
-                settings.enableNextBlock = false;
+                settings.EnableNextBlock = false;
                 SettingsSliderValueNextBlock.Content = "Off";
             }
             else
             {
                 // Toggle setting on
-                settings.enableNextBlock = true;
+                settings.EnableNextBlock = true;
                 SettingsSliderValueNextBlock.Content = "On";
             }
 

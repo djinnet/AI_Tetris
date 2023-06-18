@@ -45,7 +45,7 @@ namespace AITetris.Controls
             // Add amount of revives
             PauseMenuUpgradesSP.Children.Add(
                 new Label { 
-                    Content = "Revives left: " + game.game.upgrades.revive,
+                    Content = "Revives left: " + game.game.Upgrades.Revive,
                     FontFamily = new FontFamily("Tahoma"),
                     FontSize = 20,
                     FontWeight = FontWeights.Bold,
@@ -57,7 +57,7 @@ namespace AITetris.Controls
             PauseMenuUpgradesSP.Children.Add(
                 new Label
                 {
-                    Content = "Score multiplier: " + game.game.upgrades.scoreMultiplier + "x",
+                    Content = "Score multiplier: " + game.game.Upgrades.ScoreMultiplier + "x",
                     FontFamily = new FontFamily("Tahoma"),
                     FontSize = 20,
                     FontWeight = FontWeights.Bold,
@@ -69,7 +69,7 @@ namespace AITetris.Controls
             PauseMenuUpgradesSP.Children.Add(
                 new Label
                 {
-                    Content = "Remove swap left: " + (game.game.upgrades.removeSwap ? "1":"0"),
+                    Content = "Remove swap left: " + (game.game.Upgrades.RemoveSwap ? "1":"0"),
                     FontFamily = new FontFamily("Tahoma"),
                     FontSize = 20,
                     FontWeight = FontWeights.Bold,
@@ -81,7 +81,7 @@ namespace AITetris.Controls
             PauseMenuUpgradesSP.Children.Add(
                 new Label
                 {
-                    Content = "Emergency line clears left: " + game.game.upgrades.emergancyLineClear,
+                    Content = "Emergency line clears left: " + game.game.Upgrades.EmergancyLineClear,
                     FontFamily = new FontFamily("Tahoma"),
                     FontSize = 20,
                     FontWeight = FontWeights.Bold,
@@ -93,7 +93,7 @@ namespace AITetris.Controls
             PauseMenuUpgradesSP.Children.Add(
                 new Label
                 {
-                    Content = "Slow time left: " + game.game.upgrades.slowTime,
+                    Content = "Slow time left: " + game.game.Upgrades.SlowTime,
                     FontFamily = new FontFamily("Tahoma"),
                     FontSize = 20,
                     FontWeight = FontWeights.Bold,

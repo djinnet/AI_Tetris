@@ -39,15 +39,15 @@ namespace AITetris.Controls
             exeDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
 
             // Set the current settings to the game settings
-            settings = game.game.settings;
+            settings = game.game.Settings;
 
             // Update the settings variables with the settings from the game settings
-            SettingsSliderVolume.Value = settings.volume;
-            SettingsSliderSpeed.Value = settings.startSpeed;
-            SettingsSliderDeltaSpeed.Value = settings.gameSpeed;
-            SettingsSliderAITraining.Value = Convert.ToInt32(settings.enableTraining);
-            SettingsSliderSaveBlock.Value = Convert.ToInt32(settings.enableSwapBlock);
-            SettingsSliderNextBlock.Value = Convert.ToInt32(settings.enableNextBlock);
+            SettingsSliderVolume.Value = settings.Volume;
+            SettingsSliderSpeed.Value = settings.StartSpeed;
+            SettingsSliderDeltaSpeed.Value = settings.GameSpeed;
+            SettingsSliderAITraining.Value = Convert.ToInt32(settings.EnableTraining);
+            SettingsSliderSaveBlock.Value = Convert.ToInt32(settings.EnableSwapBlock);
+            SettingsSliderNextBlock.Value = Convert.ToInt32(settings.EnableNextBlock);
 
             // Set the game to the current game
             this.game = game;
@@ -120,13 +120,13 @@ namespace AITetris.Controls
             if (e.NewValue == 0)
             {
                 // Toggle the next block Off
-                settings.enableNextBlock = false;
+                settings.EnableNextBlock = false;
                 SettingsSliderValueNextBlock.Content = "Off";
             }
             else
             {
                 // Toggle the next block On
-                settings.enableNextBlock = true;
+                settings.EnableNextBlock = true;
                 SettingsSliderValueNextBlock.Content = "On";
             }
 
@@ -141,13 +141,13 @@ namespace AITetris.Controls
             if (e.NewValue == 0)
             {
                 // Toggle the save block Off
-                settings.enableSwapBlock = false;
+                settings.EnableSwapBlock = false;
                 SettingsSliderValueSaveBlock.Content = "Off";
             }
             else
             {
                 // Toggle the save block On
-                settings.enableSwapBlock = true;
+                settings.EnableSwapBlock = true;
                 SettingsSliderValueSaveBlock.Content = "On";
             }
 
@@ -162,13 +162,13 @@ namespace AITetris.Controls
             if (e.NewValue == 0)
             {
                 // Toggle the AI training Off
-                settings.enableTraining = false;
+                settings.EnableTraining = false;
                 SettingsSliderValueAITraining.Content = "Off";
             }
             else
             {
                 // Toggle the AI training On
-                settings.enableTraining = true;
+                settings.EnableTraining = true;
                 SettingsSliderValueAITraining.Content = "On";
             }
 
@@ -180,7 +180,7 @@ namespace AITetris.Controls
         private void SettingsSliderDeltaSpeed_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             // Set the gamespeed/deltaspeed to the current slider value
-            settings.gameSpeed = ((Slider)sender).Value;
+            settings.GameSpeed = ((Slider)sender).Value;
 
             // Set the state to true since there is new changes
             SettingsControlsApplySettings.IsEnabled = true;
@@ -190,7 +190,7 @@ namespace AITetris.Controls
         private void SettingsSliderSpeed_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             // Set the Startspeed/Defaultspeed to the current slider value
-            settings.startSpeed = ((Slider)sender).Value;
+            settings.StartSpeed = ((Slider)sender).Value;
 
             // Set the state to true since there is new changes
             SettingsControlsApplySettings.IsEnabled = true;
@@ -200,7 +200,7 @@ namespace AITetris.Controls
         private void SettingsSliderVolume_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
             // Set the volume to the current slider value
-            settings.volume = (int)((Slider)sender).Value;
+            settings.Volume = (int)((Slider)sender).Value;
 
             // Set the state to true since there is new changes
             SettingsControlsApplySettings.IsEnabled = true;

@@ -11,8 +11,12 @@ namespace AITetris.Classes
         // Constructor for making a new Character.
         public Character(string name)
         {
-            this.name = name;
+            this.Name = name;
         }
-        public string name;
+
+        /// <summary>
+        /// The character name
+        /// </summary>
+        public string Name { get; private set; }
     }
 }

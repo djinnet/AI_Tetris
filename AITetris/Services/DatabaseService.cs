@@ -7,10 +7,11 @@ using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
 using System.Xml.Linq;
+using AITetris.Classes;
 
-namespace AITetris.Classes
+namespace AITetris.Services
 {
-    public class SQLCalls
+    public class DatabaseService
     {
         //connection string to the sql database
         private static readonly string connectionString = "Data Source=mssql15.unoeuro.com;Initial Catalog=barrelclickers_dk_db_fightinggame;Persist Security Info=True;User ID=barrelclickers_dk;Password=ErAaR9pmFwG5";
@@ -22,7 +23,7 @@ namespace AITetris.Classes
             List<Game> games = new List<Game>();
 
             //ready the sql connection
-            using(SqlConnection conn = new SqlConnection(connectionString))
+            using (SqlConnection conn = new SqlConnection(connectionString))
             {
                 //sql query to get the top 10 on rank from leaderboard
                 string query = "SELECT TOP 10 Name, Points, LinesCleared, GameTimeInMs, IsPlayer, Rank FROM Leaderboard ORDER BY Rank ASC";
@@ -58,11 +59,11 @@ namespace AITetris.Classes
                 //ready the call to the sql server
                 SqlCommand cmd = new SqlCommand(query, conn);
                 //add the different values to the to the parameters
-                cmd.Parameters.AddWithValue("@Name", gameToCreate.character.name);
-                cmd.Parameters.AddWithValue("@Points", gameToCreate.points);
-                cmd.Parameters.AddWithValue("@LinesCleared", gameToCreate.linesCleared);
-                cmd.Parameters.AddWithValue("@GameTimeInMs", gameToCreate.time);
-                cmd.Parameters.AddWithValue("@IsPlayer", gameToCreate.isPlayer);
+                cmd.Parameters.AddWithValue("@Name", gameToCreate.Character.Name);
+                cmd.Parameters.AddWithValue("@Points", gameToCreate.Points);
+                cmd.Parameters.AddWithValue("@LinesCleared", gameToCreate.LinesCleared);
+                cmd.Parameters.AddWithValue("@GameTimeInMs", gameToCreate.Time);
+                cmd.Parameters.AddWithValue("@IsPlayer", gameToCreate.IsPlayer);
                 //open the sql connection
                 conn.Open();
                 //execute the query
@@ -83,12 +84,12 @@ namespace AITetris.Classes
                 //ready the call to the sql server
                 SqlCommand cmd = new SqlCommand(query, conn);
                 //add the different values to the to the parameters
-                cmd.Parameters.AddWithValue("@Name", gameToUpdate.character.name);
-                cmd.Parameters.AddWithValue("@Points", gameToUpdate.points);
-                cmd.Parameters.AddWithValue("@LinesCleared", gameToUpdate.linesCleared);
-                cmd.Parameters.AddWithValue("@GameTimeInMs", gameToUpdate.time);
-                cmd.Parameters.AddWithValue("@IsPlayer", gameToUpdate.isPlayer);
-                cmd.Parameters.AddWithValue("@Rank", gameToUpdate.rank);
+                cmd.Parameters.AddWithValue("@Name", gameToUpdate.Character.Name);
+                cmd.Parameters.AddWithValue("@Points", gameToUpdate.Points);
+                cmd.Parameters.AddWithValue("@LinesCleared", gameToUpdate.LinesCleared);
+                cmd.Parameters.AddWithValue("@GameTimeInMs", gameToUpdate.Time);
+                cmd.Parameters.AddWithValue("@IsPlayer", gameToUpdate.IsPlayer);
+                cmd.Parameters.AddWithValue("@Rank", gameToUpdate.Rank);
                 //open the sql connection
                 conn.Open();
                 //execute the query
@@ -111,7 +112,7 @@ namespace AITetris.Classes
                 //ready the call to the sql server
                 SqlCommand cmd = new SqlCommand(query, conn);
                 //add the value to the to the parameter
-                cmd.Parameters.AddWithValue("@Name","%" + name + "%");
+                cmd.Parameters.AddWithValue("@Name", "%" + name + "%");
                 //open the sql connection
                 conn.Open();
                 //create a reader to read from the database using the query
@@ -306,11 +307,11 @@ namespace AITetris.Classes
                 //ready the call to the sql server
                 SqlCommand cmd = new SqlCommand(query, conn);
                 //add the different values to the to the parameters
-                cmd.Parameters.AddWithValue("@YourName", yourGame.character.name);
-                cmd.Parameters.AddWithValue("@YourPoints", yourGame.points);
-                cmd.Parameters.AddWithValue("@YourLines", yourGame.linesCleared);
-                cmd.Parameters.AddWithValue("@YourTime", yourGame.time);
-                cmd.Parameters.AddWithValue("@IsPlayer", yourGame.isPlayer);
+                cmd.Parameters.AddWithValue("@YourName", yourGame.Character.Name);
+                cmd.Parameters.AddWithValue("@YourPoints", yourGame.Points);
+                cmd.Parameters.AddWithValue("@YourLines", yourGame.LinesCleared);
+                cmd.Parameters.AddWithValue("@YourTime", yourGame.Time);
+                cmd.Parameters.AddWithValue("@IsPlayer", yourGame.IsPlayer);
                 //open the sql connection
                 conn.Open();
                 //create a reader to read from the database using the query
@@ -363,9 +364,9 @@ namespace AITetris.Classes
             List<string> weights = new List<string>();
 
             // Add weights as JSON for every individual
-            foreach (Individual individual in individuals) 
+            foreach (Individual individual in individuals)
             {
-                weights.Add(JsonSerializer.Serialize(individual.chromosomes, new JsonSerializerOptions() { WriteIndented = true }));
+                weights.Add(JsonSerializer.Serialize(individual.Chromosomes, new JsonSerializerOptions() { WriteIndented = true }));
             }
 
             // Creating a new database connection

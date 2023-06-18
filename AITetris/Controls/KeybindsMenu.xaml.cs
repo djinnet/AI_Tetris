@@ -26,9 +26,9 @@ namespace AITetris.Controls
     public partial class KeybindsMenu : UserControl
     {
         // Menu variables
-        SettingsMenu prev;
-        GameBoard gamePrev;
-        Settings pauseMenuSettings;
+        private readonly SettingsMenu prev;
+        private readonly GameBoard gamePrev;
+        private readonly Settings pauseMenuSettings;
 
         // Variable that toggles listener
         private bool isListeningForKey = false;
@@ -45,13 +45,13 @@ namespace AITetris.Controls
             this.prev = prev;
 
             // Set keybinds from settings
-            KeybindsMenuKeybindPauseTxtbox.Text = prev.settings.keyBinds.pause.ToString();
-            KeybindsMenuKeybindSwitchTxtbox.Text = prev.settings.keyBinds.swap.ToString();
-            KeybindsMenuKeybindInstantDropTxtbox.Text = prev.settings.keyBinds.insta.ToString();
-            KeybindsMenuKeybindRotateTxtbox.Text = prev.settings.keyBinds.rotate.ToString();
-            KeybindsMenuKeybindLeftTxtbox.Text = prev.settings.keyBinds.left.ToString();
-            KeybindsMenuKeybindRightTxtbox.Text = prev.settings.keyBinds.right.ToString();
-            KeybindsMenuKeybindDownTxtbox.Text = prev.settings.keyBinds.drop.ToString();
+            KeybindsMenuKeybindPauseTxtbox.Text = prev.settings.KeyBinds.Pause.ToString();
+            KeybindsMenuKeybindSwitchTxtbox.Text = prev.settings.KeyBinds.Swap.ToString();
+            KeybindsMenuKeybindInstantDropTxtbox.Text = prev.settings.KeyBinds.Insta.ToString();
+            KeybindsMenuKeybindRotateTxtbox.Text = prev.settings.KeyBinds.Rotate.ToString();
+            KeybindsMenuKeybindLeftTxtbox.Text = prev.settings.KeyBinds.Left.ToString();
+            KeybindsMenuKeybindRightTxtbox.Text = prev.settings.KeyBinds.Right.ToString();
+            KeybindsMenuKeybindDownTxtbox.Text = prev.settings.KeyBinds.Drop.ToString();
         }
 
         public KeybindsMenu(GameBoard prev, Settings pauseMenuSettings)
@@ -63,13 +63,13 @@ namespace AITetris.Controls
             this.pauseMenuSettings = pauseMenuSettings;
 
             // Set keybinds from settings
-            KeybindsMenuKeybindPauseTxtbox.Text = pauseMenuSettings.keyBinds.pause.ToString();
-            KeybindsMenuKeybindSwitchTxtbox.Text = pauseMenuSettings.keyBinds.swap.ToString();
-            KeybindsMenuKeybindInstantDropTxtbox.Text = pauseMenuSettings.keyBinds.insta.ToString();
-            KeybindsMenuKeybindRotateTxtbox.Text = pauseMenuSettings.keyBinds.rotate.ToString();
-            KeybindsMenuKeybindLeftTxtbox.Text = pauseMenuSettings.keyBinds.left.ToString();
-            KeybindsMenuKeybindRightTxtbox.Text = pauseMenuSettings.keyBinds.right.ToString();
-            KeybindsMenuKeybindDownTxtbox.Text = pauseMenuSettings.keyBinds.drop.ToString();
+            KeybindsMenuKeybindPauseTxtbox.Text = pauseMenuSettings.KeyBinds.Pause.ToString();
+            KeybindsMenuKeybindSwitchTxtbox.Text = pauseMenuSettings.KeyBinds.Swap.ToString();
+            KeybindsMenuKeybindInstantDropTxtbox.Text = pauseMenuSettings.KeyBinds.Insta.ToString();
+            KeybindsMenuKeybindRotateTxtbox.Text = pauseMenuSettings.KeyBinds.Rotate.ToString();
+            KeybindsMenuKeybindLeftTxtbox.Text = pauseMenuSettings.KeyBinds.Left.ToString();
+            KeybindsMenuKeybindRightTxtbox.Text = pauseMenuSettings.KeyBinds.Right.ToString();
+            KeybindsMenuKeybindDownTxtbox.Text = pauseMenuSettings.KeyBinds.Drop.ToString();
         }
         // UI buttons
         // Remove the keybind menu
@@ -104,31 +104,31 @@ namespace AITetris.Controls
                     switch (typeOfKeybind)
                     {
                         case "Pause":
-                            pauseMenuSettings.keyBinds.pause = pressedKey;
+                            pauseMenuSettings.KeyBinds.Pause = pressedKey;
                             break;
 
                         case "Switch":
-                            pauseMenuSettings.keyBinds.swap = pressedKey;
+                            pauseMenuSettings.KeyBinds.Swap = pressedKey;
                             break;
 
                         case "InstantDrop":
-                            pauseMenuSettings.keyBinds.insta = pressedKey;
+                            pauseMenuSettings.KeyBinds.Insta = pressedKey;
                             break;
 
                         case "Rotate":
-                            pauseMenuSettings.keyBinds.rotate = pressedKey;
+                            pauseMenuSettings.KeyBinds.Rotate = pressedKey;
                             break;
 
                         case "Left":
-                            pauseMenuSettings.keyBinds.left = pressedKey;
+                            pauseMenuSettings.KeyBinds.Left = pressedKey;
                             break;
 
                         case "Right":
-                            pauseMenuSettings.keyBinds.right = pressedKey;
+                            pauseMenuSettings.KeyBinds.Right = pressedKey;
                             break;
 
                         case "Down":
-                            pauseMenuSettings.keyBinds.drop = pressedKey;
+                            pauseMenuSettings.KeyBinds.Drop = pressedKey;
                             break;
 
                         default:
@@ -141,31 +141,31 @@ namespace AITetris.Controls
                     switch (typeOfKeybind)
                     {
                         case "Pause":
-                            prev.settings.keyBinds.pause = pressedKey;
+                            prev.settings.KeyBinds.Pause = pressedKey;
                             break;
 
                         case "Switch":
-                            prev.settings.keyBinds.swap = pressedKey;
+                            prev.settings.KeyBinds.Swap = pressedKey;
                             break;
 
                         case "InstantDrop":
-                            prev.settings.keyBinds.insta = pressedKey;
+                            prev.settings.KeyBinds.Insta = pressedKey;
                             break;
 
                         case "Rotate":
-                            prev.settings.keyBinds.rotate = pressedKey;
+                            prev.settings.KeyBinds.Rotate = pressedKey;
                             break;
 
                         case "Left":
-                            prev.settings.keyBinds.left = pressedKey;
+                            prev.settings.KeyBinds.Left = pressedKey;
                             break;
 
                         case "Right":
-                            prev.settings.keyBinds.right = pressedKey;
+                            prev.settings.KeyBinds.Right = pressedKey;
                             break;
 
                         case "Down":
-                            prev.settings.keyBinds.drop = pressedKey;
+                            prev.settings.KeyBinds.Drop = pressedKey;
                             break;
 
                         default:

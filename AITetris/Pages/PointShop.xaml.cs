@@ -57,7 +57,7 @@ namespace AITetris.Pages
             // Update the UI label for metacurrency
             PointShopShopControlsMetaCurrency.Content = metaCurrency;
 
-            upgradeStates = upgrades.purchasedUpgrades;
+            upgradeStates = upgrades.PurchasedUpgrades;
 
             // Flip the upgradestates to toggle is enabled on the upgrade buttons
             ChangeButtonEnabledState();
@@ -111,7 +111,7 @@ namespace AITetris.Pages
                 // Disable the button and the the content of the button to Purchased
                 button.IsEnabled = false;
                 button.Content = "Purchased";
-                upgrades.purchasedUpgrades[index] = true;
+                upgrades.PurchasedUpgrades[index] = true;
             }
         }
 

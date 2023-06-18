@@ -24,6 +24,8 @@ using System.Windows.Threading;
 using AITetris.Classes;
 using AITetris.Controllers;
 using AITetris.Controls;
+using AITetris.Enums;
+using AITetris.Services;
 
 namespace AITetris.Pages
 {
@@ -93,21 +95,21 @@ namespace AITetris.Pages
             exeDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
 
             // Create a new instannce of game where gameboard is created, character is set and the settings is applied
-            game = new Game(
-                new Board(maxWidth + 2, maxHeight),
+            game = Game.Create(
+                Board.Create(maxWidth + 2, maxHeight),
                 character,
                 JsonSerializer.Deserialize<Settings>(File.ReadAllText(exeDir + "/Assets/JSON/Settings.json")),
                 upgrades);
 
             // Checks if the character is an AI and if so, sets the AI-specific variables.
-            if (!game.isPlayer)
+            if (!game.IsPlayer)
             {
                 currentIndividual = 0;
                 currentChromosome = 0;
                 bestFitness = 0.0;
 
                 // Random is used to specifiy the order of figures. Using the same seed maked each game the same.
-                rand = new Random((game.character as AI).seed);
+                rand = new Random((game.Character as AI).Seed);
             }
             else
             {
@@ -116,7 +118,7 @@ namespace AITetris.Pages
 
 
             // Set the playername in the scoreboard
-            GameBoardScorePlayerLbl.Content = character.name;
+            GameBoardScorePlayerLbl.Content = character.Name;
 
             // Set the AI panel labels
             GameBoardAINameLbl.Content = "AI Name: ";
@@ -127,15 +129,15 @@ namespace AITetris.Pages
             GameBoardLastFitnessLbl.Content = "Last Fitness: ";
 
             // Check if AI is enabled
-            if (!game.isPlayer)
+            if (!game.IsPlayer)
             {
                 // Set the AI panel labels
-                GameBoardAINameLbl.Content = character.name;
-                GameBoardGenerationLbl.Content = "Generation: " + (game.character as AI).generationNumber.ToString();
+                GameBoardAINameLbl.Content = character.Name;
+                GameBoardGenerationLbl.Content = "Generation: " + (game.Character as AI).GenerationNumber.ToString();
                 GameBoardIndividualLbl.Content = "Individual: " + currentIndividual.ToString();
-                GameBoardCurrentFitnessLbl.Content = "Current Fitness: " + (game.character as AI).population[currentIndividual].fitness;
+                GameBoardCurrentFitnessLbl.Content = "Current Fitness: " + (game.Character as AI).Population[currentIndividual].Fitness;
                 GameBoardBestFitnessLbl.Content = "Best Fitness: " + bestFitness.ToString();
-                GameBoardLastFitnessLbl.Content = "Last Fitness: " + (game.character as AI).population[currentIndividual].fitness.ToString();
+                GameBoardLastFitnessLbl.Content = "Last Fitness: " + (game.Character as AI).Population[currentIndividual].Fitness.ToString();
             }
 
             // Apply the settings set in the JSON settings file
@@ -163,15 +165,15 @@ namespace AITetris.Pages
             // Initialize a pause menu in this game
             pauseMenu = new PauseMenu(this);
 
-            if (game.upgrades.emergancyLineClear == 0)
+            if (game.Upgrades.EmergancyLineClear == 0)
             {
                 GameBoardActionsConsumeOneBtn.IsEnabled = false;
             }
-            if (game.upgrades.slowTime == 0)
+            if (game.Upgrades.SlowTime == 0)
             {
                 GameBoardActionsConsumeTwoBtn.IsEnabled = false;
             }
-            if (!game.upgrades.removeSwap)
+            if (!game.Upgrades.RemoveSwap)
             {
                 GameBoardActionsConsumeThreeBtn.IsEnabled = false;
             }
@@ -217,16 +219,16 @@ namespace AITetris.Pages
         private void FillBoard()
         {
             // Makes sure the board is clear.
-            game.board.squares.Clear();
+            game.Board.Squares.Clear();
 
             // Goes through the height of the board.
             for (int i = 0; i < maxHeight; i++)
             {
                 // Adds a block to the left, just outside of the visual grid.
-                game.board.squares.Add(new Square(-1, i, "BluePrimary"));
+                game.Board.Squares.Add(new Square(-1, i, "BluePrimary"));
 
                 // Adds a block to the right, just outside of the visual grid.
-                game.board.squares.Add(new Square(maxWidth, i, "BluePrimary"));
+                game.Board.Squares.Add(new Square(maxWidth, i, "BluePrimary"));
             }
         }
 
@@ -237,11 +239,11 @@ namespace AITetris.Pages
             foreach (Square square in squares)
             {
                 // Sets the X and Y coodinates of the square to the grid.
-                Grid.SetColumn(square.image, square.coordinateX);
-                Grid.SetRow(square.image, square.coordinateY);
+                Grid.SetColumn(square.Image, square.CoordinateX);
+                Grid.SetRow(square.Image, square.CoordinateY);
                 
                 // Adds the square to the grid.
-                grid.Children.Add(square.image);
+                grid.Children.Add(square.Image);
             }
         }
 
@@ -252,7 +254,7 @@ namespace AITetris.Pages
             foreach (Square square in squares)
             {
                 // Removes it from the grid.
-                grid.Children.Remove(square.image);
+                grid.Children.Remove(square.Image);
             }
         }
 
@@ -260,7 +262,7 @@ namespace AITetris.Pages
         private void RotateFigure()
         {
             // Visually removes the figure.
-            EraseSquares(figure.squares, GameBoardGameGrid);
+            EraseSquares(figure.Squares, GameBoardGameGrid);
 
             // Rotates the figure 90 degrees.
             figure.Rotate();
@@ -278,17 +280,17 @@ namespace AITetris.Pages
             Kickback();
 
             // Visualizes the figure.
-            DrawSquares(figure.squares, GameBoardGameGrid);
+            DrawSquares(figure.Squares, GameBoardGameGrid);
         }
 
         // A figure to move the figure on the game board.
-        private void MoveFigure(string destination)
-        {
+        private void MoveFigure(EDirection direction)
+        { 
             // Checks if the figure is able to move the direction.
-            if (Collision(destination))
+            if (Collision(direction))
             {
                 // Checks if the figure is able to move down.
-                if (destination == "down")
+                if (direction == EDirection.down)
                 {
                     // Plays a sound and adds the figure to the board.
                     SFXDrop.Play();
@@ -298,52 +300,54 @@ namespace AITetris.Pages
             }
 
             // Removes the figure visually, moves it, then visualizes it again.
-            EraseSquares(figure.squares, GameBoardGameGrid);
-            figure.Move(destination);
-            DrawSquares(figure.squares, GameBoardGameGrid);
+            EraseSquares(figure.Squares, GameBoardGameGrid);
+
+            
+            figure.Move(direction);
+            DrawSquares(figure.Squares, GameBoardGameGrid);
         }
 
         // A function that moves the figure immediately to the bottom.
         private void InstaDrop()
         {
             // Continues to run until it collides.
-            while (!Collision("down"))
+            while (!Collision(EDirection.down))
             {
                 // Removes the figure visually, moves it, then visualizes it again.
-                EraseSquares(figure.squares, GameBoardGameGrid);
-                figure.Move("down");
-                DrawSquares(figure.squares, GameBoardGameGrid);
+                EraseSquares(figure.Squares, GameBoardGameGrid);
+                figure.Move(EDirection.down);
+                DrawSquares(figure.Squares, GameBoardGameGrid);
             }
 
             // Moves the figure down once more, triggering anything that would normally happen when it moves down.
-            MoveFigure("down");
+            MoveFigure(EDirection.down);
         }
 
         // A function that generates a random figure in the Next Block grid.
         private void GenerateRandomFigure()
         {
             // Generates a random number between 0 and thene amount of figure types.
-            int randomNumber = rand.Next(0, Enum.GetNames(typeof(FigureType)).Length);
+            int randomNumber = rand.Next(0, Enum.GetNames(typeof(EFigureType)).Length);
 
             // Sets nextFigure to a new TetrisFigure with coords for the grid and the random number to specify the FigureType
-            nextFigure = new TetrisFigure(new int[]{ 1,0},(FigureType)randomNumber);
+            nextFigure = new TetrisFigure(new int[]{ 1,0},(EFigureType)randomNumber);
 
             // Visualizes the Next Block grid.
-            DrawSquares(nextFigure.squares, GameBoardNextGrid);
+            DrawSquares(nextFigure.Squares, GameBoardNextGrid);
         }
 
         // A function that moves nextFigure to the Game Board.
         private void NextToGame()
         {
             // Removes visualization of the figure in the Next Block grid.
-            EraseSquares(nextFigure.squares, GameBoardNextGrid);
+            EraseSquares(nextFigure.Squares, GameBoardNextGrid);
 
             // Sets the Game Board figure and moves it to the right position.
             figure = nextFigure;
             figure.MoveTo(new int[]{4,0});
 
             // Visualizes the figure.
-            DrawSquares(figure.squares, GameBoardGameGrid);
+            DrawSquares(figure.Squares, GameBoardGameGrid);
 
             // Checks if a figure have been swapped, otherwise start an automove timer.
             if (!hasSwapped) StartAutoMove();
@@ -358,13 +362,13 @@ namespace AITetris.Pages
             TetrisFigure reserve;
 
             // Checks if a figure already have swapped or if it is disabled in the settings.
-            if (!hasSwapped && game.settings.enableSwapBlock)
+            if (!hasSwapped && game.Settings.EnableSwapBlock)
             {
                 // Swapping is now happening.
                 hasSwapped = true;
 
                 // Removes the figure visually from the Game Board.
-                EraseSquares(figure.squares, GameBoardGameGrid);
+                EraseSquares(figure.Squares, GameBoardGameGrid);
 
                 // Checks if the Swap Block grid is empty.
                 if (swappedFigure == null)
@@ -379,7 +383,7 @@ namespace AITetris.Pages
                 else
                 {
                     // Removes visualization of the figure in the Swap Block grid.
-                    EraseSquares(swappedFigure.squares, GameBoardSwapGrid);
+                    EraseSquares(swappedFigure.Squares, GameBoardSwapGrid);
 
                     // Temporarily stores the Swap Block figure.
                     reserve = swappedFigure;
@@ -393,11 +397,11 @@ namespace AITetris.Pages
                     figure.MoveTo(new int[] { 4, 0 });
 
                     // Visualizes the block in the Game Board
-                    DrawSquares(figure.squares, GameBoardGameGrid);
+                    DrawSquares(figure.Squares, GameBoardGameGrid);
                 }
 
                 // Visualizes the block in the Swap Block grid.
-                DrawSquares(swappedFigure.squares, GameBoardSwapGrid);
+                DrawSquares(swappedFigure.Squares, GameBoardSwapGrid);
             }
         }
 
@@ -405,7 +409,7 @@ namespace AITetris.Pages
         private void FigureToBoard()
         {
             // Adds the squares of the figure to the board.
-            game.board.squares.AddRange(figure.squares);
+            game.Board.Squares.AddRange(figure.Squares);
 
             // Checks if any lines are getting cleared.
             ClearLine();
@@ -425,36 +429,36 @@ namespace AITetris.Pages
         }
 
         // A function that checks collison on move.
-        private bool Collision(string move)
+        private bool Collision(EDirection move)
         {
             bool result = false;
 
             // Checks each square in the figure.
-            foreach (Square square in figure.squares)
+            foreach (Square square in figure.Squares)
             {
                 // Checks which direction the figure is moving. Then checks if it goes outside of bounds or collides with a block.
                 switch (move)
                 {
-                    case "left":
-                        if (square.coordinateX == minWidth || BlockCollision(square, move))
+                    case EDirection.left:
+                        if (square.CoordinateX == minWidth || BlockCollision(square, move))
                         {
                             result = true;
                         }
                         break;
-                    case "right":
-                        if (square.coordinateX == maxWidth - 1 || BlockCollision(square, move))
+                    case EDirection.right:
+                        if (square.CoordinateX == maxWidth - 1 || BlockCollision(square, move))
                         {
                             result = true;
                         }
                         break;
-                    case "up":
-                        if (square.coordinateY == minHeight || BlockCollision(square, move))
+                    case EDirection.up:
+                        if (square.CoordinateY == minHeight || BlockCollision(square, move))
                         {
                             result = true;
                         }
                         break;
-                    case "down":
-                        if (square.coordinateY == maxHeight - 1 || BlockCollision(square, move))
+                    case EDirection.down:
+                        if (square.CoordinateY == maxHeight - 1 || BlockCollision(square, move))
                         {
                             result = true;
                         }
@@ -467,7 +471,7 @@ namespace AITetris.Pages
         }
 
         // A function that checks if a square is colliding with a block if it moves.
-        private bool BlockCollision(Square square, string direction)
+        private bool BlockCollision(Square square, EDirection direction)
         {
             bool result = false;
 
@@ -477,16 +481,16 @@ namespace AITetris.Pages
             // Checks what direction it moves, and sets which direction it needs to look out for.
             switch (direction)
             {
-                case "left":
+                case EDirection.left:
                     x = -1;
                     break;
-                case "right":
+                case EDirection.right:
                     x = 1;
                     break;
-                case "up":
+                case EDirection.up:
                     y = -1;
                     break;
-                case "down":
+                case EDirection.down:
                     y = 1;
                     break;
                 default:
@@ -494,7 +498,7 @@ namespace AITetris.Pages
             }
 
             // Checks if any square of the figure is moving into a square of the board.
-            int collide = game.board.squares.Where(board => board.coordinateX == square.coordinateX + x && board.coordinateY == square.coordinateY + y).Count();
+            int collide = game.Board.Squares.Where(board => board.CoordinateX == square.CoordinateX + x && board.CoordinateY == square.CoordinateY + y).Count();
             if (collide != 0)
             {
                 result = true;
@@ -507,10 +511,10 @@ namespace AITetris.Pages
         private bool CanRotate()
         {
             // Goes through each square in the figure.
-            foreach (Square square in figure.squares)
+            foreach (Square square in figure.Squares)
             {
                 // Checks if the square is overlapping with the board.
-                int collide = game.board.squares.Where(board => board.coordinateX == square.coordinateX && board.coordinateY == square.coordinateY).Count();
+                int collide = game.Board.Squares.Where(board => board.CoordinateX == square.CoordinateX && board.CoordinateY == square.CoordinateY).Count();
 
                 if (collide != 0)
                 {
@@ -524,24 +528,24 @@ namespace AITetris.Pages
         private void Kickback()
         {
             // Goes through each square of the figure.
-            foreach (Square square in figure.squares)
+            foreach (Square square in figure.Squares)
             {
                 // If the square is outside of the board, then it is moved in the opposite direction.
-                if (square.coordinateX < minWidth)
+                if (square.CoordinateX < minWidth)
                 {
-                    figure.Move("right");
+                    figure.Move(EDirection.right);
                 }
-                else if (square.coordinateX > maxWidth - 1)
+                else if (square.CoordinateX > maxWidth - 1)
                 {
-                    figure.Move("left");
+                    figure.Move(EDirection.left);
                 }
-                else if (square.coordinateY < minHeight)
+                else if (square.CoordinateY < minHeight)
                 {
-                    figure.Move("down");
+                    figure.Move(EDirection.down);
                 }
-                else if (square.coordinateY > maxHeight - 1)
+                else if (square.CoordinateY > maxHeight - 1)
                 {
-                    figure.Move("up");
+                    figure.Move(EDirection.up);
                 }
             }
         }
@@ -608,7 +612,7 @@ namespace AITetris.Pages
             for (int i = 0; i < maxHeight; i++)
             {
                 //Here we get the squares in the current row of the game grid
-                List<Square> line = game.board.squares.Where(s => s.coordinateY == i && s.coordinateX >= 0 && s.coordinateX < maxWidth).ToList();
+                List<Square> line = game.Board.Squares.Where(s => s.CoordinateY == i && s.CoordinateX >= 0 && s.CoordinateX < maxWidth).ToList();
                 //If statment to check if the amount of square equal the max width
                 if (line.Count() >= maxWidth)
                 {
@@ -616,17 +620,17 @@ namespace AITetris.Pages
                     foreach (Square square in line)
                     {
                         //Remove the square from the board (functionaly)
-                        game.board.squares.Remove(square);
+                        game.Board.Squares.Remove(square);
                         //Remove the square from the board (visualy)
-                        GameBoardGameGrid.Children.Remove(square.image);
+                        GameBoardGameGrid.Children.Remove(square.Image);
                     }
                     //Here we get the squares above the current row of the game grid
-                    List<Square> above = game.board.squares.Where(s => s.coordinateY < i && s.coordinateX >= 0 && s.coordinateX < maxWidth).ToList();
+                    List<Square> above = game.Board.Squares.Where(s => s.CoordinateY < i && s.CoordinateX >= 0 && s.CoordinateX < maxWidth).ToList();
                     //Foreach loop to go through each sqaure in the above rows
                     foreach (Square square in above)
                     {
                         //Moves each square down one Y coordinate
-                        square.coordinateY++;
+                        square.CoordinateY++;
                     }
                     //Visualy erase all squares above
                     EraseSquares(above.ToArray(), GameBoardGameGrid);
@@ -634,7 +638,7 @@ namespace AITetris.Pages
                     DrawSquares(above.ToArray(), GameBoardGameGrid);
 
                     //Add line clear to total line clear
-                    game.linesCleared++;
+                    game.LinesCleared++;
                     //Call speed up function
                     SpeedUp();
                     //local line clear variable plus 1
@@ -645,7 +649,7 @@ namespace AITetris.Pages
             if (linesCleared > 0)
             {
                 //Call add point function
-                AddPoint(linesCleared, game.upgrades.scoreMultiplier);
+                AddPoint(linesCleared, game.Upgrades.ScoreMultiplier);
             }
         }
 
@@ -653,17 +657,17 @@ namespace AITetris.Pages
         private void LoseGame()
         {
             // Checks if there are more than 2 squares on the top of the board.
-            if (game.board.squares.Where(s => s.coordinateY == 0).Count() > 2)
+            if (game.Board.Squares.Where(s => s.CoordinateY == 0).Count() > 2)
             {
                 // Checks if AI Training is enabled.
-                if (game.settings.enableTraining)
+                if (game.Settings.EnableTraining)
                 {
                     // Checks if the character is an AI.
-                    if (!game.isPlayer)
+                    if (!game.IsPlayer)
                     {
                         // Calculates fitness for the current individual.
                         double currentFitness = EvaluateFitness();
-                        (game.character as AI).population[currentIndividual].fitness = currentFitness;
+                        (game.Character as AI).Population[currentIndividual].Fitness = currentFitness;
 
                         // Checks and assigns the best fitness.
                         if (currentFitness > bestFitness)
@@ -675,34 +679,34 @@ namespace AITetris.Pages
                         currentIndividual++;
 
                         // Checks if the current individual is at the end of the population.
-                        if (currentIndividual == (game.character as AI).population.Count())
+                        if (currentIndividual == (game.Character as AI).Population.Count())
                         {
                             // Advances to the next generation.
                             NextGeneration();
                             currentIndividual = 0;
-                            (game.character as AI).generationNumber++;
+                            (game.Character as AI).GenerationNumber++;
                         }
                     }
 
                     // Clears all three boards and clears lines and points.
                     ClearBoard();
-                    game.linesCleared = 0;
-                    game.points = 0;
+                    game.LinesCleared = 0;
+                    game.Points = 0;
 
                     // Checks if the character is a player.
-                    if (!game.isPlayer)
+                    if (!game.IsPlayer)
                     {
                         double currentFitness = EvaluateFitness();
 
                         // Set the AI panel labels
-                        GameBoardAINameLbl.Content = game.character.name;
-                        GameBoardGenerationLbl.Content = "Generation: " + (game.character as AI).generationNumber.ToString();
+                        GameBoardAINameLbl.Content = game.Character.Name;
+                        GameBoardGenerationLbl.Content = "Generation: " + (game.Character as AI).GenerationNumber.ToString();
                         GameBoardIndividualLbl.Content = "Individual: " + currentIndividual.ToString();
                         GameBoardLastFitnessLbl.Content = "Last Fitness: " + currentFitness.ToString();
                         GameBoardBestFitnessLbl.Content = "Best Fitness: " + bestFitness.ToString();
 
                         // Resets the Random.
-                        rand = new Random((game.character as AI).seed);
+                        rand = new Random((game.Character as AI).Seed);
                     }
                     // Resets the timer.
                     scoreboardTimer = new DispatcherTimer();
@@ -737,14 +741,14 @@ namespace AITetris.Pages
         
             // Stop the current game timers
             
-            game.time = Convert.ToInt32(elapsedTime.TotalMilliseconds);
+            game.Time = Convert.ToInt32(elapsedTime.TotalMilliseconds);
             if (!revived)
             {
-                SQLCalls.CreateLeaderboardEntry(game);
+                DatabaseService.CreateLeaderboardEntry(game);
             }
             else
             {
-                SQLCalls.UpdateLeaderboardEntry(game);
+                DatabaseService.UpdateLeaderboardEntry(game);
             }
             
             PauseTime(scoreboardTimer);
@@ -777,7 +781,7 @@ namespace AITetris.Pages
             // Clear the gamboard of content
             GameBoardGameGrid.Children.Clear();
             figure = null;
-            game.board.squares.Clear();
+            game.Board.Squares.Clear();
             GameBoardNextGrid.Children.Clear();
             nextFigure = null;
             GameBoardSwapGrid.Children.Clear();
@@ -812,17 +816,17 @@ namespace AITetris.Pages
             // Decides if the figure is going to move left, right, or not at all.
             if (calcMove < 0)
             {
-                MoveFigure("left");
+                MoveFigure(EDirection.left);
             }
             else if (calcMove > 0)
             {
-                MoveFigure("right");
+                MoveFigure(EDirection.right);
             }
 
             // Decides if the figure is going to go down slow, quick or not at all.
             if (calcDown < 0)
             {
-                MoveFigure("down");
+                MoveFigure(EDirection.down);
             }
             else if(calcDown > 0)
             {
@@ -847,7 +851,7 @@ namespace AITetris.Pages
         // A function to calculate the outputs of the AI.
         private double CalculateOutput()
         {
-            Individual individual = (game.character as AI).population[currentIndividual];
+            Individual individual = (game.Character as AI).Population[currentIndividual];
 
             int output = 0;
 
@@ -855,32 +859,32 @@ namespace AITetris.Pages
             // output_n = (input_x * chromosone[x]) + (input_x+1 * chromosone[x+1]) + (input_x+2 * chromosone[x+2]) +...
 
             // Goes through each square on the board.
-            for (int i = 0; i < game.board.squares.Count(); i++)
+            for (int i = 0; i < game.Board.Squares.Count(); i++)
             {
                 // Adds to the output and increases the current chromosome.
-                output += game.board.squares[i].coordinateX * individual.chromosomes[currentChromosome];
-                output += game.board.squares[i].coordinateY * individual.chromosomes[currentChromosome];
+                output += game.Board.Squares[i].CoordinateX * individual.Chromosomes[currentChromosome];
+                output += game.Board.Squares[i].CoordinateY * individual.Chromosomes[currentChromosome];
                 currentChromosome++;
             }
 
             // Skips chromosomes for each unused square on the board.
-            currentChromosome += game.board.gridSize - game.board.squares.Count();
+            currentChromosome += game.Board.GridSize - game.Board.Squares.Count();
 
             // Goes through each square in figure.
-            for (int i = 0; i < figure.squares.Length; i++)
+            for (int i = 0; i < figure.Squares.Length; i++)
             {
                 // Adds to the output and increases the current chromosome.
-                output += figure.squares[i].coordinateX * individual.chromosomes[currentChromosome];
-                output += figure.squares[i].coordinateY * individual.chromosomes[currentChromosome];
+                output += figure.Squares[i].CoordinateX * individual.Chromosomes[currentChromosome];
+                output += figure.Squares[i].CoordinateY * individual.Chromosomes[currentChromosome];
                 currentChromosome++;
             }
 
             // Goes through each square in nextFigure.
-            for (int i = 0; i < nextFigure.squares.Length; i++)
+            for (int i = 0; i < nextFigure.Squares.Length; i++)
             {
                 // Adds to the output and increases the current chromosome.
-                output += nextFigure.squares[i].coordinateX * individual.chromosomes[currentChromosome];
-                output += nextFigure.squares[i].coordinateY * individual.chromosomes[currentChromosome];
+                output += nextFigure.Squares[i].CoordinateX * individual.Chromosomes[currentChromosome];
+                output += nextFigure.Squares[i].CoordinateY * individual.Chromosomes[currentChromosome];
                 currentChromosome++;
             }
 
@@ -892,11 +896,11 @@ namespace AITetris.Pages
             else
             {
                 // Goes through each square in swappedFigure.
-                for (int i = 0; i < swappedFigure.squares.Length; i++)
+                for (int i = 0; i < swappedFigure.Squares.Length; i++)
                 {
                     // Adds to the output and increases the current chromosome.
-                    output += swappedFigure.squares[i].coordinateX * individual.chromosomes[currentChromosome];
-                    output += swappedFigure.squares[i].coordinateY * individual.chromosomes[currentChromosome];
+                    output += swappedFigure.Squares[i].CoordinateX * individual.Chromosomes[currentChromosome];
+                    output += swappedFigure.Squares[i].CoordinateY * individual.Chromosomes[currentChromosome];
                     currentChromosome++;
                 }
             }
@@ -908,7 +912,7 @@ namespace AITetris.Pages
         private void NextGeneration()
         {
             List<Individual> newPopulation = new List<Individual>();
-            Individual[] population = (game.character as AI).population;
+            Individual[] population = (game.Character as AI).Population;
 
             // Decides on a random individual to pair with the best.
             Random random = new Random();
@@ -916,7 +920,7 @@ namespace AITetris.Pages
 
 
             // Sets the individual with the highest fitness to be first in the next generation.
-            newPopulation.Add(population.First(i => i.fitness == population.Max(i => i.fitness)));
+            newPopulation.Add(population.First(i => i.Fitness == population.Max(i => i.Fitness)));
 
             // Makes 4 pairings between the best and the mate.
             for (int i = 0; i < 4; i++)
@@ -927,30 +931,30 @@ namespace AITetris.Pages
             // Fills the rest of the array with completely new individuals.
             for (int i = newPopulation.Count(); i < population.Length; i++)
             {
-                newPopulation.Add(new Individual(newPopulation[0].chromosomes.Length));
+                newPopulation.Add(new Individual(newPopulation[0].Chromosomes.Length));
             }
 
-            (game.character as AI).population = newPopulation.ToArray();
+            (game.Character as AI).Population = newPopulation.ToArray();
         }
 
         // A function to make a pairing between two individuals.
         private Individual Reproduce(Individual first, Individual second, Random random)
         {
             // Designates the result to be a clone of the first.
-            Individual result = new Individual(first.chromosomes, 0.0);
+            Individual result = new Individual(first.Chromosomes, 0.0);
 
             // Goes through half of the chromosomes.
-            for (int i = 0; i < (first.chromosomes.Length / 2); i++)
+            for (int i = 0; i < (first.Chromosomes.Length / 2); i++)
             {
                 // Determines which chromosome is getting changed.
-                int rng = random.Next(first.chromosomes.Length);
+                int rng = random.Next(first.Chromosomes.Length);
 
                 // Changes the chromosome to the second individuals.
-                result.chromosomes[rng] = second.chromosomes[rng];
+                result.Chromosomes[rng] = second.Chromosomes[rng];
             }
 
             // Adds a single random mutation.
-            result.chromosomes[random.Next(first.chromosomes.Length)] = result.RandomChromosome();
+            result.Chromosomes[random.Next(first.Chromosomes.Length)] = result.RandomChromosome();
 
             return result;
         }
@@ -958,7 +962,7 @@ namespace AITetris.Pages
         // A function that evalutates the current fitness.
         private double EvaluateFitness()
         {
-            return game.points + elapsedTime.TotalSeconds;
+            return game.Points + elapsedTime.TotalSeconds;
         }
 
         // A function that starts the automove timer
@@ -981,16 +985,16 @@ namespace AITetris.Pages
         private void AutoMove_Tick(object sender, EventArgs e)
         {
             // Move the figure down
-            MoveFigure("down");
+            MoveFigure(EDirection.down);
             // Checks if the character is an AI.
-            if (!game.isPlayer && !hasLost)
+            if (!game.IsPlayer && !hasLost)
             {
                 // Move the figure.
                 AIMove();
 
                 // Assing current fitnes and update the UI.
-                (game.character as AI).population[currentIndividual].fitness = EvaluateFitness();
-                GameBoardCurrentFitnessLbl.Content = "Current Fitness: " + (game.character as AI).population[currentIndividual].fitness;
+                (game.Character as AI).Population[currentIndividual].Fitness = EvaluateFitness();
+                GameBoardCurrentFitnessLbl.Content = "Current Fitness: " + (game.Character as AI).Population[currentIndividual].Fitness;
 
             }
         }
@@ -1093,11 +1097,11 @@ namespace AITetris.Pages
         
             // Every ten lines cleared
             
-            if (game.linesCleared % 10 == 0 & game.linesCleared != 0)
+            if (game.LinesCleared % 10 == 0 & game.LinesCleared != 0)
             
             {
                 // Recalculating the automovetimerinterval setting the value lower to increase the tick speed
-                autoMoveTimerInterval -= autoMoveTimerInterval * (game.settings.gameSpeed / 100);
+                autoMoveTimerInterval -= autoMoveTimerInterval * (game.Settings.GameSpeed / 100);
             }
         }
 
@@ -1117,11 +1121,11 @@ namespace AITetris.Pages
             }
                         
             // Recalculate the points and doubling the points added accordingly to the amount of lines cleared
-            game.points += Convert.ToInt32(((int)Math.Pow(2, lines) * 100) * mulitplier);
+            game.Points += Convert.ToInt32(((int)Math.Pow(2, lines) * 100) * mulitplier);
 
             // Update the scoreboard labels
-            GameBoardScorePointLbl.Content = "Point: " + game.points;
-            GameBoardScoreLineClearedLbl.Content = "Lines: " + game.linesCleared;
+            GameBoardScorePointLbl.Content = "Point: " + game.Points;
+            GameBoardScoreLineClearedLbl.Content = "Lines: " + game.LinesCleared;
             
         }
 
@@ -1129,7 +1133,7 @@ namespace AITetris.Pages
         private void ApplySettings()
         {
             //If statment to check what setting enable next block is and then sets the visibility to the respective options
-            if (game.settings.enableNextBlock)
+            if (game.Settings.EnableNextBlock)
             {
                 GameBoardNextBlockBorder.Visibility = Visibility.Visible;
             }
@@ -1139,7 +1143,7 @@ namespace AITetris.Pages
             }
 
             //If statment to check what setting enable swap block is and then sets the visibility to the respective options
-            if (game.settings.enableSwapBlock)
+            if (game.Settings.EnableSwapBlock)
             {
                 GameBoardSaveBlockBorder.Visibility = Visibility.Visible;
             }
@@ -1149,22 +1153,22 @@ namespace AITetris.Pages
             }
 
             //Sets the inital auto move timer interval
-            autoMoveTimerInterval = TimeSpan.FromMilliseconds(game.settings.startSpeed);
+            autoMoveTimerInterval = TimeSpan.FromMilliseconds(game.Settings.StartSpeed);
 
             //sets the audio level of the background music
-            backgroundMusic.Volume = Convert.ToDouble(game.settings.volume) / 100;
+            backgroundMusic.Volume = Convert.ToDouble(game.Settings.Volume) / 100;
 
             // Setting the controls from the keybinds in the controls panel
-            GameBoardControlsPause.Content = "Pause: " + game.settings.keyBinds.pause.ToString();
-            GameBoardControlsSave.Content = "Swap: " + game.settings.keyBinds.swap.ToString();
-            GameBoardControlsRotate.Content = "Rotate: " + game.settings.keyBinds.rotate.ToString();
-            GameBoardControlsLeft.Content = "Left: " + game.settings.keyBinds.left.ToString();
-            GameBoardControlsRight.Content = "Right: " + game.settings.keyBinds.right.ToString();
-            GameBoardControlsDown.Content = "Down: " + game.settings.keyBinds.drop.ToString();
-            GameBoardControlsInstantDown.Content = "Instant Down: " + game.settings.keyBinds.insta.ToString();
+            GameBoardControlsPause.Content = "Pause: " + game.Settings.KeyBinds.Pause.ToString();
+            GameBoardControlsSave.Content = "Swap: " + game.Settings.KeyBinds.Swap.ToString();
+            GameBoardControlsRotate.Content = "Rotate: " + game.Settings.KeyBinds.Rotate.ToString();
+            GameBoardControlsLeft.Content = "Left: " + game.Settings.KeyBinds.Left.ToString();
+            GameBoardControlsRight.Content = "Right: " + game.Settings.KeyBinds.Right.ToString();
+            GameBoardControlsDown.Content = "Down: " + game.Settings.KeyBinds.Drop.ToString();
+            GameBoardControlsInstantDown.Content = "Instant Down: " + game.Settings.KeyBinds.Insta.ToString();
 
             // Check if AI is enabled
-            if (!game.isPlayer)
+            if (!game.IsPlayer)
             {
                 // Removing the controls from the keybinds in the controls panel if the AI is active
                 GameBoardControlsPause.Content = "Pause: ";
@@ -1181,7 +1185,7 @@ namespace AITetris.Pages
         public void ApplySettings(Settings settings)
         {
             //sets the current settings
-            game.settings = settings;
+            game.Settings = settings;
             //Applies the current settings to the board
             ApplySettings();
         }
@@ -1191,7 +1195,7 @@ namespace AITetris.Pages
             hasLost = false;
             revived = true;
             ClearBoard();
-            game.upgrades.revive--;
+            game.Upgrades.Revive--;
             backgroundMusic.Play();
             SetBoard();
             ResumeTime(scoreboardTimer);
@@ -1212,15 +1216,15 @@ namespace AITetris.Pages
             {
                 for (int x = 0; x < maxWidth; x++)
                 {
-                    game.board.squares.Add(new Square(x, y, "GreenPrimary"));
+                    game.Board.Squares.Add(new Square(x, y, "GreenPrimary"));
                 }
             }
-            double originalMultiplier = game.upgrades.scoreMultiplier;
-            game.upgrades.scoreMultiplier = 0.5;
+            double originalMultiplier = game.Upgrades.ScoreMultiplier;
+            game.Upgrades.ScoreMultiplier = 0.5;
             ClearLine();
-            game.upgrades.scoreMultiplier = originalMultiplier;
-            game.upgrades.emergancyLineClear--;
-            if(game.upgrades.emergancyLineClear == 0)
+            game.Upgrades.ScoreMultiplier = originalMultiplier;
+            game.Upgrades.EmergancyLineClear--;
+            if(game.Upgrades.EmergancyLineClear == 0)
             {
                 GameBoardActionsConsumeOneBtn.IsEnabled = false;
             }
@@ -1230,13 +1234,13 @@ namespace AITetris.Pages
         private void GameBoardActionsConsumeTwoBtn_Click(object sender, RoutedEventArgs e)
         {
             autoMoveTimer.Interval *= 2;
-            game.settings.startSpeed *= 2;
+            game.Settings.StartSpeed *= 2;
             DispatcherTimer slowTime = new DispatcherTimer();
-            slowTime.Interval = TimeSpan.FromSeconds(game.upgrades.slowTime);
+            slowTime.Interval = TimeSpan.FromSeconds(game.Upgrades.SlowTime);
             slowTime.Tick += (object sender, EventArgs e) =>
             {
                 autoMoveTimer.Interval /=  2;
-                game.settings.startSpeed /= 2;
+                game.Settings.StartSpeed /= 2;
                 GameBoardActionsConsumeTwoBtn.IsEnabled = false;
                 slowTime.Stop();
             };
@@ -1248,10 +1252,10 @@ namespace AITetris.Pages
         {
             if (swappedFigure != null)
             {
-                EraseSquares(swappedFigure.squares, GameBoardSwapGrid);
+                EraseSquares(swappedFigure.Squares, GameBoardSwapGrid);
                 swappedFigure = null;
                 hasSwapped = false;
-                game.upgrades.removeSwap = false;
+                game.Upgrades.RemoveSwap = false;
                 GameBoardActionsConsumeThreeBtn.IsEnabled = false;
             }
         }
@@ -1260,10 +1264,10 @@ namespace AITetris.Pages
         public void GamePage_KeyDown(object sender, KeyEventArgs e)
         {
             //If statment checking if the player has lost and the player is a player
-            if (!hasLost && game.isPlayer)
+            if (!hasLost && game.IsPlayer)
             {
                 //If statment checking if the inputed key is the pause keybind
-                if(e.Key == game.settings.keyBinds.pause)
+                if(e.Key == game.Settings.KeyBinds.Pause)
                 {
                     // Trigger the pause menu
                     TogglePauseGame();
@@ -1275,36 +1279,36 @@ namespace AITetris.Pages
                     switch (e.Key)
                     {
                         //Case When the inputed key = kebind left
-                        case Key k when k == game.settings.keyBinds.left:
+                        case Key k when k == game.Settings.KeyBinds.Left:
                             //Play move sfx
                             SFXMove.Play();
                             //Call the move figure function
-                            MoveFigure("left");
+                            MoveFigure(EDirection.left);
                             break;
                         //Case When the inputed key = kebind right
-                        case Key k when k == game.settings.keyBinds.right:
+                        case Key k when k == game.Settings.KeyBinds.Right:
                             //Play move sfx
                             SFXMove.Play();
                             //Call the move figure function
-                            MoveFigure("right");
+                            MoveFigure(EDirection.right);
                             break;
                         //Case When the inputed key = kebind rotate
-                        case Key k when k == game.settings.keyBinds.rotate:
+                        case Key k when k == game.Settings.KeyBinds.Rotate:
                             //Call the Rotate Figure
                             RotateFigure();
                             break;
                         //Case When the inputed key = kebind drop
-                        case Key k when k == game.settings.keyBinds.drop:
+                        case Key k when k == game.Settings.KeyBinds.Drop:
                             //Call the move figure function
-                            MoveFigure("down");
+                            MoveFigure(EDirection.down);
                             break;
                         //Case When the inputed key = kebind insta
-                        case Key k when k == game.settings.keyBinds.insta:
+                        case Key k when k == game.Settings.KeyBinds.Insta:
                             //Call the insta drop function
                             InstaDrop();
                             break;
                         //Case When the inputed key = kebind swap
-                        case Key k when k == game.settings.keyBinds.swap:
+                        case Key k when k == game.Settings.KeyBinds.Swap:
                             //Call the swap figure function
                             Swap();
                             break;

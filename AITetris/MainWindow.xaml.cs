@@ -1,20 +1,7 @@
-﻿using AITetris.Classes;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
+﻿using AITetris.Services;
+using AITetris.Stores;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace AITetris
 {
@@ -31,19 +18,14 @@ namespace AITetris
             Loaded += MainWindow_Loaded;
 
 
-            try
+            if (!JsonIOService.CheckSetting())
             {
-                // Try to read the settings JSON file
-                File.ReadAllText(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "/Assets/JSON/Settings.json");
-            }
-            catch
-            {
-                // Create the settings JSON file if it fails
-                File.WriteAllText(System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location) + "/Assets/JSON/Settings.json", JsonSerializer.Serialize(new Settings(), new JsonSerializerOptions() { WriteIndented = true }));
+                //log the failed crash and stop the program, since it couldnt load or create the settings.
+                return;
             }
 
             // Navigate to the first page of the program (Main menu)
-            NavigationService.Navigate(new Uri("Pages/MainPage.xaml", UriKind.Relative));
+            NavigationService.Navigate(FileStore.MainMenu);
         }
 
         // Event - Fullscreen on launch

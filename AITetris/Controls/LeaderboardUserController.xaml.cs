@@ -1,5 +1,6 @@
 ﻿using AITetris.Classes;
 using AITetris.Pages;
+using AITetris.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -24,8 +25,8 @@ namespace AITetris.Controls
     {
         // Game variables
         GameBoard game;
-        // A list of games played collected from the SQLCalls function GetLeaderboardTop10
-        List<Game> scores = SQLCalls.GetLeaderboardTop10();
+        // A list of games played collected from the DatabaseService function GetLeaderboardTop10
+        List<Game> scores = DatabaseService.GetLeaderboardTop10();
         bool isSerching = false;
         public LeaderboardUserController(GameBoard game)
         {
@@ -147,12 +148,12 @@ namespace AITetris.Controls
                         // Using a shorthand switchcase we add the leaderboard content for each game we pass through in the loop
                         label.Content = j switch
                         {
-                            0 => scores[i - 1].rank,
-                            1 => scores[i - 1].character.name,
-                            2 => scores[i - 1].points,
-                            3 => scores[i - 1].linesCleared,
-                            4 => scores[i - 1].time,
-                            5 => scores[i - 1].isPlayer ? "Player" : "AI",
+                            0 => scores[i - 1].Rank,
+                            1 => scores[i - 1].Character.Name,
+                            2 => scores[i - 1].Points,
+                            3 => scores[i - 1].LinesCleared,
+                            4 => scores[i - 1].Time,
+                            5 => scores[i - 1].IsPlayer ? "Player" : "AI",
                             _ => ""
                         };
 
@@ -185,7 +186,7 @@ namespace AITetris.Controls
         private void LeaderboardControlsFindPlayerBtn_Click(object sender, RoutedEventArgs e)
         {
             //call sql database with name from text box
-            scores = SQLCalls.SearchLeaderboardOnName(LeaderboardControlsFindPlayerTxtbox.Text);
+            scores = DatabaseService.SearchLeaderboardOnName(LeaderboardControlsFindPlayerTxtbox.Text);
             //clear current leaderboard
             LeaderboardGrid.Children.Clear();
             //bool to note we are searching now
@@ -203,10 +204,10 @@ namespace AITetris.Controls
                 if (scores.Count != 0)
                 {
                     //check if there are any previous entries to get
-                    if (SQLCalls.GetPrevious10Leaderboard(scores[0].rank, LeaderboardControlsFindPlayerTxtbox.Text).Count != 0)
+                    if (DatabaseService.GetPrevious10Leaderboard(scores[0].Rank, LeaderboardControlsFindPlayerTxtbox.Text).Count != 0)
                     {
                         //call sql database for previous 10 by rank with searched name
-                        scores = SQLCalls.GetPrevious10Leaderboard(scores[0].rank, LeaderboardControlsFindPlayerTxtbox.Text);
+                        scores = DatabaseService.GetPrevious10Leaderboard(scores[0].Rank, LeaderboardControlsFindPlayerTxtbox.Text);
                         //clear current leaderboard
                         LeaderboardGrid.Children.Clear();
                         //fill the leaderboard with the gotten entries
@@ -229,10 +230,10 @@ namespace AITetris.Controls
             else
             {
                 //check if there are any previous entries to get
-                if (SQLCalls.GetPrevious10Leaderboard(scores[0].rank).Count != 0)
+                if (DatabaseService.GetPrevious10Leaderboard(scores[0].Rank).Count != 0)
                 {
                     //call sql database for previous 10 by rank
-                    scores = SQLCalls.GetPrevious10Leaderboard(scores[0].rank);
+                    scores = DatabaseService.GetPrevious10Leaderboard(scores[0].Rank);
                     //clear current leaderboard
                     LeaderboardGrid.Children.Clear();
                     //fill the leaderboard with the gotten entries
@@ -258,10 +259,10 @@ namespace AITetris.Controls
                 if (scores.Count != 0)
                 {
                     //check if there are any next entries to get
-                    if (SQLCalls.GetNext10Leaderboard(scores[scores.Count - 1].rank, LeaderboardControlsFindPlayerTxtbox.Text).Count != 0)
+                    if (DatabaseService.GetNext10Leaderboard(scores[scores.Count - 1].Rank, LeaderboardControlsFindPlayerTxtbox.Text).Count != 0)
                     {
                         //call sql database for next 10 by rank with searched name
-                        scores = SQLCalls.GetNext10Leaderboard(scores[scores.Count - 1].rank, LeaderboardControlsFindPlayerTxtbox.Text);
+                        scores = DatabaseService.GetNext10Leaderboard(scores[scores.Count - 1].Rank, LeaderboardControlsFindPlayerTxtbox.Text);
                         //clear current leaderboard
                         LeaderboardGrid.Children.Clear();
                         //fill the leaderboard with the gotten entries
@@ -284,10 +285,10 @@ namespace AITetris.Controls
             else
             {
                 //check if there are any next entries to get
-                if (SQLCalls.GetNext10Leaderboard(scores[scores.Count - 1].rank).Count != 0)
+                if (DatabaseService.GetNext10Leaderboard(scores[scores.Count - 1].Rank).Count != 0)
                 {
                     //call sql database for next 10 by rank
-                    scores = SQLCalls.GetNext10Leaderboard(scores[scores.Count - 1].rank);
+                    scores = DatabaseService.GetNext10Leaderboard(scores[scores.Count - 1].Rank);
                     //clear current leaderboard
                     LeaderboardGrid.Children.Clear();
                     //fill the leaderboard with the gotten entries
@@ -306,7 +307,7 @@ namespace AITetris.Controls
         //function that refresh the leaderboard
         private void LeaderboardRefreshBtn_Click(object sender, RoutedEventArgs e)
         {
-            scores = SQLCalls.GetLeaderboardTop10();
+            scores = DatabaseService.GetLeaderboardTop10();
             //clear current leaderboard
             LeaderboardGrid.Children.Clear();
             //bool to note we are not searching

@@ -1,25 +1,27 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Sebas\\source\\repos\\AI_Tetris\\AI_Tetris\\AITetris\\AITetris.csproj": {}
+    "C:\\Users\\Djinnet_PC\\source\\repos\\AI_Tetris\\AITetris\\AITetris.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Sebas\\source\\repos\\AI_Tetris\\AI_Tetris\\AITetris\\AITetris.csproj": {
+    "C:\\Users\\Djinnet_PC\\source\\repos\\AI_Tetris\\AITetris\\AITetris.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Sebas\\source\\repos\\AI_Tetris\\AI_Tetris\\AITetris\\AITetris.csproj",
+        "projectUniqueName": "C:\\Users\\Djinnet_PC\\source\\repos\\AI_Tetris\\AITetris\\AITetris.csproj",
         "projectName": "AITetris",
-        "projectPath": "C:\\Users\\Sebas\\source\\repos\\AI_Tetris\\AI_Tetris\\AITetris\\AITetris.csproj",
-        "packagesPath": "C:\\Users\\Sebas\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Sebas\\source\\repos\\AI_Tetris\\AI_Tetris\\AITetris\\obj\\",
+        "projectPath": "C:\\Users\\Djinnet_PC\\source\\repos\\AI_Tetris\\AITetris\\AITetris.csproj",
+        "packagesPath": "C:\\Users\\Djinnet_PC\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Djinnet_PC\\source\\repos\\AI_Tetris\\AITetris\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
         ],
         "configFilePaths": [
-          "C:\\Users\\Sebas\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Djinnet_PC\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
         "originalTargetFrameworks": [
           "net6.0-windows"
@@ -69,7 +71,7 @@
               "privateAssets": "none"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.100\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.202\\RuntimeIdentifierGraph.json"
         }
       }
     }

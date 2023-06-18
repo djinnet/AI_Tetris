@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AITetris.Stores;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
@@ -25,15 +26,8 @@ namespace AITetris.Pages
         {
             InitializeComponent();
 
-            // Add a background to the page
-            // Get path to background
-            string imagePath = System.IO.Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location) + "\\Assets\\Sprites\\Background\\SirBackground2.png";
-
-            // Set an image source
-            ImageSource imageSource = new BitmapImage(new Uri(imagePath));
-
             // Add image source to image
-            MainPageBackground.Source = imageSource;
+            MainPageBackground.Source = FileStore.BackgroundImageSource;
         }
 
         // UI buttons
@@ -41,28 +35,28 @@ namespace AITetris.Pages
         private void MainMenuStartGameBtn_Click(object sender, RoutedEventArgs e)
         {
             // Navigate to the Start Game Menu
-            NavigationService.Navigate(new Uri("Pages/StartGameMenu.xaml", UriKind.Relative));
+            NavigationService.Navigate(FileStore.GameMenu);
         }
 
         // Navigation
         private void MainMenuLeaderboardBtn_Click(object sender, RoutedEventArgs e)
         {
             // Navigate to the Leaderboard
-            NavigationService.Navigate(new Uri("Pages/Leaderboard.xaml", UriKind.Relative));
+            NavigationService.Navigate(FileStore.LeaderBoardMenu);
         }
 
         // Navigation
         private void MainMenuPointShopBtn_Click(object sender, RoutedEventArgs e)
         {
             // Navigate to the Point shop
-            NavigationService.Navigate(new Uri("Pages/PointShop.xaml", UriKind.Relative));
+            NavigationService.Navigate(FileStore.PointShopMenu);
         }
 
         // Navigation
         private void MainMenuSettingsBtn_Click(object sender, RoutedEventArgs e)
         {
             // Navigate to the Settings Menu
-            NavigationService.Navigate(new Uri("Pages/SettingsMenu.xaml", UriKind.Relative));
+            NavigationService.Navigate(FileStore.SettingsMenu);
         }
 
         // Quit game

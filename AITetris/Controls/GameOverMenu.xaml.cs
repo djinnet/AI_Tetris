@@ -1,5 +1,6 @@
 ﻿using AITetris.Classes;
 using AITetris.Pages;
+using AITetris.Services;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -36,17 +37,17 @@ namespace AITetris.Controllers
         {
             InitializeComponent();
             this.gameBoard = gameBoard;
-            gameFromDB = SQLCalls.GetExactLeaderboardEntry(gameBoard.game);
-            List<Game> leaderboard = SQLCalls.Get4AboveCurrentRank(gameFromDB.rank);
+            gameFromDB = DatabaseService.GetExactLeaderboardEntry(gameBoard.game);
+            List<Game> leaderboard = DatabaseService.Get4AboveCurrentRank(gameFromDB.Rank);
 
             // Check to see if character is AI
-            if(!gameBoard.game.isPlayer)
+            if(!gameBoard.game.IsPlayer)
             {
                 // Set the generation variables
-                generationName = gameBoard.game.character.name;
-                generationNumber = (gameBoard.game.character as AI).generationNumber;
-                individuals = (gameBoard.game.character as AI).population.ToList();
-                seed = (gameBoard.game.character as AI).seed;
+                generationName = gameBoard.game.Character.Name;
+                generationNumber = (gameBoard.game.Character as AI).GenerationNumber;
+                individuals = (gameBoard.game.Character as AI).Population.ToList();
+                seed = (gameBoard.game.Character as AI).Seed;
             }
 
             // Default set buttons to true, then disable later
@@ -55,13 +56,13 @@ namespace AITetris.Controllers
             FillLeaderboard(leaderboard);
 
             // Check if the game contains a player or AI
-            if(gameBoard.game.isPlayer == true)
+            if(gameBoard.game.IsPlayer == true)
             {
                 // Disable save AI button for player
                 GameOverMenuControlSaveAI.IsEnabled = false;
 
                 // Enable or disable the upgrades bought
-                if (gameBoard.game.upgrades.revive == 0)
+                if (gameBoard.game.Upgrades.Revive == 0)
                 {
                     // Disable Revive button for Player if you have no revives
                     GameOverMenuControlRevive.IsEnabled = false;
@@ -177,12 +178,12 @@ namespace AITetris.Controllers
 
                         label.Content = j switch
                         {
-                            0 => scores[i - 1].rank,
-                            1 => scores[i - 1].character.name,
-                            2 => scores[i - 1].points,
-                            3 => scores[i - 1].linesCleared,
-                            4 => scores[i - 1].time,
-                            5 => scores[i - 1].isPlayer ? "Player" : "AI",
+                            0 => scores[i - 1].Rank,
+                            1 => scores[i - 1].Character.Name,
+                            2 => scores[i - 1].Points,
+                            3 => scores[i - 1].LinesCleared,
+                            4 => scores[i - 1].Time,
+                            5 => scores[i - 1].IsPlayer ? "Player" : "AI",
                             _ => ""
                         };
 
@@ -208,7 +209,7 @@ namespace AITetris.Controllers
         // A button that triggers a revive when upgrade is created
         private void GameOverMenuControlRevive_Click(object sender, RoutedEventArgs e)
         {
-            gameBoard.game.rank = gameFromDB.rank;
+            gameBoard.game.rank = gameFromDB.Rank;
             gameBoard.Revive();
             gameBoard.GameBoardMainGrid.Children.Remove(this);
         }
@@ -217,10 +218,10 @@ namespace AITetris.Controllers
         private void GameOverMenuControlSaveAI_Click(object sender, RoutedEventArgs e)
         {
             // Saving the generation
-            SQLCalls.CreateGenerationEntry(generationName, generationNumber, seed);
+            DatabaseService.CreateGenerationEntry(generationName, generationNumber, seed);
 
             // Saving the individuals
-            SQLCalls.Create10IndividualsEntry(individuals, SQLCalls.GetLastGenerationID());
+            DatabaseService.Create10IndividualsEntry(individuals, DatabaseService.GetLastGenerationID());
 
             // Navigating back to main menu
             ((NavigationWindow)Window.GetWindow(this)).NavigationService.Navigate(new Uri("Pages/MainPage.xaml", UriKind.Relative));
@@ -232,7 +233,7 @@ namespace AITetris.Controllers
             Window.GetWindow(this).KeyDown -= gameBoard.GamePage_KeyDown;
             string exeDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
             int metaCurrency = Convert.ToInt32(File.ReadAllText(exeDir + "/Assets/JSON/MetaCurrency.txt"));
-            File.WriteAllText(exeDir + "/Assets/JSON/MetaCurrency.txt", ((gameBoard.game.points / 100) + metaCurrency).ToString());
+            File.WriteAllText(exeDir + "/Assets/JSON/MetaCurrency.txt", ((gameBoard.game.Points / 100) + metaCurrency).ToString());
             // Navigating back to main menu
             ((NavigationWindow)Window.GetWindow(this)).NavigationService.Navigate(new Uri("Pages/MainPage.xaml", UriKind.Relative));
         }
