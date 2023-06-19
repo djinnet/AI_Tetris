@@ -1,6 +1,8 @@
 ﻿using AITetris.Classes;
+using AITetris.Enums;
 using AITetris.Pages;
 using AITetris.Services;
+using AITetris.Stores;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -25,13 +27,14 @@ namespace AITetris.Controllers
     /// </summary>
     public partial class GameOverMenu : UserControl
     {
-        private GameBoard gameBoard;
+        private GameBoard gameBoard { get; set; }
+
         // Generation variables
-        string generationName;
-        int generationNumber;
-        List<Individual> individuals;
-        int seed = 0;
-        private Game gameFromDB;
+        string generationName { get; set; }
+        int generationNumber { get; set; }
+        List<Individual> individuals { get; set; }
+        int seed { get; set; } = 0;
+        private Game gameFromDB { get; set; }
 
         public GameOverMenu(GameBoard gameBoard)
         {
@@ -53,163 +56,18 @@ namespace AITetris.Controllers
             // Default set buttons to true, then disable later
             GameOverMenuControlSaveAI.IsEnabled = true;
             GameOverMenuControlRevive.IsEnabled = true;
-            FillLeaderboard(leaderboard);
+            LeaderboardGrid.FillLeaderboard(leaderboard);
 
-            // Check if the game contains a player or AI
-            if(gameBoard.game.IsPlayer == true)
-            {
-                // Disable save AI button for player
-                GameOverMenuControlSaveAI.IsEnabled = false;
-
-                // Enable or disable the upgrades bought
-                if (gameBoard.game.Upgrades.Revive == 0)
-                {
-                    // Disable Revive button for Player if you have no revives
-                    GameOverMenuControlRevive.IsEnabled = false;
-                }
-            }
-            else
-            {
-                // Disable Revive button for AI
-                GameOverMenuControlRevive.IsEnabled = false;
-            }
+            (bool SaveAi, bool Revive) = gameBoard.CheckPlayerStateOfSaveAiAndRevive();
+            GameOverMenuControlSaveAI.IsEnabled = SaveAi;
+            GameOverMenuControlRevive.IsEnabled = Revive;
         }
-        private void FillLeaderboard(List<Game> scores)
-        {
-            // Leaderbordgrid
-            Grid leaderboardGrid = LeaderboardGrid;
-
-            // Clear current leaderboard
-            leaderboardGrid.Children.Clear();
-
-            // Remove current definitions
-            leaderboardGrid.RowDefinitions.Clear();
-            leaderboardGrid.ColumnDefinitions.Clear();
-
-            // Amount of rows in the leaderboard
-            int rowCount = scores.Count + 1;
-
-            // Amount of columns in the leaderboard
-            int columnCount = 6;
-
-            // Create new row definitions
-            for (int i = 0; i < rowCount; i++)
-            {
-                leaderboardGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-            }
-
-            // Create new row definitions
-            for (int i = 0; i < columnCount; i++)
-            {
-                leaderboardGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star) });
-            }
-
-            // Running for each row in the leaderboard
-            for (int i = 0; i < rowCount; i++)
-            {
-                // Running for each column in the leaderboard
-                for (int j = 0; j < columnCount; j++)
-                {
-                    if (i == 0)
-                    {
-                        // Border for each label
-                        Border border = new Border();
-
-                        // Border styling
-                        border.BorderBrush = Brushes.Silver;
-                        border.BorderThickness = new Thickness(2);
-
-                        // Creating a new label
-                        Label label = new Label();
-
-                        // Add content and styling to the label
-                        switch (j)
-                        {
-                            case 0:
-                                label.Content = "Rank";
-                                break;
-                            case 1:
-                                label.Content = "Name";
-                                break;
-                            case 2:
-                                label.Content = "Point";
-                                break;
-                            case 3:
-                                label.Content = "Lines";
-                                break;
-                            case 4:
-                                label.Content = "Time";
-                                break;
-                            case 5:
-                                label.Content = "Character";
-                                break;
-
-                            default:
-                                break;
-                        }
-
-                        label.HorizontalAlignment = HorizontalAlignment.Center;
-                        label.VerticalAlignment = VerticalAlignment.Center;
-                        label.FontFamily = new FontFamily("Tahomaa");
-                        label.FontSize = 20;
-                        label.FontWeight = FontWeights.Bold;
-
-                        // Add label to border
-                        border.Child = label;
-
-                        // Add the border to the leaderboardgrid
-                        Grid.SetColumn(border, j);
-                        Grid.SetRow(border, i);
-                        leaderboardGrid.Children.Add(border);
-                    }
-                    else
-                    {
-                        // Border for each label
-                        Border border = new Border();
-
-                        // Border styling
-                        border.BorderBrush = Brushes.Silver;
-                        border.BorderThickness = new Thickness(2);
-
-                        // Creating a new label
-                        Label label = new Label();
-
-                        // Add content and styling to the label
-
-                        label.Content = j switch
-                        {
-                            0 => scores[i - 1].Rank,
-                            1 => scores[i - 1].Character.Name,
-                            2 => scores[i - 1].Points,
-                            3 => scores[i - 1].LinesCleared,
-                            4 => scores[i - 1].Time,
-                            5 => scores[i - 1].IsPlayer ? "Player" : "AI",
-                            _ => ""
-                        };
-
-                        label.HorizontalAlignment = HorizontalAlignment.Center;
-                        label.VerticalAlignment = VerticalAlignment.Center;
-                        label.FontFamily = new FontFamily("Tahomaa");
-                        label.FontSize = 15;
-                        label.FontWeight = FontWeights.Bold;
-
-                        // Add label to border
-                        border.Child = label;
-
-                        // Add the border to the leaderboardgrid
-                        Grid.SetColumn(border, j);
-                        Grid.SetRow(border, i);
-                        leaderboardGrid.Children.Add(border);
-                    }
-                }
-            }
-        }
-        
+       
         // UI buttons
         // A button that triggers a revive when upgrade is created
         private void GameOverMenuControlRevive_Click(object sender, RoutedEventArgs e)
         {
-            gameBoard.game.rank = gameFromDB.Rank;
+            gameBoard.game.Rank = gameFromDB.Rank;
             gameBoard.Revive();
             gameBoard.GameBoardMainGrid.Children.Remove(this);
         }
@@ -224,18 +82,17 @@ namespace AITetris.Controllers
             DatabaseService.Create10IndividualsEntry(individuals, DatabaseService.GetLastGenerationID());
 
             // Navigating back to main menu
-            ((NavigationWindow)Window.GetWindow(this)).NavigationService.Navigate(new Uri("Pages/MainPage.xaml", UriKind.Relative));
+            ((NavigationWindow)Window.GetWindow(this)).NavigationService.Navigate(FileStore.MainMenu);
         }
 
         // Navigation
         private void GameOverMenuControlQuitGame_Click(object sender, RoutedEventArgs e)
         {
             Window.GetWindow(this).KeyDown -= gameBoard.GamePage_KeyDown;
-            string exeDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
-            int metaCurrency = Convert.ToInt32(File.ReadAllText(exeDir + "/Assets/JSON/MetaCurrency.txt"));
-            File.WriteAllText(exeDir + "/Assets/JSON/MetaCurrency.txt", ((gameBoard.game.Points / 100) + metaCurrency).ToString());
+            int metaCurrency = TxtIOService.Read;
+            TxtIOService.Write(metaCurrency, gameBoard.game.Points);
             // Navigating back to main menu
-            ((NavigationWindow)Window.GetWindow(this)).NavigationService.Navigate(new Uri("Pages/MainPage.xaml", UriKind.Relative));
+            ((NavigationWindow)Window.GetWindow(this)).NavigationService.Navigate(FileStore.MainMenu);
         }
     }
 }

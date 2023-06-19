@@ -60,6 +60,11 @@ public static class FileStore
         return new Uri(@$"Assets/JSON/{value}.json", UriKind.Relative);
     }
 
+    private static Uri SetAssetTxtUri(string value)
+    {
+        return new Uri(@$"Assets/JSON/{value}.txt", UriKind.Relative);
+    }
+
     private static Uri SetAssetSoundUri(string value)
     {
         return new Uri(@$"Assets/Sound/{value}", UriKind.Relative);
@@ -86,4 +91,8 @@ public static class FileStore
         };
         return image;
 	}
+
+	public static Uri MetaCurrencyFileLocation => SetAssetTxtUri("MetaCurrency");
+
+	
 }

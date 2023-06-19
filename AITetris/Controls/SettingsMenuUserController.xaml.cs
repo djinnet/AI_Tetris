@@ -1,21 +1,10 @@
 ﻿using AITetris.Classes;
 using AITetris.Pages;
+using AITetris.Services;
+using AITetris.Stores;
 using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace AITetris.Controls
 {
@@ -36,10 +25,10 @@ namespace AITetris.Controls
             InitializeComponent();
 
             // Set the execution directory path
-            exeDir = System.IO.Path.GetDirectoryName(System.Reflection.Assembly.GetExecutingAssembly().Location);
+            exeDir = FileStore.ExeDir;
 
             // Set the current settings to the game settings
-            settings = game.game.Settings;
+            settings = game?.game?.Settings;
 
             // Update the settings variables with the settings from the game settings
             SettingsSliderVolume.Value = settings.Volume;
@@ -68,9 +57,7 @@ namespace AITetris.Controls
                 // Check if the response of the popup was OK
                 if (result == MessageBoxResult.Yes)
                 {
-                    // Write new settings to the settings file
-                    File.WriteAllText(exeDir + "/Assets/JSON/Settings.json", JsonSerializer.Serialize(settings, new JsonSerializerOptions() { WriteIndented = true }));
-
+                    JsonIOService.Write(settings);
                     // Set the state to false since was just applied
                     SettingsControlsApplySettings.IsEnabled = false;
                 }
@@ -80,12 +67,11 @@ namespace AITetris.Controls
             game.GameBoardMainGrid.Children.Remove(this);
         }
 
-        // Write aand apply the newly set settings
+        // Write and apply the newly set settings
         private void SettingsControlsApplySettings_Click(object sender, RoutedEventArgs e)
         {
-            // Write the settings to the settings JSON file
-            File.WriteAllText(exeDir + "/Assets/JSON/Settings.json", JsonSerializer.Serialize(settings, new JsonSerializerOptions() { WriteIndented = true }));
-
+            JsonIOService.Write(settings);
+            
             // Apply the new settings to the game settings
             game.ApplySettings(settings);
 

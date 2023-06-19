@@ -24,14 +24,14 @@ namespace AITetris.Controls
     public partial class PauseMenu : UserControl
     {
         // Game variables
-        private GameBoard game;
+        private GameBoard Game { get; set; }
 
         public PauseMenu(GameBoard game)
         {
             InitializeComponent();
 
             // Set game to an instance of the current game
-            this.game = game;
+            this.Game = game;
 
             AddUpgradeToPauseMenuUpgradesSP();
         }
@@ -45,7 +45,7 @@ namespace AITetris.Controls
             // Add amount of revives
             PauseMenuUpgradesSP.Children.Add(
                 new Label { 
-                    Content = "Revives left: " + game.game.Upgrades.Revive,
+                    Content = "Revives left: " + Game.game.Upgrades.Revive,
                     FontFamily = new FontFamily("Tahoma"),
                     FontSize = 20,
                     FontWeight = FontWeights.Bold,
@@ -57,7 +57,7 @@ namespace AITetris.Controls
             PauseMenuUpgradesSP.Children.Add(
                 new Label
                 {
-                    Content = "Score multiplier: " + game.game.Upgrades.ScoreMultiplier + "x",
+                    Content = "Score multiplier: " + Game.game.Upgrades.ScoreMultiplier + "x",
                     FontFamily = new FontFamily("Tahoma"),
                     FontSize = 20,
                     FontWeight = FontWeights.Bold,
@@ -69,7 +69,7 @@ namespace AITetris.Controls
             PauseMenuUpgradesSP.Children.Add(
                 new Label
                 {
-                    Content = "Remove swap left: " + (game.game.Upgrades.RemoveSwap ? "1":"0"),
+                    Content = "Remove swap left: " + (Game.game.Upgrades.RemoveSwap ? "1":"0"),
                     FontFamily = new FontFamily("Tahoma"),
                     FontSize = 20,
                     FontWeight = FontWeights.Bold,
@@ -81,7 +81,7 @@ namespace AITetris.Controls
             PauseMenuUpgradesSP.Children.Add(
                 new Label
                 {
-                    Content = "Emergency line clears left: " + game.game.Upgrades.EmergancyLineClear,
+                    Content = "Emergency line clears left: " + Game.game.Upgrades.EmergancyLineClear,
                     FontFamily = new FontFamily("Tahoma"),
                     FontSize = 20,
                     FontWeight = FontWeights.Bold,
@@ -93,7 +93,7 @@ namespace AITetris.Controls
             PauseMenuUpgradesSP.Children.Add(
                 new Label
                 {
-                    Content = "Slow time left: " + game.game.Upgrades.SlowTime,
+                    Content = "Slow time left: " + Game.game.Upgrades.SlowTime,
                     FontFamily = new FontFamily("Tahoma"),
                     FontSize = 20,
                     FontWeight = FontWeights.Bold,
@@ -107,17 +107,17 @@ namespace AITetris.Controls
         private void PauseMenuResumeBtn_Click(object sender, RoutedEventArgs e)
         {
             // Toggle pause off
-            game.TogglePauseGame();
+            Game.TogglePauseGame();
         }
 
         // Open the settings menu
         private void PauseMenuSettingsBtn_Click(object sender, RoutedEventArgs e)
         {
             // Create an instance of the settings menu controller for the current game
-            SettingsMenuUserController settings = new SettingsMenuUserController(game);
+            SettingsMenuUserController settings = new SettingsMenuUserController(Game);
 
             // Add the settings menu to the gameboardmaingrid
-            game.GameBoardMainGrid.Children.Add(settings);
+            Game.GameBoardMainGrid.Children.Add(settings);
 
             // Position the settings menu
             Grid.SetColumn(settings, 1);
@@ -130,20 +130,20 @@ namespace AITetris.Controls
         private void PauseMenuForfeitGame_Click(object sender, RoutedEventArgs e)
         {
             // Unpause the game
-            game.TogglePauseGame();
+            Game.TogglePauseGame();
 
             // Trigger the lose game event
-            game.LoseGame(true);
+            Game.LoseGame(true);
         }
 
         // Open the leaaderboard menu
         private void PauseMenuLeaderboard_Click(object sender, RoutedEventArgs e)
         {
             // Create an instance of the leaderboard menu controller for the current game
-            LeaderboardUserController leaderboard = new LeaderboardUserController(game);
+            LeaderboardUserController leaderboard = new LeaderboardUserController(Game);
 
             // Add the leaderboard menu to the gameboardmaingrid
-            game.GameBoardMainGrid.Children.Add(leaderboard);
+            Game.GameBoardMainGrid.Children.Add(leaderboard);
 
             // Position the leaderboard menu
             Grid.SetColumn(leaderboard, 1);

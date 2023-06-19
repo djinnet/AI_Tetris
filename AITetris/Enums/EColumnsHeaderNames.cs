@@ -1,12 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AITetris.Stores;
-public static class DataStore
+namespace AITetris.Enums;
+public enum EColumnsHeaderNames
 {
-    
+    Rank,
+    Name,
+    Point,
+    Lines,
+    Time,
+    Character
 }
